@@ -36,13 +36,13 @@ const slides = [
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  //   }, 5000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 5000);
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="relative h-screen overflow-hidden bg-black">
@@ -60,7 +60,7 @@ export default function HeroSection() {
         >
           <div className="absolute inset-0 bg-black bg-opacity-50" />
           <div className="relative gap-6 z-10 flex flex-col items-center justify-center h-full text-center px-4 text-white">
-            <h1 className="text-white font-bold text-[38px] md:w-96">{slide.heading}</h1>
+            <h1 className="text-white font-bold text-[38px] lg:w-4/5 lg:text-[70px] font-unbounded">{slide.heading}</h1>
             
            <div className="flex gap-6 flex-col">
               <div className="mt-6 flex gap-3">
@@ -84,7 +84,7 @@ export default function HeroSection() {
                 ))}
               </div>
 
-              <p className="text-white font-light text-[15px]">{slide.description}</p>
+              <p className="text-white font-light text-[15px] lg:text-[18px] font-unbounded">{slide.description}</p>
            </div>
           </div>
         </div>

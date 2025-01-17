@@ -15,7 +15,7 @@ export default function ProductSwiper() {
   ];
 
   return (
-    <section className="py-10 bg-gray-50">
+    <section className="bg-gray-50">
       <Swiper
         spaceBetween={0}
         slidesPerView={5}

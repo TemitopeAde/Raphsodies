@@ -1,6 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@font-face {
+  font-family: 'freize';
+  src: url('/fonts/Freizeit140-Bold.otf') format('otf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+a {
+  font-family: 'freize', sans-serif;
+}
+
 
 :root {
   --background: #00EEAE;

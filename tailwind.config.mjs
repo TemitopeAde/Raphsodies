@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
 const tailwindConfig = {
+  
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,6 +16,10 @@ const tailwindConfig = {
       },
       backgroundImage: {
         'custom-bg': "url('/images/bg.png')",
+      },
+      fontFamily: {
+        unbounded: ['Unbounded', 'serif'], 
+        freize: ['Freize', 'serif'],
       },
     },
   },

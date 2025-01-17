@@ -1,5 +1,7 @@
 import HeroSection from "@/components/main/hero";
+import ImageGrid from "@/components/main/ImageGrid";
 import ProductSwiper from "@/components/main/Slider";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -8,12 +10,12 @@ const page = () => {
     <section>
       <HeroSection />
 
-      <section className="grid lg:grid-cols-2 lg:items-center gap-12 lg:px-32 py-16 px-10 bg-custom-bg bg-cover bg-center bg-no-repeat">
+      <section className="grid lg:grid-cols-2 lg:items-center gap-12 lg:px-32 lg:py-24 py-10 px-6 bg-custom-bg bg-cover bg-center bg-no-repeat">
         <div className="flex gap-4 flex-col h-full">
-          <h1 className="font-medium text-[36px] text-primary">
+          <h1 className="font-medium text-[36px] text-primary font-unbounded">
             An Era of African Inspired Beauty
           </h1>
-          <p className="font-normal text-lg text-primary">
+          <p className="font-normal text-lg text-primary font-unbounded">
             Inspired by Africa’s rich botanical heritage, African Rhapsody
             combines ancient wisdom with modern cosmetic science to create
             revolutionary beauty products. Through research and innovation, we
@@ -248,6 +250,130 @@ const page = () => {
       </section>
 
       <ProductSwiper />
+
+      <section className="lg:items-center flex flex-col gap-16 lg:flex-row-reverse lg:px-32 py-24 px-6 bg-[#00EAAB]">
+        <div className="flex-1 basis-1/2 flex flex-col gap-6">
+          <h1 className="text-primary font-medium text-2xl lg:text-[36px] lg:leading-[40px] font-unbounded">
+            Africa is the true home of Wellness and Beauty
+          </h1>
+          <p className="text-[15px] lg:text-[18px] font-normal text-primary font-unbounded">
+            From Cleopatra’s milk baths to the to the century old beauty rituals
+            of Local Nigerian tribes. The thing is its always been here in
+            Africa. Throughout the ages, from the reigns of Queen Amina,
+            Cleopatra, Nefertiti, to the majestic kingdoms of Ashanti, Benin,
+            Mali, and ancient Egypt, Africa has been the timeless custodian of
+            integral wellness and ageless beauty secrets.
+          </p>
+          <button className=" items-center bg-primary py-2 px-2 rounded-2xl w-40">
+            <span className="flex gap-2 items-center justify-center">
+              <span className="text-lg font-normal text-white rounded-[15px]">
+                Read more
+              </span>
+
+              <span>
+                <svg
+                  width="24"
+                  height="23"
+                  viewBox="0 0 24 23"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.171 5.97213C12.8775 5.69205 12.8765 5.23696 13.1687 4.95567C13.4344 4.69995 13.851 4.67589 14.1451 4.88406L14.2294 4.95348L20.2794 10.7265C20.547 10.9819 20.5714 11.3826 20.3524 11.6644L20.2794 11.7451L14.2294 17.519C13.9359 17.7992 13.4611 17.7982 13.1688 17.5169C12.9031 17.2612 12.8797 16.8619 13.0982 16.581L13.171 16.5005L18.687 11.2355L13.171 5.97213Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M4 11.2363C4 10.8725 4.28215 10.5717 4.64823 10.5241L4.75 10.5176H19.75C20.1642 10.5176 20.5 10.8394 20.5 11.2363C20.5 11.6002 20.2178 11.9009 19.8518 11.9485L19.75 11.9551L4.75 11.9551C4.33579 11.9551 4 11.6333 4 11.2363Z"
+                    fill="white"
+                  />
+                </svg>
+              </span>
+            </span>
+          </button>
+        </div>
+        <div className="flex-1 basis-1/2 h-[400px] relative">
+          <span className="absolute left-[-18px] top-[-23px] lg:left-[-70px] lg:top-[-66px] z-30">
+            <img
+              alt=""
+              src="/images/layer-1.png"
+              className="w-[65px] lg:w-[152px]"
+            />
+          </span>
+          <img
+            alt=""
+            className="h-full w-full object-cover rounded-[30px]"
+            src="/images/hero-2.png"
+          />
+        </div>
+      </section>
+
+      <section className="grid lg:grid-cols-1 lg:items-center gap-12 lg:px-32 lg:py-24 py-10 px-6 bg-custom-bg bg-cover bg-center bg-no-repeat">
+        <div className="flex gap-4 flex-col h-full">
+          <h1 className="font-medium text-xl lg:text-[36px] lg:leading-[55px] text-center text-primary font-unbounded">
+            More than a beauty brand, every product is a celebration that
+            transcends time
+          </h1>
+
+          <div>
+            <ImageGrid />
+          </div>
+
+          <div className="flex flex-col gap-4 items-center">
+            <h2 className="font-bold text-xl md:text-[35px] lg:leading-[48px] text-center lg:text-[65px] text-primary font-unbounded">
+              the clearest, stunning skin
+            </h2>
+            <span className="flex flex-between gap-4 items-center">
+              <p className="text-xs text-primary text-center font-unbounded lg:text-[41px] lg:leading-[43px]">
+              find the perfect product for you
+
+              </p>
+              <Link
+                href="/shop"
+                className={`flex items-center gap-3 px-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300"
+                    }`}
+              >
+                <span className="flex items-center text-[9px] lg:text-[18px]">Shop Now</span>
+                  <span className="lg:block hidden">
+                    <svg
+                      width="17"
+                      height="15"
+                      viewBox="0 0 17 15"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
+                        fill="#292F4A"
+                      />
+                      <path
+                        d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
+                        fill="#292F4A"
+                      />
+                    </svg>
+                  </span>
+                  <span className="block lg:hidden">
+                    <svg
+                      width="10"
+                      height="15"
+                      viewBox="0 0 17 15"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
+                        fill="#292F4A"
+                      />
+                      <path
+                        d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
+                        fill="#292F4A"
+                      />
+                    </svg>
+                  </span>
+              </Link>
+            </span>
+          </div>
+        </div>
+      </section>
     </section>
   );
 };
