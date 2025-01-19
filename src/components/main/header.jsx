@@ -53,8 +53,8 @@ const Header = () => {
   };
   return (
     <>
-      <header className="fixed top-0 left-0 z-30 w-full">
-        <div className="flex justify-between items-center p-4">
+      <header className="fixed top-0 left-0 z-30 w-full lg:px-24 px-10">
+        <div className="flex justify-between items-center py-4 ">
           <div>
             <Image src="/images/logo.png" alt="logo" width={100} height={60} />
           </div>
