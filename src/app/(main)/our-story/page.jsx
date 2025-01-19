@@ -65,12 +65,12 @@ const Page = () => {
             <img
               src="/images/story.png"
               alt=""
-              className="w-full h-[316px] object-cover rounded-[24px]"
+              className="w-full h-[316px] lg:h-full object-cover rounded-[24px]"
             />
           </div>
 
           <div className="basis-1/2">
-            <p className="font-freize font-normal text-[15px] leading-[35px] lg:pr-20">
+            <p className="font-freize font-normal text-[15px] lg:leading-[35px]">
               From Cleopatra's legendary milk baths to the to the century old
               beauty rituals of Local Nigerian tribes and vibrant red women of
               Namibia. The thing is its always been here in Africa. Throughout
@@ -92,12 +92,12 @@ const Page = () => {
             <img
               src="/images/product-bottle.png"
               alt=""
-              className="w-full h-[316px] object-cover rounded-[24px]"
+              className="w-full h-[316px] lg:h-full object-cover rounded-[24px]"
             />
           </div>
 
           <div className="basis-1/2">
-            <p className="font-freize font-normal text-[15px] leading-[35px] lg:pr-20">
+            <p className="font-freize font-normal text-[15px] lg:leading-[35px]">
               In the tapestry of history, Africa has always held the key to
               unparalleled beauty rituals and holistic well-being. Despite the
               shift, driven by media proliferation and globalization, African
@@ -119,12 +119,12 @@ const Page = () => {
             <img
               src="/images/image-1.png"
               alt=""
-              className="w-full h-[316px] object-cover rounded-[24px]"
+              className="w-full h-[316px] lg:h-full object-cover rounded-[24px]"
             />
           </div>
 
           <div className="basis-1/2 flex flex-col gap-3">
-            <p className="font-freize font-normal text-[15px] leading-[35px] lg:leading-[25px] lg:pr-20">
+            <p className="font-freize font-normal text-[15px] leading-[35px] lg:leading-[35px]">
               At African Rhapsody we research and transform Africa's botanical
               wisdom with cutting-edge cosmetic science into innovative skincare
               solutions. More than a beauty brand; it's a journey to rediscover

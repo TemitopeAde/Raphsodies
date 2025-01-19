@@ -164,19 +164,19 @@ const Header = () => {
             </button>
           </div>
           <nav className="mt-8 space-y-4">
-            <Link href="/" className="text-base text-primary font-bold border-b py-2 flex border-primary">
+            <Link href="/" className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">
               Home
             </Link>
-            <Link href="/our-story" className="text-base text-primary font-bold border-b py-2 flex border-primary">
+            <Link href="/our-story" className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">
               Our Story
             </Link>
-            <Link href="/shop" className="text-base text-primary font-bold border-b py-2 flex border-primary">
+            <Link href="/shop" className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">
               Shop
             </Link>
-            <Link href="/contact-us" className="text-base text-primary font-bold border-b py-2 flex border-primary">
+            <Link href="/contact-us" className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">
               Contact Us
             </Link>
-            <Link href="/blog"  className="text-base text-primary font-bold border-b py-2 flex border-primary">
+            <Link href="/blog"  className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">
               Blog
             </Link>
           </nav>

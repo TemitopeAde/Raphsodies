@@ -19,7 +19,8 @@ const tailwindConfig = {
       },
       fontFamily: {
         unbounded: ['Unbounded', 'serif'], 
-        freize: ['Freize', 'serif'],
+        freize: ['"Freize"', 'serif'],
+        gistesy: ['"Gistesy"', 'sans-serif'],
       },
     },
   },
