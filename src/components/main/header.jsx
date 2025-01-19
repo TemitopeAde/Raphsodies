@@ -35,7 +35,7 @@ const Header = () => {
                 pathname === link.href ? "text-[#00EEAE]" : "text-white"
               }`}
             >
-              <span>
+              <span className="font-freize font-normal text-base leading-4">
                 {link.text}
               </span>
               <span>

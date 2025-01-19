@@ -1,0 +1,33 @@
+import Link from 'next/link'
+import React from 'react'
+import ProductKit from './ProductKit'
+
+const Product = ({data}) => {
+    
+    
+  return (
+    <div className='grid grid-cols-1 px-10 lg:px-24 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:justify-between'>
+        {data?.map((item, index) => (
+            <div className='bg-white rounded-[20px] p-3 text-center flex flex-col gap-5'>
+            <img src={item?.image} alt={item?.name} className='rounded-[20px]' />
+
+            <div className='flex flex-col flex-grow justify-between gap-3 h-full'>
+                <div>
+                <h1 className="text-[#C78700] font-bold lg:text-base lg:leading-5 font-unbounded text-[15px]">
+                    <Link href={`/shop/${index}`}>
+                     {item?.name}
+                    </Link>
+                </h1>
+                <h3 className='font-freize text-xs lg:text-sm lg:leading-4'>{item?.label}</h3>
+                </div>
+                <button className='cursor-none font-unbounded w-full py-2 rounded-[20px] bg-[#292F4A] text-white lg:text-[18px] font-bold'>
+                NGN {item?.price?.toLocaleString('en-NG')}
+                </button>
+            </div>
+            </div>
+        ))}
+    </div>
+  )
+}
+
+export default Product

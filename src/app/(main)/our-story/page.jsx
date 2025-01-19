@@ -18,7 +18,6 @@ const Page = () => {
         </div>
 
         <div className="absolute inset-0 bg-black bg-opacity-80" />
-
         <div className="absolute inset-0 z-10 flex items-center justify-center px-8 lg:px-24 lg:justify-start">
           <div className="text-white flex flex-col gap-10 text-center lg:text-left">
             <div>
