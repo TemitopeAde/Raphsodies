@@ -18,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${unbounded.variable}  antialiased`}>
+      <body className={`${unbounded.variable} text-primary antialiased`}>
         <Header />
         {children}
         <Footer />
