@@ -1,5 +1,6 @@
 import HeroSection from "@/components/main/hero";
 import ImageGrid from "@/components/main/ImageGrid";
+import ReviewSection from "@/components/main/review";
 import ProductSwiper from "@/components/main/Slider";
 import Image from "next/image";
 import Link from "next/link";
@@ -373,6 +374,10 @@ const page = () => {
             </span>
           </div>
         </div>
+      </section>
+
+      <section>
+        <ReviewSection />
       </section>
     </section>
   );
