@@ -1,8 +1,8 @@
+import Modals from "@/components/main/modal";
 import Product from "@/components/main/Product";
 import React from "react";
 
 const page = () => {
-
   const products = [
     {
       id: 1,
@@ -31,15 +31,16 @@ const page = () => {
       label: "Smooth & Even Tone",
       price: 12499,
       image: "/images/image-1.png"
-    },
-    
+    }
   ];
 
   return (
     <section className="bg-custom-bg mt-20">
       <div className="px-10 lg:px-24 flex flex-col gap-20 py-8">
         <div className="flex gap-3 items-center">
-          <h2 className="font-freize lg:text-[22px] text-base leading-[26px] font-normal">Home</h2>
+          <h2 className="font-freize lg:text-[22px] text-base leading-[26px] font-normal">
+            Home
+          </h2>
           <span>
             <svg
               width="17"
@@ -58,7 +59,9 @@ const page = () => {
               />
             </svg>
           </span>
-          <h2 className="font-freize lg:text-[22px] font-normal text-base leading-[26px]">Shop</h2>
+          <h2 className="font-freize lg:text-[22px] font-normal text-base leading-[26px]">
+            Shop
+          </h2>
           <span>
             <svg
               width="17"
@@ -258,32 +261,114 @@ const page = () => {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <h1 className="font-unbounded font-semibold lg:text-[32px] lg:leading-[51px] text-primary">Description</h1>
+            <h1 className="font-unbounded font-semibold lg:text-[32px] lg:leading-[51px] text-primary">
+              Description
+            </h1>
             <p className="font-freize font-normal lg:text-2xl lg:leading-[35px]">
               A good Face cream should keep moisture and elasticity in your
               skin. Our Nefertiti Face Cream draws inspiration from the timeless
               beauty of Queen Nefertiti and is enriched with a blend of oils,
-              proteins, and plant extracts. Here's what it does: Enhances
-              your natural radiance, leaving your skin glowing and
-              youthful.Targets wrinkles, age spots, and fine lines, providing
-              powerful anti-aging benefits. Enriched with: Avena sativa (oat
-              extract), Lavandula Angustifolia, Vitamin B5, Vitamin B3,
-              Proteins, Ceramides, Glycerol, EDTA, Beerberry extract,
-              hyaluronan, Aqua, Cetyl acholohol, Wax.
+              proteins, and plant extracts. Here's what it does: Enhances your
+              natural radiance, leaving your skin glowing and youthful.Targets
+              wrinkles, age spots, and fine lines, providing powerful anti-aging
+              benefits. Enriched with: Avena sativa (oat extract), Lavandula
+              Angustifolia, Vitamin B5, Vitamin B3, Proteins, Ceramides,
+              Glycerol, EDTA, Beerberry extract, hyaluronan, Aqua, Cetyl
+              acholohol, Wax.
             </p>
           </div>
         </div>
 
         <div className="pb-36">
           <div className="flex flex-col gap-20">
-            <h1 className="font-unbounded font-semibold lg:text-[32px] lg:leading-[51px] text-primary">Other products</h1>
+            <h1 className="font-unbounded font-semibold lg:text-[32px] lg:leading-[51px] text-primary">
+              Other products
+            </h1>
 
             <div>
-                <Product  data={products} type="other" />
+              <Product data={products} type="other" />
             </div>
           </div>
         </div>
       </div>
+      <Modals
+        content={
+          <div>
+            <h3 className="mb-5 text-lg font-semibold text-primary font-unbounded">
+              1 Item added to Cart
+            </h3>
+
+            <div className="flex gap-6 justify-start">
+              <div className="basis-24">
+                <img className="h-full object-cover rounded-md" src="/images/product-1.png" alt="" />
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-bold">Nefertiti Face Moisturizer</h2>
+                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-semibold">NGN 34,453</h2>
+                </div>
+
+                <div className="flex items-center ">
+                  <div className="flex items-center gap-2">
+                    <button className="">
+                      <svg
+                        width="47"
+                        height="47"
+                        viewBox="0 0 47 47"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M23.5003 5.38562C33.5035 5.38562 41.6149 13.4951 41.6149 23.5002C41.6149 33.5034 33.5035 41.6148 23.5003 41.6148C13.4952 41.6148 5.38574 33.5034 5.38574 23.5002C5.38574 13.497 13.4972 5.38562 23.5003 5.38562Z"
+                          stroke="#292F4A"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M15.9805 23.4796C15.7043 23.4796 15.4805 23.7035 15.4805 23.9796C15.4805 24.2558 15.7043 24.4796 15.9805 24.4796H30.1461C30.4223 24.4796 30.6461 24.2558 30.6461 23.9796C30.6461 23.7035 30.4223 23.4796 30.1461 23.4796H15.9805Z"
+                          stroke="#292F4A"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <span className="font-freize font-bold text-[20px]">1</span>
+                    <button className="ml-1">
+                      <svg
+                        width="38"
+                        height="38"
+                        viewBox="0 0 38 38"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M19 1C28.9399 1 37 9.05816 37 19C37 28.9399 28.9399 37 19 37C9.05816 37 1 28.9399 1 19C1 9.06011 9.06011 1 19 1Z"
+                          stroke="#292F4A"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M28 19C28 19.1989 27.921 19.3897 27.7803 19.5303C27.6397 19.671 27.4489 19.75 27.25 19.75H19.75V27.25C19.75 27.4489 19.671 27.6397 19.5303 27.7803C19.3897 27.921 19.1989 28 19 28C18.8011 28 18.6103 27.921 18.4697 27.7803C18.329 27.6397 18.25 27.4489 18.25 27.25V19.75H10.75C10.5511 19.75 10.3603 19.671 10.2197 19.5303C10.079 19.3897 10 19.1989 10 19C10 18.8011 10.079 18.6103 10.2197 18.4697C10.3603 18.329 10.5511 18.25 10.75 18.25H18.25V10.75C18.25 10.5511 18.329 10.3603 18.4697 10.2197C18.6103 10.079 18.8011 10 19 10C19.1989 10 19.3897 10.079 19.5303 10.2197C19.671 10.3603 19.75 10.5511 19.75 10.75V18.25H27.25C27.4489 18.25 27.6397 18.329 27.7803 18.4697C27.921 18.6103 28 18.8011 28 19Z"
+                          fill="#292F4A"
+                          stroke="#292F4A"
+                          strokeWidth="0.5"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      />
     </section>
   );
 };
