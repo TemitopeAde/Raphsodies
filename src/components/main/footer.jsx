@@ -138,7 +138,7 @@ const Footer = () => {
 
             <div className="flex justify-center items-center self-baseline lg:text-left lg:basis-1/3">
               <div>
-                <img alt="logo" src="images/image-2.png" />
+                {/* <img alt="logo" src="images/logo-footer.png" /> */}
               </div>
             </div>
           </div>
