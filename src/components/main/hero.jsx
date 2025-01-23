@@ -74,7 +74,7 @@ export default function HeroSection() {
                         : "bg-background text-primary hover:bg-teal-300"
                     }`}
                   >
-                    <span>
+                    <span className="font-freize font-normal text-base">
                       {button.text}
                     </span>
                     <span>
