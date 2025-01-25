@@ -1,9 +1,10 @@
+
+import AccordionSection, { Component } from "@/components/main/accordion";
 import HeroSection from "@/components/main/hero";
 import ImageGrid from "@/components/main/ImageGrid";
 import Product from "@/components/main/Product";
-import ReviewSection from "@/components/main/review";
 import ProductSwiper from "@/components/main/Slider";
-import Image from "next/image";
+
 import Link from "next/link";
 import React from "react";
 
@@ -562,9 +563,122 @@ const page = () => {
         </div>
       </section>
 
-      {/* <section>
-        <ReviewSection />
-      </section> */}
+
+
+      <section className="lg:px-32 lg:py-24 py-10 px-6 bg-background">
+        <div className="grid grid-rows-[auto_auto] gap-4 p-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white rounded-[40px] mx-auto p-4">
+              <div>
+                <img
+                  src="/images/bottle.png"
+                  alt="acne"
+                  className="rounded-[30px] w-full object-cover"
+                />
+                <h2 className="text-center font-bold leading-[22px] md:leading-[26px] font-unbounded text-[18px] md:text-[22px] my-3 md:my-6">
+                  Acne Treatment Kit
+                </h2>
+              </div>
+            </div>
+            <div className="bg-white rounded-[40px] mx-auto p-4">
+              <div>
+                <img
+                  src="/images/bottle.png"
+                  alt="acne"
+                  className="rounded-[30px] w-full object-cover"
+                />
+                <h2 className="text-center font-bold leading-[22px] md:leading-[26px] font-unbounded text-[18px] md:text-[22px] my-3 md:my-6">
+                  Acne Treatment Kit
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-[40px] mx-auto p-4">
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                <img
+                  src="/images/bottle.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+                <img
+                  src="/images/bottle.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+                <img
+                  src="/images/bottle.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+                <img
+                  src="/images/bottle.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+                <img
+                  src="/images/bottle.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+              </div>
+              <h2 className="font-unbounded font-bold text-[18px] md:text-[22px] leading-[22px] md:leading-[26px] text-primary my-3 md:my-6 text-center">
+                Face & Body Rejuvenation Kit
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-center items-center lg:my-14 my-6">
+          <Link
+            href="/products"
+            className={`w-fit flex items-center gap-3 px-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-[#292F4A] text-primary hover:bg-teal-300"
+                    }`}
+          >
+            <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-white">
+              Shop Now
+            </span>
+            <span className="lg:block hidden">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13.171 6.23271C12.8775 5.94045 12.8765 5.46558 13.1687 5.17206C13.4344 4.90522 13.851 4.88012 14.1451 5.09734L14.2294 5.16977L20.2794 11.1938C20.547 11.4603 20.5714 11.8784 20.3524 12.1724L20.2794 12.2567L14.2294 18.2817C13.9359 18.574 13.4611 18.573 13.1688 18.2795C12.9031 18.0127 12.8797 17.5959 13.0982 17.3028L13.171 17.2188L18.687 11.7249L13.171 6.23271Z"
+                  fill="white"
+                />
+                <path
+                  d="M4 11.7256C4 11.3459 4.28215 11.0321 4.64823 10.9824L4.75 10.9756H19.75C20.1642 10.9756 20.5 11.3114 20.5 11.7256C20.5 12.1053 20.2178 12.4191 19.8518 12.4687L19.75 12.4756L4.75 12.4756C4.33579 12.4756 4 12.1398 4 11.7256Z"
+                  fill="white"
+                />
+              </svg>
+            </span>
+            <span className="block lg:hidden">
+              <svg
+                width="10"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13.171 6.23271C12.8775 5.94045 12.8765 5.46558 13.1687 5.17206C13.4344 4.90522 13.851 4.88012 14.1451 5.09734L14.2294 5.16977L20.2794 11.1938C20.547 11.4603 20.5714 11.8784 20.3524 12.1724L20.2794 12.2567L14.2294 18.2817C13.9359 18.574 13.4611 18.573 13.1688 18.2795C12.9031 18.0127 12.8797 17.5959 13.0982 17.3028L13.171 17.2188L18.687 11.7249L13.171 6.23271Z"
+                  fill="white"
+                />
+                <path
+                  d="M4 11.7256C4 11.3459 4.28215 11.0321 4.64823 10.9824L4.75 10.9756H19.75C20.1642 10.9756 20.5 11.3114 20.5 11.7256C20.5 12.1053 20.2178 12.4191 19.8518 12.4687L19.75 12.4756L4.75 12.4756C4.33579 12.4756 4 12.1398 4 11.7256Z"
+                  fill="white"
+                />
+              </svg>
+            </span>
+          </Link>
+        </div>
+      </section>
+
+      
     </section>
   );
 };

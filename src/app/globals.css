@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: 'freize';
   src: url('/fonts/freeze.otf') format('opentype');
@@ -12,16 +11,12 @@
   font-style: normal;
 }
 
-/* globals.css */
-
 @font-face {
-  font-family: 'Gistesy'; /* Name of the font */
-  src: url('/fonts/Gistesy.ttf') format('opentype'); /* Path to your font */
+  font-family: 'Gistesy';
+  src: url('/fonts/Gistesy.ttf') format('opentype'); 
   font-weight: normal;
   font-style: normal;
 }
-
-
 
 :root {
   --background: #00EEAE;
@@ -33,3 +28,5 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
