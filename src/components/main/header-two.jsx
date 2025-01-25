@@ -13,11 +13,7 @@ const HeaderTwo = () => {
   const navLinks = [
     { href: "/", text: "Home" },
     { href: "/our-story", text: "Our Story" },
-    { href: "/products", text: "Shop", icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19 8.5L12 15.5L5 8.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    )},
+    { href: "/products", text: "Shop"},
     { href: "/contact-us", text: "Contact Us" },
     { href: "/blog", text: "Blog" }
   ];

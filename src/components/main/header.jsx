@@ -107,7 +107,38 @@ const Header = () => {
 
             <div>
               <button onClick={toggleSidebar} className="md:hidden">
-                {/* Menu Icon */}
+                <svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clipPath="url(#clip0_703_1869)">
+                    <path
+                      d="M7.79541 9.25H23.5454C24.1642 9.25 24.6704 8.74375 24.6704 8.125C24.6704 7.50625 24.1642 7 23.5454 7H7.79541C7.17666 7 6.67041 7.50625 6.67041 8.125C6.67041 8.74375 7.17666 9.25 7.79541 9.25Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M7.79541 13.75H15.6704H23.5454C24.1642 13.75 24.6704 13.2438 24.6704 12.625C24.6704 12.0062 24.1642 11.5 23.5454 11.5H7.79541C7.17666 11.5 6.67041 12.0062 6.67041 12.625C6.67041 13.2438 7.17666 13.75 7.79541 13.75Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M7.79541 18.25H23.5454C24.1642 18.25 24.6704 17.7437 24.6704 17.125C24.6704 16.5063 24.1642 16 23.5454 16H7.79541C7.17666 16 6.67041 16.5063 6.67041 17.125C6.67041 17.7437 7.17666 18.25 7.79541 18.25Z"
+                      fill="white"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_703_1869">
+                      <rect
+                        width="24"
+                        height="24"
+                        fill="white"
+                        transform="translate(0.890137 0.5)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
               </button>
             </div>
           </div>
@@ -157,7 +188,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* Overlay */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 z-30 bg-black opacity-50"
