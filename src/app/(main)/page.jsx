@@ -1,6 +1,6 @@
 "use client";
 
-import AccordionSection from "@/components/main/accordion";
+import AccordionSection from "@/components/main/Accordion";
 import HeroSection from "@/components/main/hero";
 import ImageGrid from "@/components/main/ImageGrid";
 import Product from "@/components/main/Product";
