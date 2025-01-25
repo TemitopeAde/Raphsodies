@@ -16,6 +16,7 @@ const tailwindConfig = {
 		},
 		backgroundImage: {
 		  'custom-bg': "url('/images/bg.png')",
+		  'dark-bg': "url('/images/product-2.png')",
 		},
 		fontFamily: {
 		  unbounded: ['Unbounded', 'serif'], 

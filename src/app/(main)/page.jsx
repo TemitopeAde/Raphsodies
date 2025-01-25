@@ -4,6 +4,7 @@ import AccordionSection from "@/components/main/Accordion";
 import HeroSection from "@/components/main/hero";
 import ImageGrid from "@/components/main/ImageGrid";
 import Product from "@/components/main/Product";
+import { CarouselDemo } from "@/components/main/review";
 import ProductSwiper from "@/components/main/Slider";
 
 import Link from "next/link";
@@ -410,6 +411,13 @@ const page = () => {
         </div>
       </section>
 
+      <section className="h-screen flex justify-center items-center bg-dark-bg bg-no-repeat bg-cover relative">
+        <div className="absolute inset-0 bg-black bg-opacity-60" />
+        <div className="relative z-10">
+          <CarouselDemo />
+        </div>
+      </section>
+
       <section className="bg-background flex justify-between items-center lg:py-40 py-20">
         <div className="flex flex-col lg:gap-24 gap-16">
           <div className="flex flex-col lg:gap-4 gap-2 px-4">
@@ -476,7 +484,7 @@ const page = () => {
       </section>
 
       <section className="lg:px-32 lg:py-24 py-10 px-6 bg-custom-bg">
-        <div className="flex lg:justify-between lg:gap-16 lg:flex-row flex-col gap-9">
+        <div className="flex lg:justify-between lg:items-center lg:gap-16 lg:flex-row flex-col gap-9">
           <div className="flex-1 basis-1/2 h-[400px] relative">
             <span className="absolute left-[-18px] top-[-23px] lg:left-[-70px] lg:top-[-66px] z-30">
               <img
@@ -679,7 +687,9 @@ const page = () => {
 
       <section className="lg:px-32 lg:py-24 py-10 px-6 bg-custom-bg">
         <div className="lg:mb-16 mb-10">
-          <h1 className="lg:text-[36px] font-semibold lg:leading-[55px] text-center text-primary font-unbounded">Got Questions? We’ve got answers</h1>
+          <h1 className="lg:text-[36px] font-semibold lg:leading-[55px] text-[28px] leading-[31px] text-center text-primary font-unbounded">
+            Got Questions? We’ve got answers
+          </h1>
         </div>
         <AccordionSection />
       </section>
