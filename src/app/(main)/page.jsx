@@ -1,4 +1,6 @@
+"use client";
 
+import AccordionSection from "@/components/main/accordion";
 import HeroSection from "@/components/main/hero";
 import ImageGrid from "@/components/main/ImageGrid";
 import Product from "@/components/main/Product";
@@ -675,6 +677,12 @@ const page = () => {
         </div>
       </section>
 
+      <section className="lg:px-32 lg:py-24 py-10 px-6 bg-custom-bg">
+        <div className="lg:mb-16 mb-10">
+          <h1 className="lg:text-[36px] font-semibold lg:leading-[55px] text-center text-primary font-unbounded">Got Questions? We’ve got answers</h1>
+        </div>
+        <AccordionSection />
+      </section>
     </section>
   );
 };
