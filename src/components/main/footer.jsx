@@ -50,11 +50,6 @@ const Footer = () => {
       id: "4",
       href: "/products",
       label: "Skin Care Combo Collection"
-    },
-    {
-      id: "5",
-      href: "/products",
-      label: "Hair Care"
     }
   ];
   const currentYear = new Date().getFullYear();
