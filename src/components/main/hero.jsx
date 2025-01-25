@@ -21,16 +21,16 @@ const slides = [
     ],
     description: "Research Based. African Inspired."
   },
-  {
-    id: 2,
-    image: "/images/hero-two.jpg",
-    heading: "Beauty Inspired by Nature",
-    buttons: [
-      { id: 1, text: "Shop Now", link: "/products" },
-      { id: 2, text: "Learn More", link: "/learn" }
-    ],
-    description: "Sustainably Sourced. Ethically Made."
-  }
+  // {
+  //   id: 2,
+  //   image: "/images/hero-two.jpg",
+  //   heading: "Beauty Inspired by Nature",
+  //   buttons: [
+  //     { id: 1, text: "Shop Now", link: "/products" },
+  //     { id: 2, text: "Learn More", link: "/learn" }
+  //   ],
+  //   description: "Sustainably Sourced. Ethically Made."
+  // }
 ];
 
 export default function HeroSection() {
