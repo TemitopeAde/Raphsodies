@@ -1,5 +1,4 @@
 
-import AccordionSection, { Component } from "@/components/main/accordion";
 import HeroSection from "@/components/main/hero";
 import ImageGrid from "@/components/main/ImageGrid";
 import Product from "@/components/main/Product";
@@ -563,8 +562,6 @@ const page = () => {
         </div>
       </section>
 
-
-
       <section className="lg:px-32 lg:py-24 py-10 px-6 bg-background">
         <div className="grid grid-rows-[auto_auto] gap-4 p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -678,7 +675,6 @@ const page = () => {
         </div>
       </section>
 
-      
     </section>
   );
 };
