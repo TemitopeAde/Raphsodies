@@ -18,7 +18,7 @@ export function CarouselDemo() {
                 <CardContent className="flex aspect-square items-center justify-center p-6 bg-white rounded-[30px]">
                   <div>
                     <div className="flex justify-between px-3">
-                      <img src="" alt="" />
+                      
                       <div>
                         <svg
                           width="83"
@@ -33,6 +33,15 @@ export function CarouselDemo() {
                           />
                         </svg>
                       </div>
+                    </div>
+
+                    <div>
+                      <p className="text-primary">
+                        I see alot of changes in my skin. It is softer and
+                        smoother. I was wondering do you have body cream like
+                        the skin repair that nourishes, removes blemishes and
+                        revives the skin?
+                      </p>
                     </div>
                   </div>
                 </CardContent>
