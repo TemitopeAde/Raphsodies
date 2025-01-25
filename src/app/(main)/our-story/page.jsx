@@ -134,7 +134,7 @@ const Page = () => {
             </p>
 
             <Link
-              href="/shop"
+              href="/products"
               className={`flex w-fit items-center gap-3 px-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300"
                     }`}
             >

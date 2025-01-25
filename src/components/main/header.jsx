@@ -12,7 +12,7 @@ const Header = () => {
   const navLinks = [
     { href: "/", text: "Home" },
     { href: "/our-story", text: "Our Story" },
-    { href: "/shop", text: "Shop", icon: (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    { href: "/products", text: "Shop", icon: (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M19 8.5L12 15.5L5 8.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
       ) },
@@ -170,7 +170,7 @@ const Header = () => {
             <Link href="/our-story" className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">
               Our Story
             </Link>
-            <Link href="/shop" className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">
+            <Link href="/products" className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">
               Shop
             </Link>
             <Link href="/contact-us" className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize">

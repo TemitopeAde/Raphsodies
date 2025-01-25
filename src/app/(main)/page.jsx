@@ -1,5 +1,6 @@
 import HeroSection from "@/components/main/hero";
 import ImageGrid from "@/components/main/ImageGrid";
+import Product from "@/components/main/Product";
 import ReviewSection from "@/components/main/review";
 import ProductSwiper from "@/components/main/Slider";
 import Image from "next/image";
@@ -7,6 +8,36 @@ import Link from "next/link";
 import React from "react";
 
 const page = () => {
+  const products = [
+    {
+      id: 1,
+      name: "pH Refreshing Face Wash",
+      label: "Detoxifying Cleanser for Women",
+      price: 10999,
+      image: "/images/image-1.png"
+    },
+    {
+      id: 2,
+      name: "Acne Control Plant",
+      label: "For Acne-Prone Skin",
+      price: 12499,
+      image: "/images/image-1.png"
+    },
+    {
+      id: 3,
+      name: "Skin Trouble Oil",
+      label: "Repair & Hydrate",
+      price: 12499,
+      image: "/images/image-1.png"
+    },
+    {
+      id: 4,
+      name: "Stretch Marks",
+      label: "Smooth & Even Tone",
+      price: 12499,
+      image: "/images/image-1.png"
+    }
+  ];
   return (
     <section>
       <HeroSection />
@@ -325,15 +356,169 @@ const page = () => {
             </h2>
             <span className="flex flex-between gap-4 items-center">
               <p className="text-xs text-primary text-center font-unbounded lg:text-[41px] lg:leading-[43px]">
-              find the perfect product for you
-
+                find the perfect product for you
               </p>
               <Link
-                href="/shop"
+                href="/products"
                 className={`flex items-center gap-3 px-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300"
                     }`}
               >
-                <span className="flex items-center text-[9px] lg:text-[18px]">Shop Now</span>
+                <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-primary">
+                  Shop Now
+                </span>
+                <span className="lg:block hidden">
+                  <svg
+                    width="17"
+                    height="15"
+                    viewBox="0 0 17 15"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
+                      fill="#292F4A"
+                    />
+                    <path
+                      d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
+                      fill="#292F4A"
+                    />
+                  </svg>
+                </span>
+                <span className="block lg:hidden">
+                  <svg
+                    width="10"
+                    height="15"
+                    viewBox="0 0 17 15"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
+                      fill="#292F4A"
+                    />
+                    <path
+                      d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
+                      fill="#292F4A"
+                    />
+                  </svg>
+                </span>
+              </Link>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-background flex justify-between items-center lg:py-40 py-20">
+        <div className="flex flex-col lg:gap-24 gap-16">
+          <div className="flex flex-col lg:gap-4 gap-2 px-4">
+            <h1 className="text-primary font-unbounded lg:font-semibold lg:text-[48px] font-medium text-2xl lg:leading-[55px] text-center">
+              African Rhapsody for skin Disorders: Grandma’s Secrets Collection
+            </h1>
+            <h4 className="font-unbounded font-normal lg:text-lg text-[15px] text-primary lg:leading-9 text-center">
+              Unveil the secrets of African botanical healing rituals
+            </h4>
+          </div>
+
+          <div>
+            <Product data={products} />
+          </div>
+
+          <div className="flex justify-center items-center">
+            <Link
+              href="/products"
+              className={`w-fit flex items-center gap-3 px-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-[#292F4A] text-primary hover:bg-teal-300"
+                    }`}
+            >
+              <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-white">
+                Shop Now
+              </span>
+              <span className="lg:block hidden">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.171 6.23271C12.8775 5.94045 12.8765 5.46558 13.1687 5.17206C13.4344 4.90522 13.851 4.88012 14.1451 5.09734L14.2294 5.16977L20.2794 11.1938C20.547 11.4603 20.5714 11.8784 20.3524 12.1724L20.2794 12.2567L14.2294 18.2817C13.9359 18.574 13.4611 18.573 13.1688 18.2795C12.9031 18.0127 12.8797 17.5959 13.0982 17.3028L13.171 17.2188L18.687 11.7249L13.171 6.23271Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M4 11.7256C4 11.3459 4.28215 11.0321 4.64823 10.9824L4.75 10.9756H19.75C20.1642 10.9756 20.5 11.3114 20.5 11.7256C20.5 12.1053 20.2178 12.4191 19.8518 12.4687L19.75 12.4756L4.75 12.4756C4.33579 12.4756 4 12.1398 4 11.7256Z"
+                    fill="white"
+                  />
+                </svg>
+              </span>
+              <span className="block lg:hidden">
+                <svg
+                  width="10"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.171 6.23271C12.8775 5.94045 12.8765 5.46558 13.1687 5.17206C13.4344 4.90522 13.851 4.88012 14.1451 5.09734L14.2294 5.16977L20.2794 11.1938C20.547 11.4603 20.5714 11.8784 20.3524 12.1724L20.2794 12.2567L14.2294 18.2817C13.9359 18.574 13.4611 18.573 13.1688 18.2795C12.9031 18.0127 12.8797 17.5959 13.0982 17.3028L13.171 17.2188L18.687 11.7249L13.171 6.23271Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M4 11.7256C4 11.3459 4.28215 11.0321 4.64823 10.9824L4.75 10.9756H19.75C20.1642 10.9756 20.5 11.3114 20.5 11.7256C20.5 12.1053 20.2178 12.4191 19.8518 12.4687L19.75 12.4756L4.75 12.4756C4.33579 12.4756 4 12.1398 4 11.7256Z"
+                    fill="white"
+                  />
+                </svg>
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="lg:px-32 lg:py-24 py-10 px-6 bg-custom-bg">
+        <div className="flex lg:justify-between lg:gap-16 lg:flex-row flex-col gap-9">
+          <div className="flex-1 basis-1/2 h-[400px] relative">
+            <span className="absolute left-[-18px] top-[-23px] lg:left-[-70px] lg:top-[-66px] z-30">
+              <img
+                alt=""
+                src="/images/layer-1.png"
+                className="w-[65px] lg:w-[152px]"
+              />
+            </span>
+            <img
+              alt=""
+              className="h-full w-full object-cover rounded-[30px]"
+              src="/images/bottle.png"
+            />
+          </div>
+
+          <div>
+            <div className="flex flex-col lg:gap-8 gap-6">
+              <h1 className="font-unbounded font-bold lg:text-[48px] text-[38px] leading-[44px] lg:leading-[55px] text-primary">
+                African Rhapsody for Kids
+              </h1>
+              <div className="flex flex-col gap-1">
+                <h2 className="font-unbounded font-bold lg:text-lg text-[#C78700] lg:leading-[26px]">
+                  Nourish & Protect
+                </h2>
+                <h2 className="font-freize font-normal lg:text-base text-xs text-primary">
+                  Nourish + Protect
+                </h2>
+                <h2 className="font-freize font-normal lg:text-base text-xs text-primary">
+                  With Kigella & Citrus Hystrix
+                </h2>
+                <h2 className="lg:text-[20px] font-unbounded text-primary font-bold lg:leading-[26px]">
+                  NGN 12,000
+                </h2>
+              </div>
+
+              <div>
+                <Link
+                  href="/products"
+                  className={`w-fit flex items-center gap-3 px-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300"
+                    }`}
+                >
+                  <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-primary">
+                    Shop Now
+                  </span>
                   <span className="lg:block hidden">
                     <svg
                       width="17"
@@ -370,15 +555,16 @@ const page = () => {
                       />
                     </svg>
                   </span>
-              </Link>
-            </span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section>
+      {/* <section>
         <ReviewSection />
-      </section>
+      </section> */}
     </section>
   );
 };

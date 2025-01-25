@@ -26,7 +26,7 @@ const slides = [
     image: "/images/hero-two.jpg",
     heading: "Beauty Inspired by Nature",
     buttons: [
-      { id: 1, text: "Shop Now", link: "/shop" },
+      { id: 1, text: "Shop Now", link: "/products" },
       { id: 2, text: "Learn More", link: "/learn" }
     ],
     description: "Sustainably Sourced. Ethically Made."

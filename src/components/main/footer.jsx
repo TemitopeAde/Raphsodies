@@ -15,7 +15,7 @@ const Footer = () => {
     },
     {
       id: "3",
-      href: "/shop",
+      href: "/products",
       label: "Shop"
     },
     {
@@ -33,27 +33,27 @@ const Footer = () => {
   const Shops = [
     {
       id: "1",
-      href: "/shop",
+      href: "/products",
       label: "African Rhapsody Products"
     },
     {
       id: "2",
-      href: "/shop",
+      href: "/products",
       label: "African Rhapsody For Kids"
     },
     {
       id: "3",
-      href: "/shop",
+      href: "/products",
       label: "Grandma’s Secrets Collection"
     },
     {
       id: "4",
-      href: "/shop",
+      href: "/products",
       label: "Skin Care Combo Collection"
     },
     {
       id: "5",
-      href: "/shop",
+      href: "/products",
       label: "Hair Care"
     }
   ];

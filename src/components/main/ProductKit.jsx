@@ -18,7 +18,7 @@ const ProductKit = ({data}) => {
                 </div>
 
                 <h1 className="text-[#C78700] font-bold lg:text-[22px] lg:leading-6 font-unbounded">
-                    <Link href={`/shop/${data?.id}`}>
+                    <Link href={`/products/${data?.id}`}>
                         {data?.label}
                     </Link>
                 </h1>
