@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${unbounded.variable} text-primary antialiased`}>
         <Header />
-          {children}
+        {children}
         <Footer />
       </body>
     </html>
