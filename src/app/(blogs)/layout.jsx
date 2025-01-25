@@ -1,10 +1,11 @@
-import Header from "@/components/main/header";
+
+import HeaderTwo from "@/components/main/header-two";
 import React from "react";
 
 const layout = ({ children }) => {
   return (
     <div>
-      <Header />
+      <HeaderTwo />
       {children}
     </div>
   );

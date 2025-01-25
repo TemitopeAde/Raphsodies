@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${unbounded.variable} text-primary antialiased`}>
-        <Header />
+        {/* <Header /> */}
         {children}
         <Footer />
       </body>
