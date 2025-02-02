@@ -59,8 +59,8 @@ export default function HeroSection() {
           }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-50" />
-          <div className="relative gap-6 z-10 flex flex-col items-center justify-center h-full text-center px-4 text-white">
-            <h1 className="text-white font-bold text-[38px] lg:w-4/5 lg:text-[70px] font-unbounded">{slide.heading}</h1>
+          <div className="relative gap-6 z-10 flex flex-col items-center justify-end h-full text-center px-4 text-white pb-20">
+            <h1 className="text-white leading-[44px] lg:leading-[86px] font-bold text-[38px] lg:w-4/5 lg:text-[70px] font-unbounded">{slide.heading}</h1>
             
            <div className="flex gap-6 flex-col">
               <div className="mt-6 flex gap-3">
@@ -68,13 +68,13 @@ export default function HeroSection() {
                   <Link
                     key={button.id}
                     href={button?.link}
-                    className={`flex h-[54px] items-center gap-3 px-6 py-4 rounded-[18px] text-base font-normal transition-all duration-300 ${
+                    className={`flex h-[54px] items-center gap-1 justify-between lg:gap-3 px-6 py-4 rounded-[18px] text-base font-normal transition-all duration-300 ${
                       button.id === 2
                         ? "bg-transparent border-white border text-white"
                         : "bg-background text-primary hover:bg-teal-300"
                     }`}
                   >
-                    <span className="font-freize font-normal text-base">
+                    <span className="font-freize font-normal text-xs lg:text-base">
                       {button.text}
                     </span>
                     <span>
@@ -84,7 +84,7 @@ export default function HeroSection() {
                 ))}
               </div>
 
-              <p className="text-white font-light text-[15px] lg:text-[18px] font-unbounded">{slide.description}</p>
+              <p className="text-white font-light text-[15px] lg:text-[18px] font-freize">{slide.description}</p>
            </div>
           </div>
         </div>

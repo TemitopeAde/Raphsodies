@@ -125,12 +125,12 @@ const page = () => {
     <section>
       <HeroSection />
 
-      <section className="grid lg:grid-cols-2 lg:items-center gap-12 lg:px-32 lg:py-24 py-10 px-6 bg-custom-bg bg-cover bg-center bg-no-repeat">
+      <section className="grid lg:grid-cols-2 lg:items-center gap-12 lg:px-32 lg:py-24 py-10 px-10 bg-custom-bg bg-cover bg-center bg-no-repeat">
         <div className="flex gap-4 flex-col h-full">
-          <h1 className="font-medium text-[36px] text-primary font-unbounded">
+          <h1 className="font-medium text-2xl lg:text-[36px] text-primary font-unbounded">
             An Era of African Inspired Beauty
           </h1>
-          <p className="font-normal text-lg text-primary font-unbounded">
+          <p className="font-normal lg:text-lg text-[15px] leading-[28px] text-primary font-freize">
             Inspired by Africa’s rich botanical heritage, African Rhapsody
             combines ancient wisdom with modern cosmetic science to create
             revolutionary beauty products. Through research and innovation, we
@@ -366,7 +366,7 @@ const page = () => {
 
       <ProductSwiper />
 
-      <section className="lg:items-center flex flex-col gap-16 lg:flex-row-reverse lg:px-32 py-24 px-6 bg-[#00EAAB]">
+      <section className="lg:items-center flex flex-col gap-16 lg:flex-row-reverse lg:px-32 py-24 px-6 bg-green-bg-two lg:bg-green-bg bg-cover bg-no-repeat bg-bottom">
         <div className="flex-1 basis-1/2 flex flex-col gap-6">
           <h1 className="text-primary font-medium text-2xl lg:text-[36px] lg:leading-[40px] font-unbounded">
             Africa is the true home of Wellness and Beauty
@@ -498,7 +498,7 @@ const page = () => {
         </div>
       </section>
 
-      <section className="bg-background flex justify-between items-center lg:py-40 py-20">
+      <section className="flex justify-between items-center lg:py-40 py-20 bg-grandma2 lg:bg-grandma bg-top  bg-cover bg-no-repeat lg:bg-bottom">
         <div className="flex flex-col lg:gap-24 gap-16">
           <div className="flex flex-col lg:gap-4 gap-2 px-4">
             <h1 className="text-primary font-unbounded lg:font-semibold lg:text-[48px] font-medium text-2xl lg:leading-[55px] text-center">

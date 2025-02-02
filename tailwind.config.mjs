@@ -17,6 +17,10 @@ const tailwindConfig = {
 		backgroundImage: {
 		  'custom-bg': "url('/images/bg.png')",
 		  'dark-bg': "url('/images/image-6.png')",
+		  'green-bg': "url('/images/read.png')",
+		  'green-bg-two': "url('/images/read-2.png')",
+		  'grandma': "url('/images/grandma.png')",
+		  'grandma2': "url('/images/grandma2.png')",
 		},
 		fontFamily: {
 		  unbounded: ['Unbounded', 'serif'], 
