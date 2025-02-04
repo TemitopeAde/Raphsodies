@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/carousel";
 
 import Link from "next/link";
+import { useRef, useState } from "react";
 
 const page = () => {
   const products = [
@@ -71,6 +72,21 @@ const page = () => {
       name: "Mrs Ayodele"
     }
   ];
+
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause(); // Pause the video
+      } else {
+        videoRef.current.play(); // Play the video
+      }
+      // Toggle the state for the button icon
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   const MyCarousel = () =>
     <Carousel className="w-full max-w-xs">
@@ -171,7 +187,7 @@ const page = () => {
         </div>
         <div className="flex flex-col gap-4 h-full relative">
           <span className="absolute z-30 right-[-25px] top-[-35px] lg:right-[-61px] lg:top-[-73px]">
-            <span className="lg:hidden">
+            <span className="lg:hidden" >
               <svg
                 width="72"
                 height="72"
@@ -426,35 +442,62 @@ const page = () => {
           </span>
 
           <span className="absolute z-40 top-[39%] right-[33%]">
-            <button>
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 100 100"
-                  width="130"
-                  height="65"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    stroke="white"
-                    strokeWidth="5"
-                    fill="none"
-                  />
-                  <polygon points="40,30 70,50 40,70" fill="white" />
-                </svg>
-              </span>
-            </button>
+        
+
+        <span>
+        <span className="absolute z-40 top-[-22px] lg:top-[39%] right-[33%]">
+        <div onClick={toggleVideo} className="cursor-pointer">
+          <span>
+            {isPlaying ? (
+              
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 100"
+                width="130"
+                height="65"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  stroke="white"
+                  strokeWidth="5"
+                  fill="none"
+                />
+                <rect x="30" y="25" width="15" height="50" fill="white" />
+                <rect x="55" y="25" width="15" height="50" fill="white" />
+              </svg>
+            ) : (
+              // Play icon (when video is paused)
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 100"
+                width="130"
+                height="65"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  stroke="white"
+                  strokeWidth="5"
+                  fill="none"
+                />
+                <polygon points="40,30 70,50 40,70" fill="white" />
+              </svg>
+            )}
           </span>
+        </div>
+      </span>
+        </span>
+      </span>
 
           <video
+            ref={videoRef}
             className="w-full h-full object-cover rounded-[13px]"
-            src="path-to-your-video.mp4"
-            controls
-            autoPlay
+            src="/videos/video.mp4"    
             loop
-            muted
+      
           />
           <div className="flex justify-center lg:hidden">
             <div>
@@ -465,7 +508,7 @@ const page = () => {
                 <span>
                   <Link href="/our-story">Our Story</Link>
                 </span>
-                <button>
+                <button onClick={toggleVideo}>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

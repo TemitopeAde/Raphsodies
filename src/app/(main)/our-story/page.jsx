@@ -64,12 +64,12 @@ const Page = () => {
             <img
               src="/images/story.png"
               alt=""
-              className="w-full h-[316px] lg:h-full object-cover rounded-[24px]"
+              className="w-full h-[316px] object-cover rounded-[24px]"
             />
           </div>
 
           <div className="basis-1/2">
-            <p className="font-freize font-normal text-[15px] lg:leading-[35px]">
+            <p className="font-freize font-normal lg:text-xl text-[15px] lg:leading-[35px]">
               From Cleopatra's legendary milk baths to the to the century old
               beauty rituals of Local Nigerian tribes and vibrant red women of
               Namibia. The thing is its always been here in Africa. Throughout
@@ -80,7 +80,7 @@ const Page = () => {
         </div>
 
         <div>
-          <h1 className="font-unbounded text-[28px] text-center leading-[40px] my-24">
+          <h1 className="font-unbounded text-[28px] lg:text-[36px] text-center leading-[40px] my-24">
             Africa has been the timeless custodian of integral wellness and
             ageless beauty secrets
           </h1>
@@ -96,7 +96,7 @@ const Page = () => {
           </div>
 
           <div className="basis-1/2">
-            <p className="font-freize font-normal text-[15px] lg:leading-[35px]">
+            <p className="font-freize lg:text-xl font-normal text-[15px] lg:leading-[35px]">
               In the tapestry of history, Africa has always held the key to
               unparalleled beauty rituals and holistic well-being. Despite the
               shift, driven by media proliferation and globalization, African
@@ -107,7 +107,7 @@ const Page = () => {
         </div>
 
         <div>
-          <h1 className="font-unbounded text-[28px] text-center leading-[40px] my-24">
+          <h1 className="font-unbounded text-[28px] lg:text-[36px] text-center leading-[40px] my-24">
             At African Rhapsody we research and transform Africa's botanical
             wisdom
           </h1>
@@ -123,7 +123,7 @@ const Page = () => {
           </div>
 
           <div className="basis-1/2 flex flex-col gap-3">
-            <p className="font-freize font-normal text-[15px] leading-[35px] lg:leading-[35px]">
+            <p className="font-freize font-normal lg:text-lg text-[15px] leading-[35px] lg:leading-[30px]">
               At African Rhapsody we research and transform Africa's botanical
               wisdom with cutting-edge cosmetic science into innovative skincare
               solutions. More than a beauty brand; it's a journey to rediscover
@@ -135,10 +135,10 @@ const Page = () => {
 
             <Link
               href="/products"
-              className={`flex w-fit items-center gap-3 px-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300"
+              className={`flex w-fit items-center gap-3 px-4 py-2 lg:py-5 lg:px-10 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300"
                     }`}
             >
-              <span className="flex items-center text-[9px] lg:text-[18px]">
+              <span className="flex items-center text-[9px] lg:text-[18px] font-freize">
                 Shop Now
               </span>
               <span className="lg:block hidden">
