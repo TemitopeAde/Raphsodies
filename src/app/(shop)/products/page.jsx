@@ -147,19 +147,19 @@ const page = () => {
         <div className="absolute inset-0">
           <img
             className="w-full h-full object-cover"
-            src="/images/image-1.png"
+            src="/images/lp.png"
           />
         </div>
 
-        <div className="absolute inset-0 bg-black bg-opacity-80" />
+        {/* <div className="absolute inset-0 bg-black bg-opacity-80" /> */}
         <div className="absolute inset-0 z-10 flex items-center justify-center px-8 lg:px-24 lg:justify-start">
           <div className="text-white flex flex-col gap-10 text-center">
-            <div className="flex flex-col gap-6">
-              <h1 className="text-[28px] font-unbounded font-bold text-center lg:text-[52px] lg:leading-[68px]">
+            <div className="flex flex-col gap-6 lg:px-16">
+              <h1 className="text-[28px] lg:px-6 font-unbounded font-bold text-center lg:text-[52px] lg:leading-[68px]">
                 Research Based African Inspired Beauty Brand for the Clearest,
                 Stunning Skin
               </h1>
-              <h3 className="font-freize font-normal text-[15px] leading-[28px] lg:text-[18px] lg:leading-[35px]">
+              <h3 className="font-freize font-normal text-[15px] lg:px-32 leading-[28px] lg:text-[18px] lg:leading-[35px]">
                 Our products include a luxurious collection of soaps, oils, body
                 milk, salves, scrubs, serums and body butters.
               </h3>
