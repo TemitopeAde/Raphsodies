@@ -11,7 +11,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="flex justify-center items-center lg:w-[43rem] mx-auto">
+    <div className="flex justify-center items-center w-full lg:w-[43rem] mx-auto">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 p-6 rounded-lg w-full"

@@ -70,7 +70,7 @@ const AccordionSection = () => {
             onClick={() => handleToggle(index)}
             className="flex items-center justify-between p-4 cursor-pointer bg-white hover:bg-gray-50"
           >
-            <h2 className="text-[13px] font-bold lg:leading-[32px] lg:text-[20px] font-unbounded text-[#212121]">
+            <h2 className="text-[12px] font-bold lg:leading-[32px] lg:text-[20px] font-unbounded text-[#212121]">
               {item.title}
             </h2>
             <span>

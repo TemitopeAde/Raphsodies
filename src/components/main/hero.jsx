@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const slides = [
   {
     id: 1,
-    image: "/images/hero-one.jpg",
+    image: "/images/hero-one.png",
     heading: "From Africa's Roots to Radiant Skin",
     buttons: [
       { id: 1, text: "Our Products", link: "/products", icon: (<svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">

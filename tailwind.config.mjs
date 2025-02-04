@@ -21,6 +21,9 @@ const tailwindConfig = {
 		  'green-bg-two': "url('/images/read-2.png')",
 		  'grandma': "url('/images/grandma.png')",
 		  'grandma2': "url('/images/grandma2.png')",
+		  'read4': "url('/images/read-4.png')",
+		  'read4m': "url('/images/read4m.png')",
+		  'read5m': "url('/images/read5m.png')",
 		},
 		fontFamily: {
 		  unbounded: ['Unbounded', 'serif'], 

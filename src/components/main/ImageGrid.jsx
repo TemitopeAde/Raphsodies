@@ -1,6 +1,6 @@
 export default function ImageGrid() {
     return (
-      <div className="grid grid-cols-7 gap-4 p-4">
+      <div className="grid grid-cols-7 gap-4">
         {/* First Image */}
         <div className="col-span-2 row-span-2 h-[177px] lg:h-[571px]">
           <img

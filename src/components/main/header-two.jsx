@@ -58,7 +58,7 @@ const HeaderTwo = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 z-30 w-full lg:px-24 px-10 transition-all duration-300 ${
+        className={`fixed top-0 left-0 z-30 w-full lg:px-24 px-8 transition-all duration-300 ${
           isScrolled ? "bg-white/50 backdrop-blur-3xl shadow-2xl" : "bg-transparent"
         }`}
       >

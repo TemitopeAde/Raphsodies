@@ -45,7 +45,7 @@ const page = () => {
             </li>
             <li>
               <a
-                href="tel:+2348063855425"
+                href="https://wa.me/message/LHXK3SHVMU6YC1"
                 className="lg:flex-row underline items-center flex flex-col gap-4"
               >
                 <span>
