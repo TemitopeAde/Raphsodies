@@ -4,9 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from "react";
+import { DialogCustomAnimation } from "../Modal";
+import CartPage from "../Cart";
 
 const HeaderTwo = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -33,6 +36,10 @@ const HeaderTwo = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
+
+  const handleModalClick = () => {
+    setOpen(prev => !prev)
+  }
 
   function Navbar() {
     return (
@@ -88,7 +95,7 @@ const HeaderTwo = () => {
                 </svg>
               </button>
 
-              <button>
+              <button onClick={handleModalClick}>
                 <svg
                   width="15"
                   height="15"
@@ -144,6 +151,8 @@ const HeaderTwo = () => {
           </div>
         </div>
       </header>
+
+      <DialogCustomAnimation open={open} setOpen={setOpen} content={<CartPage setOpen={setOpen} open={open} />} />
 
       {isSidebarOpen && (
         <div

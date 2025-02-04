@@ -16,7 +16,7 @@ const page = () => {
         </div>
 
         <div>
-          <ul className="flex flex-col gap-8 lg:flex-row lg:max-w-3xl mx-auto">
+          <ul className="flex flex-col gap-8 lg:flex-row lg:max-w-4xl mx-auto">
             <li>
               <a
                 href="tel:+2348063855425"

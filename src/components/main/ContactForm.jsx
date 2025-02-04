@@ -25,7 +25,7 @@ export default function ContactForm() {
             className="h-[55px] text-sm font-freize text-primary w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
           />
           {errors.name &&
-            <p className="text-red-500 text-right text-xs mt-1">
+            <p className="text-red-500 text-right text-xs mt-1 font-unbounded">
               {errors.name.message}
             </p>}
         </div>
@@ -45,7 +45,7 @@ export default function ContactForm() {
             className="h-[55px] text-sm font-freize text-primary w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
           />
           {errors.email &&
-            <p className="text-red-500 text-right text-xs mt-1">
+            <p className="text-red-500 text-right text-xs mt-1 font-unbounded">
               {errors.email.message}
             </p>}
         </div>
@@ -65,7 +65,7 @@ export default function ContactForm() {
             className="h-[55px] text-sm font-freize text-primary w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
           />
           {errors.phone &&
-            <p className="text-red-500 text-right text-xs mt-1">
+            <p className="text-red-500 text-right text-xs mt-1 font-unbounded">
               {errors.phone.message}
             </p>}
         </div>
@@ -79,7 +79,7 @@ export default function ContactForm() {
             rows="4"
           />
           {errors.message &&
-            <p className="text-red-500 text-right text-xs mt-1">
+            <p className="text-red-500 text-right text-xs mt-1 font-unbounded">
               {errors.message.message}
             </p>}
         </div>
@@ -88,10 +88,10 @@ export default function ContactForm() {
           <button type="submit" className="transition">
             <span
               href="/products"
-              className={`flex w-fit items-center gap-3 px-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300"
+              className={`flex w-fit items-center gap-1 justify-start pr-4 py-2 text-[10px] rounded-[10px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300"
                     }`}
             >
-              <span className="flex items-center text-[9px] lg:text-[18px]">
+              <span className="flex font-freize items-center text-[9px] lg:text-[18px] lg:px-5 lg:py-2">
                 Send
               </span>
               <span className="lg:block hidden">
