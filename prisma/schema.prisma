@@ -5,25 +5,46 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearchPostgres"]
 }
 
-
 datasource db {
   provider  = "postgresql"
-  url  	    = env("POSTGRES_PRISMA_URL")
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-
 model User {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  password  String
+  id                Int      @id @default(autoincrement())
+  email             String   @unique
+  name              String?
+  password          String
+  createdAt         DateTime @default(now())
+  isVerified        Boolean  @default(false)
+  verificationToken String?  @unique
 }
 
+model Product {
+  id          String   @id @default(cuid())  
+  name        String  
+  description String?  
+  price       Decimal  
+  stock       Int  
+  imageUrl    String?  
+  label       String?  
+  otherDetails Json?  
+  categoryId  String  
+  attributes  String[]
+  category    Category @relation(fields: [categoryId], references: [id])  
+  createdAt   DateTime @default(now())  
+  updatedAt   DateTime @updatedAt  
+}
 
+model Category {
+  id        String    @id @default(cuid())  
+  name      String    @unique  
+  products  Product[] // One-to-many relationship with products
+  createdAt DateTime  @default(now())  
+  updatedAt DateTime  @updatedAt  
+}
