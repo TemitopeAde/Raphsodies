@@ -6,12 +6,18 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { DialogCustomAnimation } from '../Modal';
 import CartPage from '../Cart';
+import useCartStore from '@/hooks/store/cartStore';
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+
+  const {cart} = useCartStore()
+
+  console.log({carts: cart.length});
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +69,6 @@ const Header = () => {
     setOpen(prev => !prev)
   }
 
-
   return (
     <>
       <header
@@ -82,7 +87,7 @@ const Header = () => {
 
           <div className="flex gap-4 items-center">
             <div className="flex bg-background rounded-full px-6 py-2 gap-6">
-              <button>
+              <button className='relative'>
                 <span className='lg:hidden'>
                   <svg
                     width="15"
@@ -100,6 +105,7 @@ const Header = () => {
 
                 <span className='hidden lg:block'>
                   <svg
+                    className='z-50'
                     width="24"
                     height="24"
                     viewBox="0 0 15 15"
@@ -111,6 +117,10 @@ const Header = () => {
                       fill="#292F4A"
                     />
                   </svg>
+
+                  <span className='bg-[#C78700] left-[67px] bottom-[3px] flex justify-center items-center w-[18px] h-[18px] rounded-full text-white absolute'>
+                    <p>{cart.length}</p>
+                  </span>
                 </span>
               </button>
 

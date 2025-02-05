@@ -3,6 +3,7 @@
 import Modals from "@/components/main/modal";
 import Product from "@/components/main/Product";
 import useCartStore from "@/hooks/store/cartStore";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const page = () => {
@@ -10,8 +11,6 @@ const page = () => {
   const {addToCart, cart} = useCartStore();  
   const [quantity, setQuantity] = useState(1)
 
-  console.log({cart});
-  
 
   const increaseQuantity = () => setQuantity(prev => prev + 1);
   const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
@@ -55,11 +54,13 @@ const page = () => {
     image: '/images/product-6.png',
   };
 
+  const router = useRouter()
+
   return (
     <section className="bg-custom-bg mt-20">
       <div className="px-10 lg:px-24 flex flex-col gap-20 py-8">
         <div className="flex gap-3 items-center">
-          <h2 className="font-freize lg:text-[22px] text-base leading-[26px] font-normal">
+          <h2 onClick={() => router.push("/")} className="cursor-pointer font-freize lg:text-[22px] text-base leading-[26px] font-normal">
             Home
           </h2>
           <span>
@@ -80,7 +81,7 @@ const page = () => {
               />
             </svg>
           </span>
-          <h2 className="font-freize lg:text-[22px] font-normal text-base leading-[26px]">
+          <h2 onClick={() => router.push("/products")} className="cursor-pointer font-freize lg:text-[22px] font-normal text-base leading-[26px]">
             Shop
           </h2>
           <span>
@@ -191,7 +192,7 @@ const page = () => {
               <div className="flex gap-3 lg:gap-4 items-center">
                 <button
                   type="button"
-                  className="transition flex lg:h-[60px] lg:text-[22px] text-[15px] gap-2 rounded-[20px] px-3 w-fit items-center lg:gap-3 lg:px-4 py-2 text-base font-normal duration-300 bg-background text-primary"
+                  className="font-freize transition flex lg:h-[60px] lg:text-[22px] text-[15px] gap-2 rounded-[20px] px-3 w-fit items-center lg:gap-3 lg:px-4 py-2 text-base font-normal duration-300 bg-background text-primary"
                 >
                   <span onClick={() => {
                     addToCart({...product, quantity})
@@ -332,13 +333,13 @@ const page = () => {
 
             <div className="flex gap-6 justify-start">
               <div className="basis-24">
-                <img className="h-full object-cover rounded-md" src="/images/product-1.png" alt="" />
+                <img className="h-full object-cover rounded-md" src={product?.image} alt={product?.name} />
               </div>
 
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-bold">Nefertiti Face Moisturizer</h2>
-                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-semibold">NGN 34,453</h2>
+                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-bold">{product?.name}</h2>
+                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-semibold">NGN {product.price}</h2>
                 </div>
 
                 {/* <div className="flex items-center ">

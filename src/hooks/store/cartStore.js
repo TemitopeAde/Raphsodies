@@ -5,38 +5,43 @@ const useCartStore = create(
   persist(
     set => ({
       cart: [],
-      addToCart: (product) =>
-        set((state) => {
-          const existingProduct = state.cart.find((item) => item.id === product.id);
-      
+      addToCart: product =>
+        set(state => {
+          const existingProduct = state.cart.find(
+            item => item.id === product.id
+          );
+
           if (existingProduct) {
             return {
-              cart: state.cart.map((item) =>
-                item.id === product.id
-                  ? { ...item, quantity: item.quantity + product.quantity }
-                  : item
-              ),
+              cart: state.cart.map(
+                item =>
+                  item.id === product.id
+                    ? { ...item, quantity: item.quantity + product.quantity }
+                    : item
+              )
             };
           } else {
-            return { cart: [...state.cart, { ...product, quantity: product.quantity }] };
+            return {
+              cart: [...state.cart, { ...product, quantity: product.quantity }]
+            };
           }
         }),
-      
+
       removeFromCart: id =>
         set(state => ({
           cart: state.cart.filter(item => item.id !== id)
         })),
 
-      // Update quantity of a product
-      updateQuantity: (id, amount) =>
+      updateQuantity: (id, newQuantity) =>
         set(state => ({
           cart: state.cart.map(
             item =>
               item.id === id
-                ? { ...item, quantity: Math.max(1, item.quantity + amount) }
+                ? { ...item, quantity: Math.max(1, newQuantity) }
                 : item
           )
-        }))
+        })),
+      clearCart: () => set({ cart: [] })
     }),
     {
       name: "cart-storage", // Local storage key
