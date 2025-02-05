@@ -8,7 +8,7 @@ import { DialogCustomAnimation } from '../Modal';
 import CartPage from '../Cart';
 import useCartStore from '@/hooks/store/cartStore';
 
-const Header = () => {
+const HeaderThree = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -73,13 +73,13 @@ const Header = () => {
     <>
       <header
         className={`fixed top-0 left-0 z-30 w-full lg:px-24 px-8 transition-all duration-300 ${
-          isScrolled ? 'bg-black/70 backdrop-blur-md' : 'bg-transparent'
+          isScrolled ? 'bg-black/70 backdrop-blur-md' : 'bg-black/70 backdrop-blur-md'
         }`}
       >
         <div className="flex justify-between items-center py-4">
           <div>
             <Link href="/">
-              <Image src="/images/logo.png" alt="logo" width={100} height={60} />
+                <Image src="/images/logo.png" alt="logo" width={100} height={60} />
             </Link>
           </div>
 
@@ -255,4 +255,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderThree;

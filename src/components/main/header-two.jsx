@@ -71,7 +71,9 @@ const HeaderTwo = () => {
       >
         <div className="flex justify-between items-center py-4">
           <div>
-            <Image src="/images/logo-two.png" alt="logo" width={100} height={60} />
+           <Link href="/">
+              <Image src="/images/logo-two.png" alt="logo" width={100} height={60} />
+            </Link>
           </div>
 
           <div className="hidden lg:block">

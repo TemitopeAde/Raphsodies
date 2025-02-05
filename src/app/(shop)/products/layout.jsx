@@ -1,11 +1,12 @@
-import Header from "@/components/main/header";
+
+import HeaderThree from "@/components/main/header-three";
 import React from "react";
 
 const layout = ({ children }) => {
   return (
     <div>
-      <Header />
-      {children}
+        <HeaderThree />
+        {children}
     </div>
   );
 };

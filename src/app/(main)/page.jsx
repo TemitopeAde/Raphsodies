@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/carousel";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 const page = () => {
@@ -72,6 +73,7 @@ const page = () => {
       name: "Mrs Ayodele"
     }
   ];
+  const router = useRouter();
 
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -79,11 +81,11 @@ const page = () => {
   const toggleVideo = () => {
     if (videoRef.current) {
       if (isPlaying) {
-        videoRef.current.pause(); // Pause the video
+        videoRef.current.pause(); 
       } else {
-        videoRef.current.play(); // Play the video
+        videoRef.current.play(); 
       }
-      // Toggle the state for the button icon
+      
       setIsPlaying(!isPlaying);
     }
   };
@@ -549,7 +551,7 @@ const page = () => {
             Mali, and ancient Egypt, Africa has been the timeless custodian of
             integral wellness and ageless beauty secrets.
           </p>
-          <button className=" items-center bg-primary py-2 px-2 rounded-2xl w-40 lg:py-5 lg:w-48">
+          <button onClick={() => router.push("/our-story")} className=" items-center bg-primary py-2 px-2 rounded-2xl w-40 lg:py-5 lg:w-48">
             <span className="flex gap-2 items-center justify-center">
               <span className="text-lg font-normal text-white rounded-[15px]">
                 Read more
