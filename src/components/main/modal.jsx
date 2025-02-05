@@ -4,8 +4,8 @@
 import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 
-export default function Modals({content}) {
-  const [openModal, setOpenModal] = useState(true);
+export default function Modals({content, openModal, setOpenModal}) {
+  
 
   return (
     <>

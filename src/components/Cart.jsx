@@ -81,7 +81,7 @@ const CartPage = ({ setOpen, open }) => {
           </div>
 
           {/* Sticky Order Summary */}
-          <div className="bg-background p-6 rounded-lg h-fit sticky top-4">
+          <div className="bg-background p-6 rounded-lg h-fit sticky top-4 mb-14 lg:mb-4">
             <h3 className="text-[#171717] text-xl font-semibold">Order Summary</h3>
             <div className="flex justify-between mt-2">
               <p>Items {cart.length}</p>

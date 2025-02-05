@@ -3,18 +3,14 @@
 import Modals from "@/components/main/modal";
 import Product from "@/components/main/Product";
 import useCartStore from "@/hooks/store/cartStore";
-import React, { useState } from "react";
+import React from "react";
 
 const page = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const {addToCart, cart} = useCartStore();  
-  const [quantity, setQuantity] = useState(1)
 
-  console.log({cart});
+  const {addToCart} = useCartStore();
+
+  console.log({addToCart});
   
-
-  const increaseQuantity = () => setQuantity(prev => prev + 1);
-  const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
   const products = [
     {
@@ -46,14 +42,6 @@ const page = () => {
       image: "/images/image-1.png"
     }
   ];
-
-  const product = {
-    id: 5,
-    name: 'Nefertiti Face Moisturizer',
-    label: 'Moisturizing + Illuminating',
-    price: 11999,
-    image: '/images/product-6.png',
-  };
 
   return (
     <section className="bg-custom-bg mt-20">
@@ -110,31 +98,31 @@ const page = () => {
           <div className="lg:flex-row flex-col flex lg:gap-20 gap-10 text-primary">
             <div className="basis-1/2">
               <img
-                src={product?.image}
-                alt={product?.name}
+                src="/images/product-6.png"
+                alt="product"
                 className="w-full rounded-[30px] h-full object-cover"
               />
             </div>
             <div className="basis-1/2 flex gap-8 flex-col">
               <div className="flex flex-col gap-3">
                 <h2 className="font-unbounded font-semibold lg:text-[32px] text-[28px] lg:leading-[34px]">
-                {product?.name}
+                  Nefertiti Face Moisturizer
                 </h2>
                 <span>
                   <h3 className="font-freize lg:text-[20px] text-[15px] font-normal lg:leading-[23px]">
-                    {product.label}
+                    Moisturizing + Illuminating
                   </h3>
-                  {/* <h3 className="text-[15px] font-freize lg:text-[20px] font-normal lg:leading-[23px]">
+                  <h3 className="text-[15px] font-freize lg:text-[20px] font-normal lg:leading-[23px]">
                     With Camellia sinensis, Oat extract & Licorice root
-                  </h3> */}
+                  </h3>
                 </span>
                 <div className="flex lg:flex-col flex-row justify-between items-center lg:items-start gap-2">
                   <span className="text-[28px] font-unbounded font-semibold lg:text-[32px] lg:leading-[34px]">
-                    NGN {product?.price}
+                    NGN 11,999
                   </span>
 
                   <div className="flex items-center gap-2">
-                    <button onClick={decreaseQuantity} className="">
+                    <button className="">
                       <svg
                         width="47"
                         height="47"
@@ -159,8 +147,8 @@ const page = () => {
                         />
                       </svg>
                     </button>
-                    <span className="font-freize font-bold text-[20px]">{quantity}</span>
-                    <button onClick={increaseQuantity} className="ml-1">
+                    <span className="font-freize font-bold text-[20px]">1</span>
+                    <button className="ml-1">
                       <svg
                         width="38"
                         height="38"
@@ -193,16 +181,7 @@ const page = () => {
                   type="button"
                   className="transition flex lg:h-[60px] lg:text-[22px] text-[15px] gap-2 rounded-[20px] px-3 w-fit items-center lg:gap-3 lg:px-4 py-2 text-base font-normal duration-300 bg-background text-primary"
                 >
-                  <span onClick={() => {
-                    addToCart({...product, quantity})
-                    setOpenModal(true)
-
-                    setQuantity(1)
-
-                    setTimeout(() => {
-                      setOpenModal(false)
-                    }, 6000);
-                  }} className="flex items-center text-primary">
+                  <span onClick={() => addToCart(product)} className="flex items-center text-primary" >
                     Add to Cart
                   </span>
                   <span className="lg:block hidden">
@@ -322,8 +301,6 @@ const page = () => {
         </div>
       </div>
       <Modals
-        openModal={openModal}
-        setOpenModal={setOpenModal}
         content={
           <div>
             <h3 className="mb-5 text-lg font-semibold text-primary font-unbounded">
@@ -341,7 +318,7 @@ const page = () => {
                   <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-semibold">NGN 34,453</h2>
                 </div>
 
-                {/* <div className="flex items-center ">
+                <div className="flex items-center ">
                   <div className="flex items-center gap-2">
                     <button className="">
                       <svg
@@ -395,7 +372,7 @@ const page = () => {
                       </svg>
                     </button>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>

@@ -505,8 +505,8 @@ const page = () => {
                 href="/our-story"
                 className="flex items-center gap-2 underline text-[22px] font-normal text-primary"
               >
-                <span>
-                  <Link href="/our-story">Our Story</Link>
+                <span className="font-freize">
+                  <Link className="font-freize lg:text-[22px] leading-[35px] font-normal text-primary" href="/our-story">Our Story</Link>
                 </span>
                 <button onClick={toggleVideo}>
                   <span>
