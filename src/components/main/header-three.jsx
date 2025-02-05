@@ -16,7 +16,7 @@ const HeaderThree = () => {
 
   const {cart} = useCartStore()
 
-  console.log({carts: cart.length});
+  // console.log({carts: cart.length});
   
 
   useEffect(() => {
