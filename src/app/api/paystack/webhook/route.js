@@ -17,7 +17,7 @@ export async function POST(req) {
 
       return NextResponse.json({ status: 'success' }, { status: 200 });
     } else {
-      console.error('Invalid signature')
+      console.error('Invalid signature');
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
     }
   } catch (error) {
