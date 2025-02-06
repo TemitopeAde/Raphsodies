@@ -2,9 +2,9 @@ export default function ImageGrid() {
     return (
       <div className="grid grid-cols-7 gap-4">
         {/* First Image */}
-        <div className="col-span-2 row-span-2 h-[177px] lg:h-[571px]">
+        <div className="col-span-2 row-span-2 h-[177px] lg:h-full">
           <img
-            src="/images/product-1.png"
+            src="/images/1.png"
             alt="Skin Temple Oil"
             className="w-full h-full object-cover rounded-lg"
           />
@@ -12,7 +12,7 @@ export default function ImageGrid() {
         {/* Second Image */}
         <div className="col-span-3">
           <img
-           src="/images/product-1.png"
+           src="/images/2.png"
             alt="Oil 2"
             className="w-full h-full object-cover rounded-lg"
           />
@@ -20,7 +20,7 @@ export default function ImageGrid() {
         {/* Third Image */}
         <div className="col-span-2">
           <img
-            src="/images/product-3.png"
+            src="/images/3.png"
             alt="Oil 3"
             className="w-full h-full object-cover rounded-lg"
           />
@@ -28,7 +28,7 @@ export default function ImageGrid() {
         {/* Fourth Image */}
         <div className="col-span-2">
           <img
-            src="/images/product-4.png"
+            src="/images/4.png"
             alt="Oil 4"
             className="w-full h-full object-cover rounded-lg"
           />
@@ -36,7 +36,7 @@ export default function ImageGrid() {
         {/* Fifth Image */}
         <div className="col-span-3">
           <img
-            src="/images/product-5.png"
+            src="/images/5.png"
             alt="Botanical Exfoliator"
             className="w-full h-full object-cover rounded-lg"
           />

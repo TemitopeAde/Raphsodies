@@ -1,8 +1,7 @@
-import { Geist, Geist_Mono, Unbounded } from "next/font/google";
+import { Unbounded } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/main/header";
 import Footer from "@/components/main/footer";
-import localFont from 'next/font/local'
+import ReactQueryProvider from "@/lib/ReactQueryProvide";
 
 const unbounded = Unbounded({
   variable: "--font-unbounded",
@@ -19,8 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${unbounded.variable} text-primary antialiased`}>
-        {/* <Header /> */}
-        {children}
+        <ReactQueryProvider>
+          {children}
+        </ReactQueryProvider>
         <Footer />
       </body>
     </html>
