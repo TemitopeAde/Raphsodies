@@ -16,12 +16,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${unbounded.variable} text-primary antialiased`}>
+    <html lang="en" className="h-full bg-white">
+      <body className={`${unbounded.variable} text-primary antialiased h-full`}>
         <ReactQueryProvider>
           {children}
         </ReactQueryProvider>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
