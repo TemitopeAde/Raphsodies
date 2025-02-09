@@ -9,15 +9,8 @@ export const config = {
   },
 };
 
-
-export async function OPTIONS() {
-  return NextResponse.json({}, {
-    headers: {
-      "Access-Control-Allow-Origin": "*", // Allow all origins (change to specific domain in production)
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  });
+export async function OPTIONS(request) {
+  return NextResponse.json({}, { status: 200 })
 }
 
 export async function POST(request) {
