@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "@/components/main/footer";
 import ReactQueryProvider from "@/lib/ReactQueryProvide";
 
+
 const unbounded = Unbounded({
   variable: "--font-unbounded",
   subsets: ["latin"]
