@@ -15,17 +15,6 @@ const productSchema = Joi.object({
 });
 
 
-
-export async function OPTIONS() {
-  return NextResponse.json({}, {
-    headers: {
-      "Access-Control-Allow-Origin": "*", // Allow all origins (change to specific domain in production)
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  });
-}
-
 export async function POST(request) {
   try {
     const parsedBody = await request.json();

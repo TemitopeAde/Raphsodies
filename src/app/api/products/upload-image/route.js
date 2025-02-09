@@ -21,7 +21,7 @@ export async function POST(request) {
       return NextResponse.json({ message: 'No file uploaded' }, { status: 400 });
     }
     const buffer = Buffer.from(await file.arrayBuffer());
-    const tmpDir = path.join(process.cwd(), 'app', 'tmp');
+    const tmpDir = path.join(process.cwd(), 'files', 'tmp');
     if (!fs.existsSync(tmpDir)) {
       fs.mkdirSync(tmpDir, { recursive: true });
     }
