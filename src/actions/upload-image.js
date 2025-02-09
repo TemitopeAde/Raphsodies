@@ -1,5 +1,5 @@
-
-import cloudinary from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
+import { Readable } from 'stream';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -7,22 +7,24 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadImageToCloudinary = (filePath) => {
+
+export async function uploadImageToCloudinary(buffer) {
   return new Promise((resolve, reject) => {
-    cloudinary.v2.uploader.upload(
-      filePath,
-      {
-        folder: 'uploads/', 
-        use_filename: true,
-        unique_filename: false,
-      },
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { resource_type: 'auto' },
       (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result.url);
-        }
+        if (error) reject(error);
+        else resolve(result.secure_url);
       }
     );
+
+    const readable = new Readable({
+      read() {
+        this.push(buffer);
+        this.push(null);
+      }
+    });
+
+    readable.pipe(uploadStream);
   });
-};
+}
