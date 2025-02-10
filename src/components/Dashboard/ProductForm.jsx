@@ -1,80 +1,234 @@
-"use client";
-
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog";
+import { toast } from 'react-toastify';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { X } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { X, Upload } from "lucide-react";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { ContentEditable } from "@lexical/react/LexicalContentEditable";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+
+const ORIGIN = "https://raphsodies.vercel.app";
+
+const Spinner = () => (
+  <div className="inline-block h-5 w-5">
+    <div className="h-full w-full rounded-full border-2 border-b-transparent border-white animate-spin" />
+  </div>
+);
+
+const ImageDropzone = ({ onImageSelect, imagePreview, isUploading, onRemoveImage }) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      onImageSelect(file);
+    } else {
+      toast.error('Please upload a valid image file (jpg, png, etc.)');
+    }
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      onImageSelect(file);
+    } else {
+      toast.error('Please upload a valid image file (jpg, png, etc.)');
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label>Product Image</Label>
+      <div
+        className={`border-2 border-dashed rounded-lg p-6 transition-colors ${
+          isDragging ? 'border-green-500 bg-green-500/10' : 'border-gray-600 hover:border-gray-500'
+        } ${imagePreview ? 'bg-gray-800' : ''}`}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        {isUploading ? (
+          <div className="flex flex-col items-center justify-center gap-2">
+            <Spinner />
+            <p className="text-gray-400">Uploading image...</p>
+          </div>
+        ) : imagePreview ? (
+          <div className="relative">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="rounded-lg max-h-40 w-full object-cover"
+            />
+            <button
+              type="button"
+              className="absolute top-2 right-2 p-1 bg-black/50 rounded-full hover:bg-black/70"
+              onClick={onRemoveImage}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-2">
+            <Upload className="h-8 w-8 text-gray-400" />
+            <p className="text-gray-400 text-center">
+              Drag and drop your image here, or{' '}
+              <button
+                type="button"
+                className="text-blue-500 hover:text-blue-400"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                browse
+              </button>
+            </p>
+            <p className="text-gray-500 text-sm">Supported formats: JPG, PNG, GIF</p>
+          </div>
+        )}
+      </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileSelect}
+        className="hidden"
+      />
+    </div>
+  );
+};
 
 const ProductForm = ({ isOpen, onClose }) => {
   const queryClient = useQueryClient();
-  const { toast } = useToast();
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [description, setDescription] = useState("");
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors, isValid, isDirty } } = useForm({
+    mode: 'onChange'
+  });
 
-  const ORIGIN="https://raphsodies.vercel.app"
+  const isFormComplete = isValid && isDirty && imageUrl && description && !isUploading;
 
   const uploadImage = async imageFile => {
-    console.log("uploading");
-    
+    setIsUploading(true);
+
     const formData = new FormData();
     formData.append("file", imageFile);
 
-    const response = await fetch(
-      `${ORIGIN}/api/products/upload-image`,
-      {
+    try {
+      const response = await fetch(`${ORIGIN}/api/products/upload-image`, {
         method: "POST",
         body: formData
-      }
-    );
+      });
 
-    console.log({response});
-    
-    if (!response.ok) {
-      throw new Error("Failed to upload image");
+      if (!response.ok) throw new Error("Image upload failed");
+
+      const data = await response.json();
+      setImageUrl(data.url);
+      setIsUploading(false);
+
+      toast.success('Image uploaded successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
+    } catch (error) {
+      setIsUploading(false);
+      toast.error('Image upload failed. Please try again.', {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
     }
+  };
 
-    const data = await response.json();
-    return data.url; 
+  const handleImageSelect = (file) => {
+    setImagePreview(URL.createObjectURL(file));
+    uploadImage(file);
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setImageUrl(null);
+  };
+
+  const extractTextFromDescription = (descriptionJSON) => {
+    try {
+      const parsedDescription = JSON.parse(descriptionJSON);
+      const children = parsedDescription?.root?.children || [];
+  
+      return children
+        .map((child) =>
+          child.children?.map((textNode) => textNode.text).join(" ")
+        )
+        .join("\n")
+        .trim();
+    } catch (error) {
+      console.error("Error parsing description:", error);
+      return "";
+    }
   };
 
   const createProduct = async data => {
-    const imageUrl = await uploadImage(data.image[0]);
+    if (!imageUrl) throw new Error("Image upload required");
+
+    const attrArray = data.attributes.split(",").map(attr => attr.trim());
+    const extractedText = extractTextFromDescription(description);
 
     const productData = {
       name: data.name,
-      description: data.description,
-      price: data.price,
-      stock: data.stock,
-      label: data.label,
+      description: extractedText,
+      price: Number(data.price),
+      stock: Number(data.stock),
+      attributes: attrArray,
       categoryName: data.category,
-      image: imageUrl
+      imageUrl: imageUrl
     };
 
-    const response = await fetch(
-      "http://localhost:3000/api/products/create-product",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer YOUR_ACCESS_TOKEN`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(productData)
-      }
-    );
+    const response = await fetch(`${ORIGIN}/api/products/create-product`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer YOUR_ACCESS_TOKEN`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(productData)
+    });
 
-    if (!response.ok) {
-      throw new Error("Failed to create product");
-    }
+    if (!response.ok) throw new Error("Failed to create product");
 
     return response.json();
   };
@@ -83,31 +237,39 @@ const ProductForm = ({ isOpen, onClose }) => {
     mutationFn: createProduct,
     onSuccess: () => {
       queryClient.invalidateQueries(["products"]);
-      toast({
-        title: "Product added successfully!",
-        description: "The product has been created."
+      toast.success('Your product has been added successfully! 🎉', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
       });
       reset();
+      setImagePreview(null);
+      setImageUrl(null);
+      setDescription("");
       onClose();
     },
     onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to add product.",
-        variant: "destructive"
+      toast.error('Failed to add product. Please check your input and try again.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
       });
     }
   });
 
-  const onSubmit = data => {
-    mutation.mutate(data);
-  };
-
   return (
     <Dialog open={isOpen}>
-      <DialogContent className="sm:max-w-[425px] font-freize max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[60vw] font-freize max-h-[90vh] overflow-y-auto scrollbar-hide">
         <DialogHeader className="flex justify-between flex-row">
-          <DialogTitle className="text-white">Add Product</DialogTitle>
+          <DialogTitle className="text-white text-2xl font-unbounded">
+            Add Product
+          </DialogTitle>
           <X
             className="cursor-pointer text-gray-400 hover:text-white"
             onClick={onClose}
@@ -115,8 +277,8 @@ const ProductForm = ({ isOpen, onClose }) => {
         </DialogHeader>
 
         <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4 text-white"
+          onSubmit={handleSubmit(mutation.mutate)}
+          className="space-y-4 text-white font-unbounded"
         >
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
@@ -124,24 +286,33 @@ const ProductForm = ({ isOpen, onClose }) => {
               id="name"
               {...register("name", { required: "Product name is required" })}
             />
-            {errors.name &&
-              <p className="text-red-500 text-sm">
-                {errors.name.message}
-              </p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
-            <Input
-              id="description"
-              {...register("description", {
-                required: "Description is required"
-              })}
-            />
-            {errors.description &&
-              <p className="text-red-500 text-sm">
-                {errors.description.message}
-              </p>}
+            <div className="border p-2 rounded-lg bg-transparent text-white max-h-40 overflow-y-auto">
+              <LexicalComposer
+                initialConfig={{
+                  theme: {},
+                  onError: console.error
+                }}
+              >
+                <RichTextPlugin
+                  contentEditable={
+                    <ContentEditable className="min-h-[100px] outline-none" />
+                  }
+                  placeholder={<div className="text-gray-400" />}
+                />
+                <HistoryPlugin />
+                <OnChangePlugin
+                  onChange={editorState =>
+                    setDescription(JSON.stringify(editorState.toJSON()))}
+                />
+              </LexicalComposer>
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -149,13 +320,16 @@ const ProductForm = ({ isOpen, onClose }) => {
             <Input
               id="price"
               type="number"
-              step="0.01"
-              {...register("price", { required: "Price is required", min: 0 })}
+              step="1"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              {...register("price", {
+                required: "Price is required",
+                min: { value: 1, message: "Price must be greater than 0" }
+              })}
             />
-            {errors.price &&
-              <p className="text-red-500 text-sm">
-                {errors.price.message}
-              </p>}
+            {errors.price && (
+              <p className="text-red-500 text-sm">{errors.price.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -163,17 +337,16 @@ const ProductForm = ({ isOpen, onClose }) => {
             <Input
               id="stock"
               type="number"
-              {...register("stock", { required: "Stock is required", min: 0 })}
+              step="1"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              {...register("stock", {
+                required: "Stock is required",
+                min: { value: 1, message: "Stock must be greater than 0" }
+              })}
             />
-            {errors.stock &&
-              <p className="text-red-500 text-sm">
-                {errors.stock.message}
-              </p>}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="label">Label</Label>
-            <Input id="label" {...register("label")} />
+            {errors.stock && (
+              <p className="text-red-500 text-sm">{errors.stock.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -182,43 +355,45 @@ const ProductForm = ({ isOpen, onClose }) => {
               id="category"
               {...register("category", { required: "Category is required" })}
             />
-            {errors.category &&
-              <p className="text-red-500 text-sm">
-                {errors.category.message}
-              </p>}
+            {errors.category && (
+              <p className="text-red-500 text-sm">{errors.category.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="image">Product Image</Label>
+            <Label htmlFor="attributes">Attributes</Label>
             <Input
-              id="image"
-              type="file"
-              accept="image/*"
-              {...register("image", { required: "Image is required" })}
-              onChange={(e) => {
-                if (e.target.files.length > 0) {
-                  uploadImage(e.target.files[0])
-                    .then((url) => {
-                      setValue("imageUrl", url); // Store the image URL in the form
-                    })
-                    .catch((error) => {
-                      toast({ title: "Upload Failed", description: error.message, variant: "destructive" });
-                    });
-                }
-              }}
+              id="attributes"
+              placeholder="Comma separated values"
+              {...register("attributes", {
+                required: "Attributes is required"
+              })}
             />
-            {errors.image &&
-              <p className="text-red-500 text-sm">
-                {errors.image.message}
-              </p>}
+            {errors.attributes && (
+              <p className="text-red-500 text-sm">{errors.attributes.message}</p>
+            )}
           </div>
 
+          <ImageDropzone
+            onImageSelect={handleImageSelect}
+            imagePreview={imagePreview}
+            isUploading={isUploading}
+            onRemoveImage={handleRemoveImage}
+          />
+          
           <Button
             type="submit"
-            className="w-full"
-            disabled={mutation.isLoading}
+            className="!bg-green-600 hover:!bg-green-700 mt-4 !text-white font-bold font-freize text-xl w-full flex items-center justify-center gap-2 bg-background text-primary hover:bg-background/90 transition-colors"
+            disabled={!isFormComplete || mutation.isPending}
           >
-            {mutation.isLoading ? "Adding..." : "Add Product"}
+            {mutation.isPending ? (
+              <>
+                <Spinner />
+                <span>Creating Product...</span>
+              </>
+            ) : (
+              <span>Add Product</span>
+            )}
           </Button>
         </form>
       </DialogContent>

@@ -32,8 +32,8 @@ export async function POST(request) {
     const newProduct = await createProduct({
       name,
       description,
-      price,
-      stock,
+      price: parseFloat(price),
+      stock: parseInt(stock),
       imageUrl,
       label,
       otherDetails,

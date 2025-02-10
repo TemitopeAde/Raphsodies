@@ -1,34 +1,76 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
+import React, { useState } from "react";
+import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import ProductForm from '../Dashboard/ProductForm';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import ProductForm from "../Dashboard/ProductForm";
+import { useProducts } from "@/hooks/admin/useProducts";
+
+const LoadingSpinner = () => (
+  <div className="flex flex-col items-center justify-center py-8">
+    <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+    <p className="mt-2 text-sm text-gray-400">Loading products...</p>
+  </div>
+);
 
 const ProductTable = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [products, setProducts] = useState([
-    {
-      id: "PRD001",
-      name: "Wireless Headphones",
-      price: 129.99,
-      category: "Electronics",
-      stock: 45,
-      image: "http://res.cloudinary.com/dtdpgrdhr/image/upload/v1738824311/uploads/1738824304913_Rectangle_41.png"
-    },
-    {
-      id: "PRD002",
-      name: "Running Shoes",
-      price: 89.99,
-      category: "Sports",
-      stock: 23,
-      image: "http://res.cloudinary.com/dtdpgrdhr/image/upload/v1738824311/uploads/1738824304913_Rectangle_41.png"
-    },
-  ]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  
+  const { data, isLoading, isError } = useProducts({
+    page: 1,
+    limit: 10,
+    search: "",
+    category: null,
+    minPrice: null,
+    maxPrice: null,
+  });
+
+  const products = data?.products || [];
 
   const handleAddProduct = (product) => {
-    setProducts([...products, { ...product, id: `PRD00${products.length + 1}` }]);
+    products.push({ ...product, id: `PRD00${products.length + 1}` });
+  };
+
+  const handleEditProduct = (updatedProduct) => {
+    const index = products.findIndex((p) => p.id === updatedProduct.id);
+    if (index !== -1) {
+      products[index] = updatedProduct;
+    }
+    setIsEditModalOpen(false);
+    setSelectedProduct(null);
+  };
+
+  const handleDeleteProduct = () => {
+    const index = products.findIndex((p) => p.id === selectedProduct.id);
+    if (index !== -1) {
+      products.splice(index, 1);
+    }
+    setIsDeleteDialogOpen(false);
+    setSelectedProduct(null);
+  };
+
+  const openEditModal = (product) => {
+    setSelectedProduct(product);
+    setIsEditModalOpen(true);
+  };
+
+  const openDeleteDialog = (product) => {
+    setSelectedProduct(product);
+    setIsDeleteDialogOpen(true);
   };
 
   return (
@@ -42,40 +84,102 @@ const ProductTable = () => {
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-gray-800">
-                  <th className="border-b border-gray-300 px-4 py-3 text-left">Image</th>
-                  <th className="border-b border-gray-300 px-4 py-3 text-left">Name</th>
-                  <th className="border-b border-gray-300 px-4 py-3 text-left">Price</th>
-                  <th className="border-b border-gray-300 px-4 py-3 text-left">Category</th>
-                  <th className="border-b border-gray-300 px-4 py-3 text-left">Stock</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((product) => (
-                  <tr key={product.id} className="border-b hover:bg-gray-800 cursor-pointer">
-                    <td className="px-4 py-3">
-                      <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded" />
-                    </td>
-                    <td className="px-4 py-3 text-sm">{product.name}</td>
-                    <td className="px-4 py-3 text-sm">${product.price.toFixed(2)}</td>
-                    <td className="px-4 py-3 text-sm">{product.category}</td>
-                    <td className="px-4 py-3 text-sm">{product.stock} units</td>
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : isError ? (
+              <p className="text-center text-red-500">Failed to load products</p>
+            ) : (
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-gray-800">
+                    <th className="border-b border-gray-300 px-4 py-3 text-left">Image</th>
+                    <th className="border-b border-gray-300 px-4 py-3 text-left">Name</th>
+                    <th className="border-b border-gray-300 px-4 py-3 text-left">Price</th>
+                    <th className="border-b border-gray-300 px-4 py-3 text-left">Category</th>
+                    <th className="border-b border-gray-300 px-4 py-3 text-left">Stock</th>
+                    <th className="border-b border-gray-300 px-4 py-3 text-left">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {products.map((product) => (
+                    <tr key={product.id} className="border-b hover:bg-gray-800">
+                      <td className="px-4 py-3">
+                        <img
+                          src={product.imageUrl}
+                          alt={product.name}
+                          className="w-12 h-12 object-cover rounded"
+                        />
+                      </td>
+                      <td className="px-4 py-3 text-sm">{product.name}</td>
+                      <td className="px-4 py-3 text-sm">${parseFloat(product.price).toFixed(2)}</td>
+                      <td className="px-4 py-3 text-sm">{product.category.name}</td>
+                      <td className="px-4 py-3 text-sm">{product.stock} units</td>
+                      <td className="px-4 py-3">
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => openEditModal(product)}
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-red-500 hover:text-red-600"
+                            onClick={() => openDeleteDialog(product)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      {/* ProductForm Modal */}
-      <ProductForm 
-        isOpen={isCreateModalOpen} 
-        onClose={() => setIsCreateModalOpen(false)} 
-        onAddProduct={handleAddProduct} 
+      <ProductForm
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onAddProduct={handleAddProduct}
       />
+
+      <ProductForm
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setSelectedProduct(null);
+        }}
+        onEditProduct={handleEditProduct}
+        product={selectedProduct}
+        mode="edit"
+      />
+
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-freize text-xl text-white text-center">Delete Product</AlertDialogTitle>
+            <AlertDialogDescription className="font-unbounded text-center">
+              Are you sure you want to delete "{selectedProduct?.name}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex items-center !justify-center">
+            <AlertDialogCancel className="!text-white" onClick={() => setSelectedProduct(null)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteProduct}
+              className="!bg-red-500 hover:bg-red-600 !text-white"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

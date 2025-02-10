@@ -22,8 +22,6 @@ export async function createProduct(data) {
         price: parseFloat(data.price),
         stock: data.stock,
         imageUrl: data.imageUrl || '',
-        label: data.label || '',
-        otherDetails: data.otherDetails || {},
         categoryId: category.id,
         attributes: data.attributes || []
       },
