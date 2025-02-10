@@ -213,7 +213,8 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
       setValue("category", product.category?.name);
       setValue("attributes", product.attributes?.join(", "));
       setImagePreview(product.imageUrl);
-      setImageUrl(product.imageUrl);
+      setImageUrl(product.imageUrl); 
+      setValue("priceDollar", product?.priceDollar)
 
       const initialEditorState = {
         root: {
@@ -349,14 +350,15 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
       name: data.name,
       description: extractedText,
       price: Number(data.price),
+      priceDollar: Number(data.priceDollar),
       stock: Number(data.stock),
       attributes: attrArray,
       categoryName: data.category,
-      imageUrl: imageUrl
+      imageUrl: imageUrl,
     };
 
     if (product) {
-      // Update existing product
+      
       const response = await fetch(`${ORIGIN}/api/products/products/${product.id}`, {
         method: "PUT",
         headers: {
@@ -452,6 +454,23 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
             />
             {errors.price && (
               <p className="text-red-500 text-sm">{errors.price.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="price">Price ($)</Label>
+            <Input
+              id="priceDollar"
+              type="number"
+              step="1"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              {...register("priceDollar", {
+                required: "Price in dollar is required",
+                min: { value: 1, message: "Price must be greater than 0" }
+              })}
+            />
+            {errors.priceDollar && (
+              <p className="text-red-500 text-sm">{errors.priceDollar.message}</p>
             )}
           </div>
 

@@ -161,7 +161,8 @@ const ProductTable = () => {
                   <th className="border-b border-gray-300 px-4 py-3 text-left">#</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Image</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Name</th>
-                    <th className="border-b border-gray-300 px-4 py-3 text-left">Price</th>
+                    <th className="border-b border-gray-300 px-4 py-3 text-left">Price (₦)</th>
+                    <th className="border-b border-gray-300 px-4 py-3 text-left">Price ($)</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Category</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Stock</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Actions</th>
@@ -179,7 +180,8 @@ const ProductTable = () => {
                         />
                       </td>
                       <td className="px-4 py-3 text-sm">{product.name}</td>
-                      <td className="px-4 py-3 text-sm">₦{parseFloat(product.price).toFixed(2)}</td>
+                      <td className="px-4 py-3 text-sm">₦{parseFloat(product?.price).toFixed(2)}</td>
+                      <td className="px-4 py-3 text-sm">${parseFloat(product?.priceDollar).toFixed(2)}</td>
                       <td className="px-4 py-3 text-sm">{product.category.name}</td>
                       <td className="px-4 py-3 text-sm">{product.stock} units</td>
                       <td className="px-4 py-3">
