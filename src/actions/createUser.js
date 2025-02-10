@@ -14,7 +14,8 @@ export async function createUser(email, name, password) {
         name,
         password,
         verificationToken,
-        isVerified: false
+        isVerified: false,
+        role: "user"
       }
     });
     await sendVerificationEmail(email, verificationToken);

@@ -23,6 +23,7 @@ model User {
   createdAt         DateTime @default(now())
   isVerified        Boolean  @default(false)
   verificationToken String?  @unique
+  role              String?
 }
 
 model Product {

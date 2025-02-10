@@ -130,6 +130,29 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [description, setDescription] = useState("");
+
+  const { 
+    register, 
+    handleSubmit, 
+    reset, 
+    setValue, 
+    watch,
+    formState: { errors, isValid }
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      price: '',
+      stock: '',
+      category: '',
+      attributes: ''
+    }
+  });
+  
+  const watchedFields = watch(); // Watches all form fields dynamically
+  console.log({watchedFields});
+  
+  
   
 
   const createInitialEditorState = (text) => {
@@ -163,10 +186,6 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
       }
     };
   };
-
-  const { register, handleSubmit, reset, setValue, formState: { errors, isValid, isDirty } } = useForm({
-    mode: 'onChange'
-  });
 
   const initialConfig = {
     namespace: 'ProductDescription',
@@ -229,11 +248,6 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
       setDescription(JSON.stringify(initialEditorState));
     }
   }, [product, setValue]);
-
-  const isFormComplete = isValid && isDirty && imageUrl && description && !isUploading;
-
-  console.log({isValid, isDirty, imageUrl, description, isUploading});
-//   console.log({mutation});
   
 
   const Editor = () => {
@@ -343,7 +357,7 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
 
     if (product) {
       // Update existing product
-      const response = await fetch(`${ORIGIN}/api/products/update-product/${product.id}`, {
+      const response = await fetch(`${ORIGIN}/api/products/products/${product.id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer YOUR_ACCESS_TOKEN`,
@@ -492,18 +506,19 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           
           <Button
             type="submit"
-            className="!bg-green-600 hover:!bg-green-700 mt-4 !text-white font-bold font-freize text-xl w-full flex items-center justify-center gap-2 bg-background text-primary hover:bg-background/90 transition-colors"
-            disabled={!isFormComplete || mutation.isPending}
-          >
+            disabled={!isValid || isUploading || mutation.isPending}
+            className={`w-full font-bold text-xl mt-4 flex items-center justify-center gap-2 
+                ${!isValid || isUploading ? "bg-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"}`}
+            >
             {mutation.isPending ? (
-              <>
+                <>
                 <Spinner />
                 <span>{product ? 'Updating' : 'Creating'} Product...</span>
-              </>
+                </>
             ) : (
-              <span>{product ? 'Update' : 'Add'} Product</span>
+                <span>{product ? 'Update' : 'Add'} Product</span>
             )}
-          </Button>
+        </Button>
         </form>
       </DialogContent>
     </Dialog>

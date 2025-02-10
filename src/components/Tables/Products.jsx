@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, ChevronLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +21,8 @@ import { toast } from 'react-toastify';
 import { useSingleProduct } from "@/hooks/admin/useSingleProduct";
 import { isPending } from "@reduxjs/toolkit";
 import EditProductForm from "../Dashboard/EditProductForm";
+import { Input } from "../ui/input";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 
 const LoadingSpinner = () => (
   <div className="flex flex-col items-center justify-center py-8">
@@ -36,21 +38,32 @@ const ProductTable = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productId, setProductId] = useState("")
   const [productsData, setProductsData] = useState({}) 
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [page, setPage] = useState(1);
+  const limit = 10;
   
   const { data, isLoading, isError } = useProducts({
-    page: 1,
-    limit: 10,
-    search: "",
-    category: null,
-    minPrice: null,
-    maxPrice: null,
+    page,
+    limit,
+    search: searchTerm,
+    minPrice: minPrice || null,
+    maxPrice: maxPrice || null,
   });
 
   const products = data?.products || [];
+  const totalPages = data?.totalPages || 1;
 
   const handleAddProduct = (product) => {
     products.push({ ...product, id: `PRD00${products.length + 1}` });
   };
+
+  const handleSearchChange = (e) => setSearchTerm(e.target.value);
+  const handleMinPriceChange = (e) => setMinPrice(e.target.value);
+  const handleMaxPriceChange = (e) => setMaxPrice(e.target.value);
+  const handlePageChange = (newPage) => setPage(newPage);
 
   const handleEditProduct = (updatedProduct) => {
     setIsEditModalOpen(false);
@@ -108,15 +121,44 @@ const ProductTable = () => {
           </Button>
         </CardHeader>
         <CardContent>
+
+        <div className="flex gap-4 mb-4">
+            <Input
+              type="text"
+              
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+            <Input
+              type="number"
+              step="1"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              placeholder="Min Price"
+              value={minPrice}
+              onChange={handleMinPriceChange}
+            />
+            <Input
+              step="1"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              type="number"
+              placeholder="Max Price"
+              value={maxPrice}
+              onChange={handleMaxPriceChange}
+            />
+          </div>
+
           <div className="overflow-x-auto">
             {isLoading ? (
               <LoadingSpinner />
             ) : isError ? (
               <p className="text-center text-red-500">Failed to load products</p>
             ) : (
+              <>
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="bg-gray-800">
+                  <th className="border-b border-gray-300 px-4 py-3 text-left">#</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Image</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Name</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Price</th>
@@ -126,8 +168,9 @@ const ProductTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product) => (
+                  {products.map((product, index) => (
                     <tr key={product.id} className="border-b hover:bg-gray-800">
+                      <td className="px-4 py-3 text-sm">{index + 1}</td>
                       <td className="px-4 py-3">
                         <img
                           src={product.imageUrl}
@@ -136,7 +179,7 @@ const ProductTable = () => {
                         />
                       </td>
                       <td className="px-4 py-3 text-sm">{product.name}</td>
-                      <td className="px-4 py-3 text-sm">${parseFloat(product.price).toFixed(2)}</td>
+                      <td className="px-4 py-3 text-sm">₦{parseFloat(product.price).toFixed(2)}</td>
                       <td className="px-4 py-3 text-sm">{product.category.name}</td>
                       <td className="px-4 py-3 text-sm">{product.stock} units</td>
                       <td className="px-4 py-3">
@@ -162,6 +205,16 @@ const ProductTable = () => {
                   ))}
                 </tbody>
               </table>
+              <div className="flex justify-center items-center mt-4">
+                  <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)}>
+                    <ChevronDoubleLeftIcon />
+                  </Button>
+                  <span className="px-4">Page {page} of {totalPages}</span>
+                  <Button disabled={page === totalPages} onClick={() => handlePageChange(page + 1)}>
+                    <ChevronDoubleRightIcon />
+                  </Button>
+                </div>
+              </>
             )}
           </div>
         </CardContent>
