@@ -3,12 +3,16 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import usePayment from "@/hooks/payment/usePayment";
+import useCartStore from "@/hooks/store/cartStore";
 
 const cities = [{ id: 1, name: "New York" }, { id: 2, name: "Los Angeles" }];
 
 const countries = [{ id: 1, name: "USA" }, { id: 2, name: "Canada" }];
 
-export default function ContactForm() {
+export default function ContactForm({netTotal}) {
+  console.log({netTotal});
+  
   const {
     register,
     handleSubmit,
@@ -21,9 +25,69 @@ export default function ContactForm() {
       country: ""
     }
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const onSubmit = data => {
-    console.log("Form submitted:", data);
+  const {cart} = useCartStore();
+
+  const cartItems = cart.map((cart) => {
+    return {
+      id: cart?.id,
+      name: cart?.name,
+      price: cart?.price,
+      quantity: cart?.quantity
+    }
+  })
+
+  const handlePayment = async (paymentData) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      console.log("Sending request to /api/paystack/initialize", paymentData);
+
+      const response = await fetch("/api/paystack/initialize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(paymentData),
+      });
+
+      if (!response.ok) {
+        console.warn("failed");
+        
+        // throw new Error("Failed to initiate payment");
+      }
+
+      const data = await response.json();
+      console.log("Payment initiated successfully:", data);
+    } catch (err) {
+      console.error("Payment initiation failed:", err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onSubmit = (data) => {
+    
+    const paymentData = {
+      email: data.email,
+      amount: netTotal,
+      cartItems: cartItems,
+      deliveryInfo: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        address: data.address,
+        phoneNumber: data.phoneNumber,
+        city: data.city,
+        state: data.state,
+        country: data.country,
+      },
+    };
+    console.log({paymentData});
+    
+
+    handlePayment(paymentData);
   };
 
   return (
@@ -53,6 +117,18 @@ export default function ContactForm() {
           {errors.lastName &&
             <p className="text-red-500 text-sm mt-1 font-freize text-primary">
               {errors.lastName.message}
+            </p>}
+        </div>
+
+        <div>
+          <input
+            {...register("email", { required: "Email is required" })}
+            placeholder="test@gmail.com"
+            className="font-freize text-primary w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
+          />
+          {errors.email &&
+            <p className="text-red-500 text-sm mt-1 font-freize text-primary">
+              {errors.email.message}
             </p>}
         </div>
 

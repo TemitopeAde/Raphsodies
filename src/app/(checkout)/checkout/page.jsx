@@ -84,7 +84,7 @@ const page = () => {
           
 
           <div className="flex lg:flex-row lg:justify-between lg:gap-16 flex-col-reverse gap-9">
-            <CheckOutForm />
+            <CheckOutForm netTotal={netTotal} />
             <div className="basis-1/2 flex flex-col gap-4">
             {
                 cart.map((item, index) => (
