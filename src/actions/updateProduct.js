@@ -5,11 +5,23 @@ export async function updateProduct(productId, updatedData) {
   try {
     const existingProduct = await prisma.product.findUnique({
       where: { id: productId },
-      include: { category: true },
+      include: { category: true }
     });
 
     if (!existingProduct) {
       throw new Error("Product not found");
+    }
+
+    let category = await prisma.category.findUnique({
+      where: { name: updatedData.categoryName }
+    });
+
+    if (!category) {
+      category = await prisma.category.create({
+        data: {
+          name: data.categoryName
+        }
+      });
     }
 
     const updatedProduct = await prisma.product.update({
@@ -18,11 +30,12 @@ export async function updateProduct(productId, updatedData) {
         name: updatedData.name || existingProduct.name,
         price: updatedData.price || existingProduct.price,
         stock: updatedData.stock || existingProduct.stock,
-        categoryId: updatedData.categoryId || existingProduct.categoryId,
+        categoryId: category.id || existingProduct.categoryId,
         imageUrl: updatedData.imageUrl || existingProduct.imageUrl,
         description: updatedData.description || existingProduct.description,
+        attributes: updatedData.attributes || existingProduct.attributes
       },
-      include: { category: true },
+      include: { category: true }
     });
 
     return updatedProduct;

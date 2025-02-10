@@ -29,7 +29,7 @@ export async function createProduct(data) {
 
     return newProduct;
   } catch (error) {
-    // console.error("Error creating product:", error.message);
+    
     console.error("Stack trace:", error.stack);
     throw new Error(error.message);
   }

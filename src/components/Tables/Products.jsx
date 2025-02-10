@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,9 @@ import ProductForm from "../Dashboard/ProductForm";
 import { useProducts } from "@/hooks/admin/useProducts";
 import { useDeleteProduct } from "@/hooks/admin/useDeleteProduct";
 import { toast } from 'react-toastify';
+import { useSingleProduct } from "@/hooks/admin/useSingleProduct";
+import { isPending } from "@reduxjs/toolkit";
+import EditProductForm from "../Dashboard/EditProductForm";
 
 const LoadingSpinner = () => (
   <div className="flex flex-col items-center justify-center py-8">
@@ -31,6 +34,8 @@ const ProductTable = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productId, setProductId] = useState("")
+  const [productsData, setProductsData] = useState({}) 
   
   const { data, isLoading, isError } = useProducts({
     page: 1,
@@ -48,16 +53,20 @@ const ProductTable = () => {
   };
 
   const handleEditProduct = (updatedProduct) => {
-    const index = products.findIndex((p) => p.id === updatedProduct.id);
-    if (index !== -1) {
-      products[index] = updatedProduct;
-    }
     setIsEditModalOpen(false);
     setSelectedProduct(null);
   };
 
   const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
+  const { data: singleData, isPending: singlePending, isError: singleError } = useSingleProduct(productId)
 
+
+  useEffect(() => {
+    if (singleData) {
+      setProductsData(singleData?.product);
+    }
+  }, [singleData]); 
+  
   const handleDeleteProduct = () => {
     if (!selectedProduct) return;
 
@@ -79,6 +88,7 @@ const ProductTable = () => {
   };
 
   const openEditModal = (product) => {
+    setProductId(product.id)
     setSelectedProduct(product);
     setIsEditModalOpen(true);
   };
@@ -163,15 +173,14 @@ const ProductTable = () => {
         onAddProduct={handleAddProduct}
       />
 
-      <ProductForm
+      <EditProductForm
         isOpen={isEditModalOpen}
         onClose={() => {
           setIsEditModalOpen(false);
           setSelectedProduct(null);
         }}
         onEditProduct={handleEditProduct}
-        product={selectedProduct}
-        mode="edit"
+        product={productsData}
       />
 
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>

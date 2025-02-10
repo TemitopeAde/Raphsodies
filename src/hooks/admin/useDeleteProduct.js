@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 const ORIGIN = "https://raphsodies.vercel.app"; 
 // const ORIGIN = "http://localhost:3000"
 
+
 export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
 
