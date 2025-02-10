@@ -2,9 +2,10 @@
 
 import useCartStore from "@/hooks/store/cartStore";
 import { ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const CartPage = ({ setOpen, open }) => {
-  
+  const router = useRouter()
   const {cart, removeFromCart,  updateQuantity, clearCart} = useCartStore();
   
   const handleIncrease = (id, quantity) => {
@@ -17,13 +18,11 @@ const CartPage = ({ setOpen, open }) => {
     }
   };
 
-  const shippingCost = 5.0;
-
   const removeItem = (id) => {
     removeFromCart(id)
   };
 
-  const totalCost = cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingCost;
+  const totalCost = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div className="min-h-screen flex justify-center p-4 font-unbounded">
@@ -109,13 +108,7 @@ const CartPage = ({ setOpen, open }) => {
               </p>
 
             </div>
-            <div className="mt-2">
-              <label className="text-gray-600 text-sm">Shipping</label>
-              <select className="w-full p-2 border rounded mt-1">
-                <option>Standard Delivery - £5.00</option>
-              </select>
-            </div>
-
+            
             <div className="flex justify-between mt-4 text-lg font-semibold">
               <p>Total Cost</p>
               <p>
@@ -132,10 +125,13 @@ const CartPage = ({ setOpen, open }) => {
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-[#292F4A] text-white"
               }`}
-              disabled={cart.length === 0}
+              // disabled={cart.length === 0}
+              onClick={() => {
+                router.push("/checkout")
+              }}
             >
               <ShoppingCart size={20} />
-              Checkout
+              Continue
             </button>
           </div>
         </div>
