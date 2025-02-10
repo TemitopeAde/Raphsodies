@@ -8,7 +8,7 @@ export async function POST(req) {
     if (!email || !amount || !cartItems?.length || !deliveryInfo) {
       return NextResponse.json({ 
         message: 'Email, amount, cart items, and delivery info are required' 
-      }, { status: 400 });
+      }, { status: 400 })
     }
 
     const params = {
