@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import ProductForm from "../Dashboard/ProductForm";
 import { useProducts } from "@/hooks/admin/useProducts";
+import { useDeleteProduct } from "@/hooks/admin/useDeleteProduct";
+import { toast } from 'react-toastify';
 
 const LoadingSpinner = () => (
   <div className="flex flex-col items-center justify-center py-8">
@@ -54,13 +56,26 @@ const ProductTable = () => {
     setSelectedProduct(null);
   };
 
+  const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
+
   const handleDeleteProduct = () => {
-    const index = products.findIndex((p) => p.id === selectedProduct.id);
-    if (index !== -1) {
-      products.splice(index, 1);
-    }
-    setIsDeleteDialogOpen(false);
-    setSelectedProduct(null);
+    if (!selectedProduct) return;
+
+    deleteProduct(selectedProduct.id, {
+      onSuccess: () => {
+        setIsDeleteDialogOpen(false);
+        setSelectedProduct(null);
+
+        toast.success('Product deleted successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true
+        });
+      },
+    });
   };
 
   const openEditModal = (product) => {
