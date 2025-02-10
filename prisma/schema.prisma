@@ -32,6 +32,7 @@ model Product {
   name        String  
   description String?  
   price       Decimal  
+  priceDollar Decimal?
   stock       Int  
   imageUrl    String?  
   label       String?  
