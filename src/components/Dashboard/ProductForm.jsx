@@ -216,7 +216,8 @@ const ProductForm = ({ isOpen, onClose }) => {
       stock: Number(data.stock),
       attributes: attrArray,
       categoryName: data.category,
-      imageUrl: imageUrl
+      imageUrl: imageUrl,
+      priceDollar: data.priceDollar
     };
 
     const response = await fetch(`${ORIGIN}/api/products/create-product`, {
@@ -316,7 +317,7 @@ const ProductForm = ({ isOpen, onClose }) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="price">Price</Label>
+            <Label htmlFor="price">Price (₦)</Label>
             <Input
               id="price"
               type="number"
@@ -329,6 +330,23 @@ const ProductForm = ({ isOpen, onClose }) => {
             />
             {errors.price && (
               <p className="text-red-500 text-sm">{errors.price.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="price">Price ($)</Label>
+            <Input
+              id="priceDollar"
+              type="number"
+              step="1"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              {...register("priceDollar", {
+                required: "Price in dollars is required",
+                min: { value: 1, message: "Price must be greater than 0" }
+              })}
+            />
+            {errors.priceDollar && (
+              <p className="text-red-500 text-sm">{errors.priceDollar.message}</p>
             )}
           </div>
 

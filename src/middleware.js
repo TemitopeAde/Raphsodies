@@ -20,11 +20,7 @@ export async function middleware(request) {
 
   const forwarded = request.headers.get("x-forwarded-for")
   const ip = forwarded ? forwarded.split(",")[0] : request.ip || "0.0.0.0"
-
-  console.log({ip});
   
-
-  // Fetch location data based on IP
   try {
     const res = await fetch(`http://ip-api.com/json/${ip}`)
     const locationData = await res.json()

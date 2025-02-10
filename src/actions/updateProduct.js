@@ -33,7 +33,8 @@ export async function updateProduct(productId, updatedData) {
         categoryId: category.id || existingProduct.categoryId,
         imageUrl: updatedData.imageUrl || existingProduct.imageUrl,
         description: updatedData.description || existingProduct.description,
-        attributes: updatedData.attributes || existingProduct.attributes
+        attributes: updatedData.attributes || existingProduct.attributes,
+        priceDollar: updatedData.priceDollar || existingProduct.priceDollar
       },
       include: { category: true }
     });

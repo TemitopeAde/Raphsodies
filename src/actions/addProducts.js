@@ -23,7 +23,8 @@ export async function createProduct(data) {
         stock: data.stock,
         imageUrl: data.imageUrl || '',
         categoryId: category.id,
-        attributes: data.attributes || []
+        attributes: data.attributes || [],
+        priceDollar: data.priceDollar
       },
     });
 

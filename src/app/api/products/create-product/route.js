@@ -11,7 +11,8 @@ const productSchema = Joi.object({
   label: Joi.string().optional(),
   otherDetails: Joi.object().optional(),
   categoryName: Joi.string().optional(),
-  attributes: Joi.array().optional()
+  attributes: Joi.array().optional(),
+  priceDollar: Joi.number().positive().required()
 });
 
 
@@ -27,7 +28,7 @@ export async function POST(request) {
       );
     }
 
-    const { name, description, price, stock, imageUrl, label, otherDetails, categoryName, attributes } = parsedBody;
+    const { name, description, price, stock, imageUrl, label, otherDetails, categoryName, attributes, priceDollar } = parsedBody;
 
     const newProduct = await createProduct({
       name,
@@ -38,7 +39,8 @@ export async function POST(request) {
       label,
       otherDetails,
       categoryName,
-      attributes
+      attributes, 
+      priceDollar
     });
 
     return NextResponse.json(
