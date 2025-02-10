@@ -24,6 +24,7 @@ model User {
   isVerified        Boolean  @default(false)
   verificationToken String?  @unique
   role              String?
+  payments          Payment[]
 }
 
 model Product {
@@ -40,6 +41,8 @@ model Product {
   category    Category @relation(fields: [categoryId], references: [id])  
   createdAt   DateTime @default(now())  
   updatedAt   DateTime @updatedAt  
+
+  payments    Payment[] @relation("PaymentProducts")
 }
 
 model Category {
@@ -48,4 +51,19 @@ model Category {
   products  Product[] // One-to-many relationship with products
   createdAt DateTime  @default(now())  
   updatedAt DateTime  @updatedAt  
+}
+
+model Payment {
+  id          String   @id @default(uuid())  
+  userId      Int      
+  reference   String   @unique 
+  amount      Int      
+  currency    String   @default("NGN")  
+  status      String   @default("pending")  
+  paidAt      DateTime?  
+  createdAt   DateTime @default(now())  
+  updatedAt   DateTime @updatedAt  
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products    Product[] @relation("PaymentProducts")
 }

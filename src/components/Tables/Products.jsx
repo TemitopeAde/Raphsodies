@@ -24,10 +24,10 @@ import EditProductForm from "../Dashboard/EditProductForm";
 import { Input } from "../ui/input";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 
-const LoadingSpinner = () => (
+export const LoadingSpinner = () => (
   <div className="flex flex-col items-center justify-center py-8">
     <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-    <p className="mt-2 text-sm text-gray-400">Loading products...</p>
+    
   </div>
 );
 
