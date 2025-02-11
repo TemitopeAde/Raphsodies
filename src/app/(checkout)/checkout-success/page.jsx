@@ -1,6 +1,7 @@
-import React from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter()
   return (
     <section className="bg-custom-bg mt-20 flex justify-center items-center h-[70vh] text-center">
       <div className="flex flex-col gap-10">
@@ -32,6 +33,7 @@ const page = () => {
         </div>
         <div className="flex justify-center items-center">
           <button
+            onclick={() => router.push("/products")}
             type="submit"
             className="transition flex text-center justify-center items-center lg:text-[22px] gap-2 py-2 px-4 lg:h-[60px] rounded-[20px] text-base font-normal duration-300 bg-background text-primary w-fit"
           >

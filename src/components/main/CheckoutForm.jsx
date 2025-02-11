@@ -3,15 +3,14 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import usePayment from "@/hooks/payment/usePayment";
 import useCartStore from "@/hooks/store/cartStore";
+import { useRouter } from "next/navigation";
 
 const cities = [{ id: 1, name: "New York" }, { id: 2, name: "Los Angeles" }];
-
 const countries = [{ id: 1, name: "USA" }, { id: 2, name: "Canada" }];
 
 export default function ContactForm({netTotal}) {
-  console.log({netTotal});
+  const router = useRouter()
   
   const {
     register,
@@ -59,7 +58,11 @@ export default function ContactForm({netTotal}) {
       }
 
       const data = await response.json();
-      console.log("Payment initiated successfully:", data);
+      // console.log("Payment initiated successfully:", data);
+      const url = data.data.authorization_url
+      console.log({url});
+      router.push(url)
+      
     } catch (err) {
       console.error("Payment initiation failed:", err);
       setError(err.message);
