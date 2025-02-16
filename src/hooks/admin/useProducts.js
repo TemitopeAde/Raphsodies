@@ -4,6 +4,7 @@ const fetchProducts = async ({ queryKey }) => {
   const [_key, { page, limit, search, category, minPrice, maxPrice }] = queryKey;
 
   const ORIGIN = "https://raphsodies.vercel.app"
+  // const ORIGIN = "http://localhost:3000"
 
   const url = new URL(`${ORIGIN}/api/products/products`);
   url.searchParams.append("page", page);
@@ -29,14 +30,27 @@ const fetchProducts = async ({ queryKey }) => {
     throw new Error("Failed to fetch products");
   }
 
-  return response.json();
+  const data = await response.json();
+  const locationHeader = response.headers.get('X-User-Location');
+  
+  // Debug headers
+  console.log('All Headers:', Object.fromEntries(response.headers.entries()));
+  console.log('Location Header:', response.headers.get('X-User-Location'));
+
+  
+  const location = locationHeader ? JSON.parse(locationHeader) : null;
+
+  return {
+    products: data,
+    location: location
+  };
 };
 
 export const useProducts = ({ page = 1, limit = 10, search = "", category = null, minPrice = null, maxPrice = null }) => {
   return useQuery({
     queryKey: ["products", { page, limit, search, category, minPrice, maxPrice }],
     queryFn: fetchProducts,
-    keepPreviousData: true, // Keeps old data while fetching new data
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
   });
 };

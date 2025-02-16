@@ -26,28 +26,28 @@ const page = () => {
       name: "pH Refreshing Face Wash",
       label: "Detoxifying Cleanser for Women",
       price: 10999,
-      image: "/images/image-1.png"
+      image: "/images/grandma/5.png"
     },
     {
       id: 2,
       name: "Acne Control Plant",
       label: "For Acne-Prone Skin",
       price: 12499,
-      image: "/images/image-1.png"
+      image: "/images/grandma/6.png"
     },
     {
       id: 3,
       name: "Skin Trouble Oil",
       label: "Repair & Hydrate",
       price: 12499,
-      image: "/images/image-1.png"
+      image: "/images/grandma/7.png"
     },
     {
       id: 4,
       name: "Stretch Marks",
       label: "Smooth & Even Tone",
       price: 12499,
-      image: "/images/image-1.png"
+      image: "/images/grandma/8.png"
     }
   ];
   const carouselData = [
@@ -828,9 +828,9 @@ const page = () => {
         <div className="grid grid-rows-[auto_auto] gap-4 px-1 p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white rounded-[40px] mx-auto p-4">
-              <div>
+              <div id="acne">
                 <img
-                  src="/images/bottle.png"
+                  src="/images/acne.png"
                   alt="acne"
                   className="rounded-[30px] w-full object-cover"
                 />
@@ -842,12 +842,13 @@ const page = () => {
             <div className="bg-white rounded-[40px] mx-auto p-4">
               <div>
                 <img
-                  src="/images/bottle.png"
-                  alt="acne"
+                  src="/images/hyper.png"
+                  alt="hyperpigmentation"
                   className="rounded-[30px] w-full object-cover"
                 />
                 <h2 className="text-center font-bold leading-[22px] md:leading-[26px] font-unbounded text-[18px] md:text-[22px] my-3 md:my-6">
-                  Acne Treatment Kit
+                Hyperpigmentation + <br/> Dark Spots Repair kit
+
                 </h2>
               </div>
             </div>
@@ -856,27 +857,27 @@ const page = () => {
             <div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                 <img
-                  src="/images/bottle.png"
+                  src="/images/face/37.png"
                   alt=""
                   className="w-full object-cover rounded-[10px]"
                 />
                 <img
-                  src="/images/bottle.png"
+                 src="/images/face/38.png"
                   alt=""
                   className="w-full object-cover rounded-[10px]"
                 />
                 <img
-                  src="/images/bottle.png"
+                  src="/images/face/39.png"
                   alt=""
                   className="w-full object-cover rounded-[10px]"
                 />
                 <img
-                  src="/images/bottle.png"
+                  src="/images/face/40.png"
                   alt=""
                   className="w-full object-cover rounded-[10px]"
                 />
                 <img
-                  src="/images/bottle.png"
+                  src="/images/face/41.png"
                   alt=""
                   className="w-full object-cover rounded-[10px]"
                 />

@@ -1,157 +1,91 @@
+"use client";
+
 import Product from "@/components/main/Product";
 import ProductKit from "@/components/main/ProductKit";
-import React from "react";
+import { useProducts } from "@/hooks/admin/useProducts";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
-const page = () => {
-  const products = [
-    {
-      id: 1,
-      name: "pH Refreshing Face Wash",
-      label: "Detoxifying Cleanser for Women",
-      price: 10999,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 2,
-      name: "Acne Control Plant",
-      label: "For Acne-Prone Skin",
-      price: 12499,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 3,
-      name: "Skin Trouble Oil",
-      label: "Repair & Hydrate",
-      price: 12499,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 4,
-      name: "Stretch Marks",
-      label: "Smooth & Even Tone",
-      price: 12499,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 5,
-      name: "Age Defying Barrier Serum",
-      label: "Anti-Aging Formula",
-      price: 12000,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 6,
-      name: "Herbal Face Food",
-      label: "Plant-Based Nutrients",
-      price: 14999,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 7,
-      name: "Black Skin Repair Complex",
-      label: "Restore & Repair",
-      price: 15000,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 8,
-      name: "Stretch Rescue Body Cream",
-      label: "Hydrate & Protect",
-      price: 12499,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 9,
-      name: "Exfoliating Skincare",
-      label: "Gentle Daily Exfoliation",
-      price: 12499,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 10,
-      name: "African Bee Toxin",
-      label: "Natural Anti-Aging Solution",
-      price: 12499,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 11,
-      name: "Botanical Exfoliator",
-      label: "Smooth & Renew",
-      price: 12499,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 12,
-      name: "Age Defying Barrier Serum",
-      label: "Anti-Aging Formula",
-      price: 12000,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 13,
-      name: "Grapefruit Butter",
-      label: "Moisturize & Brighten",
-      price: 12999,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 14,
-      name: "Plant-Based Clarifying Toner",
-      label: "Cleanse & Purify",
-      price: 12999,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 15,
-      name: "Acne Treatment Kit",
-      label: "Complete Acne Solution",
-      price: 47500,
-      image: "/images/image-1.png"
-    },
-    {
-      id: 16,
-      name: "Hyperpigmentation Treatment Kit",
-      label: "Fade Dark Spots",
-      price: 37500,
-      image: "/images/image-1.png"
+const Page = () => {
+  const [products, setProducts] = useState([]); // Removed static products
+  const [searchTerm, setSearchTerm] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [page, setPage] = useState(1);
+  const [location, setLocation] = useState(null); 
+  const limit = 10;
+
+  const { data, isLoading, isError } = useProducts({
+    page,
+    limit,
+    search: searchTerm,
+    minPrice: minPrice || null,
+    maxPrice: maxPrice || null,
+  });
+
+  
+  
+  
+
+  // Update products state when data changes
+  useEffect(() => {
+    console.log({location:data?.location});
+    if (data?.products) {
+      setProducts(data.products);
     }
-  ];
+  }, [data]);
+
+  console.log(products);
+  
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center h-screen text-red-500">
+        Failed to load products. Please try again later.
+      </div>
+    );
+  }
 
   const Kits = {
     id: 1,
     label: "Face & Body Rejuvenation Kit",
     images: [
       {
-        src: "/images/image-1.png"
+        src: "/images/image-1.png",
       },
       {
-        src: "/images/image-1.png"
+        src: "/images/image-1.png",
       },
       {
-        src: "/images/image-1.png"
+        src: "/images/image-1.png",
       },
       {
-        src: "/images/image-1.png"
+        src: "/images/image-1.png",
       },
       {
-        src: "/images/image-1.png"
-      }
+        src: "/images/image-1.png",
+      },
     ],
-    price: "45643"
+    price: "45643",
   };
 
   return (
     <section>
       <section className="relative h-screen w-screen">
         <div className="absolute inset-0">
-          <img
-            className="w-full h-full object-cover"
-            src="/images/lp.png"
-          />
+          <img className="w-full h-full object-cover" src="/images/lp.png" />
         </div>
 
-        {/* <div className="absolute inset-0 bg-black bg-opacity-80" /> */}
         <div className="absolute inset-0 z-10 flex items-center justify-center px-8 lg:px-24 lg:justify-start">
           <div className="text-white flex flex-col gap-10 text-center">
             <div className="flex flex-col gap-6 lg:px-16">
@@ -179,7 +113,11 @@ const page = () => {
         </div>
 
         <div className="flex flex-col gap-48 pb-20">
-          <Product data={products} />
+          {products.length > 0 ? (
+            <Product data={products} />
+          ) : (
+            <p className="text-center text-gray-500">No products found.</p>
+          )}
 
           <ProductKit data={Kits} />
         </div>
@@ -188,4 +126,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
