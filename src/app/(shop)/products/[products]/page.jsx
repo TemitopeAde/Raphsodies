@@ -1,19 +1,21 @@
 'use client'
 
+import CartPage from "@/components/Cart";
 import Modals from "@/components/main/modal";
 import Product from "@/components/main/Product";
+import { DialogCustomAnimation } from "@/components/Modal";
 import { useSingleProduct } from "@/hooks/admin/useSingleProduct";
 import useCartStore from "@/hooks/store/cartStore";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = ({params}) => {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(true);
   const {addToCart, cart} = useCartStore();  
   const [quantity, setQuantity] = useState(1)
   const [productId, setProductId] = useState(null)
   const [product, setProduct] = useState({})
-
+  const [open, setOpen] = useState(false);
   const [location, setLocation] = useState(null); 
   const [countryCode, setCountryCode] = useState("")
   const router = useRouter()
@@ -32,28 +34,29 @@ const page = ({params}) => {
   
   const increaseQuantity = () => setQuantity(prev => prev + 1);
   const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  
 
   const handleAddToCart = () => {
-    const currency = countryCode === "NG" ? "NGN" : "USD"; // Determine currency
-    const price = countryCode === "NG" ? product.price : product.priceDollar; // Use price or priceDollar
+    const currency = countryCode === "NG" ? "NGN" : "USD"; 
+    const price = countryCode === "NG" ? product.price : product.priceDollar;
   
     addToCart({
       ...product,
       quantity,
-      currency, // Add currency to the product
-      price, // Add the correct price
+      currency, 
+      price,
     });
     setOpenModal(true);
     setQuantity(1);
   
-    setTimeout(() => {
-      setOpenModal(false);
-    }, 6000);
+    // setTimeout(() => {
+    //   setOpenModal(false);
+    // }, 6000);
   };
 
   const {data, isError, isLoading} = useSingleProduct(productId);
   
-  console.log(data);
+  // console.log(data);
   
   const products = [
     {
@@ -189,7 +192,7 @@ const page = ({params}) => {
                   <span className="text-[28px] font-unbounded font-semibold lg:text-[32px] lg:leading-[34px]">
                   {countryCode === "NG"
                     ? product?.price !== undefined && product?.price !== null
-                      ? `NGN ${item?.price?.toLocaleString("en-NG")}`
+                      ? `NGN ${product?.price?.toLocaleString("en-NG")}`
                       : "Unavailable"
                     : product?.priceDollar !== undefined && product?.priceDollar !== null
                       ? `$ ${product?.priceDollar?.toLocaleString("en-US")}`
@@ -253,10 +256,11 @@ const page = ({params}) => {
               </div>
               <div className="flex gap-3 lg:gap-4 items-center">
                 <button
+                  onClick={handleAddToCart}
                   type="button"
                   className="font-freize transition flex lg:h-[60px] lg:text-[22px] text-[15px] gap-2 rounded-[20px] px-3 w-fit items-center lg:gap-3 lg:px-4 py-2 text-base font-normal duration-300 bg-background text-primary"
                 >
-                  <span onClick={handleAddToCart} className="flex items-center text-primary">
+                  <span className="flex items-center text-primary">
                     Add to Cart
                   </span>
                   <span className="lg:block hidden">
@@ -379,11 +383,11 @@ const page = ({params}) => {
               1 Item added to Cart
             </h3>
 
-            <div className="flex gap-6 justify-start">
+            <div className="flex gap-4 justify-start">
               <div className="basis-24">
                 <img
-                  className="h-full object-cover rounded-md"
-                  src={product?.image}
+                  className="h-16 object-cover rounded-md w-full"
+                  src={product?.imageUrl}
                   alt={product?.name}
                 />
               </div>
@@ -400,8 +404,8 @@ const page = ({params}) => {
                   </h2>
                 </div>
 
-                {/* Quantity Selector (Optional) */}
-                {/* <div className="flex items-center">
+                
+                <div className="flex items-center">
                   <div className="flex items-center gap-2">
                     <button className="">
                       <svg
@@ -455,12 +459,62 @@ const page = ({params}) => {
                       </svg>
                     </button>
                   </div>
-                </div> */}
+                </div> 
               </div>
             </div>
+
+            <div className="mt-6">
+              <button
+                onClick={() => setOpen(true)}
+                type="button"
+                className="font-freize transition flex lg:h-[40px] lg:text-[22px] text-[15px] gap-2 rounded-[20px] px-5 w-fit items-center lg:gap-3 lg:px-8 py-2 text-base font-normal duration-300 bg-background text-primary"
+              >
+                <span className="flex items-center text-primary">
+                  Proceed to cart
+                </span>
+                <span className="lg:block hidden">
+                  <svg
+                    width="17"
+                    height="15"
+                    viewBox="0 0 17 15"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
+                      fill="#292F4A"
+                    />
+                    <path
+                      d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
+                      fill="#292F4A"
+                    />
+                  </svg>
+                </span>
+                <span className="block lg:hidden">
+                  <svg
+                    width="10"
+                    height="15"
+                    viewBox="0 0 17 15"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
+                      fill="#292F4A"
+                    />
+                    <path
+                      d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
+                      fill="#292F4A"
+                    />
+                  </svg>
+                </span>
+              </button>
+              </div>
           </div>
         }
       />
+
+      <DialogCustomAnimation open={open} setOpen={setOpen} content={<CartPage setOpen={setOpen} open={open} />} />
     </section>
   );
 };

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-const ORIGIN = "http://localhost:3000"; 
+// const ORIGIN = "http://localhost:3000"; 
+const ORIGIN = "https://raphsodies.vercel.app"
 
 export function useSingleProduct(productId) {
   return useQuery({

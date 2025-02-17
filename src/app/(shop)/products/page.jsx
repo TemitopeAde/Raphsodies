@@ -4,10 +4,9 @@ import Product from "@/components/main/Product";
 import ProductKit from "@/components/main/ProductKit";
 import { useProducts } from "@/hooks/admin/useProducts";
 import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 
 const Page = () => {
-  const [products, setProducts] = useState([]); // Removed static products
+  const [products, setProducts] = useState([]); 
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -27,6 +26,8 @@ const Page = () => {
   
   useEffect(() => {
     setLocation(data?.location)
+    console.log(data?.location);
+    
     setCountryCode(data?.location?.countryCode)
     if (data?.products) {
       setProducts(data.products.products);

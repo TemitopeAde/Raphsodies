@@ -28,8 +28,8 @@ const CartPage = ({ setOpen, open }) => {
   }, 0);
 
   return (
-    <div className="min-h-screen flex justify-center p-4 font-unbounded">
-      <div className="rounded-lg w-full max-w-5xl p-6">
+    <div className="min-h-screen flex justify-center p-1 font-unbounded">
+      <div className="rounded-lg w-full max-w-5xl p-2 lg:p-6">
         <div className="grid md:grid-cols-3 gap-6">
           {/* Cart Items */}
           <div className="md:col-span-2">
@@ -87,7 +87,7 @@ const CartPage = ({ setOpen, open }) => {
 
             {/* Continue Shopping and Clear Cart Buttons */}
             <div className="flex justify-between items-center">
-              <button onClick={() => setOpen(false)} className="text-[#292F4A] mt-4 inline-block">
+              <button onClick={() => setOpen(false)} className="text-[#292F4A] text-xs lg:text-base mt-4 inline-block">
                 ← Continue Shopping
               </button>
 
