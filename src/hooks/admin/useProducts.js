@@ -32,12 +32,6 @@ const fetchProducts = async ({ queryKey }) => {
 
   const data = await response.json();
   const locationHeader = response.headers.get('X-User-Location');
-  
-  // Debug headers
-  console.log('All Headers:', Object.fromEntries(response.headers.entries()));
-  console.log('Location Header:', response.headers.get('X-User-Location'));
-
-  
   const location = locationHeader ? JSON.parse(locationHeader) : null;
 
   return {

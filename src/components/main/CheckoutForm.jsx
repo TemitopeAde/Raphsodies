@@ -1,82 +1,132 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Listbox } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import useCartStore from "@/hooks/store/cartStore";
 import { useRouter } from "next/navigation";
+import { useStatesByCountry } from "@/hooks/payment/useState";
+import useCitiesByState from "@/hooks/payment/useCitiesStates";
 
-const cities = [{ id: 1, name: "New York" }, { id: 2, name: "Los Angeles" }];
-const countries = [{ id: 1, name: "USA" }, { id: 2, name: "Canada" }];
+export default function ContactForm({
+  netTotal,
+  countryList,
+  loadingCountries,
+  countryError,
+}) {
+  const router = useRouter();
+  const { cart } = useCartStore();
 
-export default function ContactForm({netTotal}) {
-  const router = useRouter()
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [locationError, setLocationError] = useState("");
+
+  const countryCode = selectedCountry?.iso2 || "";
   
+  const {
+    data: states,
+    isLoading: loadingStates,
+    isError: hasStateError,
+  } = useStatesByCountry(countryCode);
+
+  const {
+    data: cities,
+    isLoading: loadingCities,
+    isError: hasCityError,
+  } = useCitiesByState(countryCode, selectedState?.iso2);
+
+  useEffect(() => {
+    if (countryList) {
+      setCountries(countryList);
+    }
+  }, [countryList]);
+
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-    setValue
+    setValue,
+    reset: resetForm,
   } = useForm({
     defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      address: "",
+      phoneNumber: "",
       city: "",
-      country: ""
-    }
+      state: "",
+      country: "",
+    },
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const {cart} = useCartStore();
+  // Reset dependent fields when country changes
+  const handleCountryChange = (selected) => {
+    setSelectedCountry(selected);
+    setValue("country", selected.name);
+    setValue("state", "");
+    setValue("city", "");
+    setSelectedState(null);
+  };
 
-  const cartItems = cart.map((cart) => {
-    return {
-      id: cart?.id,
-      name: cart?.name,
-      price: cart?.price,
-      quantity: cart?.quantity
+  // Reset city when state changes
+  const handleStateChange = (selected) => {
+    setSelectedState(selected);
+    setValue("state", selected.name);
+    setValue("city", "");
+  };
+
+  // Handle API errors
+  useEffect(() => {
+    if (countryError) {
+      setLocationError("Failed to load countries. Please try again later.");
+    } else if (hasStateError) {
+      setLocationError("Failed to load states. Please try again later.");
+    } else if (hasCityError) {
+      setLocationError("Failed to load cities. Please try again later.");
+    } else {
+      setLocationError("");
     }
-  })
+  }, [countryError, hasStateError, hasCityError]);
+
+  const cartItems = cart.map((item) => ({
+    id: item?.id,
+    name: item?.name,
+    price: item?.currency === 'USD' ? item?.priceDollar : item?.price,
+    quantity: item?.quantity,
+    currency: item?.currency,
+  }));
+  
+
+  console.log(cart);
+  
 
   const handlePayment = async (paymentData) => {
-    setIsLoading(true);
-    setError(null);
-
     try {
-      console.log("Sending request to /api/paystack/initialize", paymentData);
-
       const response = await fetch("/api/paystack/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(paymentData),
       });
 
-      if (!response.ok) {
-        console.warn("failed");
-        
-        // throw new Error("Failed to initiate payment");
-      }
+      if (!response.ok) throw new Error("Failed to initiate payment");
 
       const data = await response.json();
-      // console.log("Payment initiated successfully:", data);
-      const url = data.data.authorization_url
-      console.log({url});
-      router.push(url)
-      
+      router.push(data.data.authorization_url);
     } catch (err) {
       console.error("Payment initiation failed:", err);
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
+      setLocationError("Payment initialization failed. Please try again.");
     }
   };
 
   const onSubmit = (data) => {
-    
     const paymentData = {
       email: data.email,
       amount: netTotal,
-      cartItems: cartItems,
+      cartItems,
       deliveryInfo: {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -87,17 +137,22 @@ export default function ContactForm({netTotal}) {
         country: data.country,
       },
     };
-    console.log({paymentData});
-    
-
     handlePayment(paymentData);
   };
 
   return (
-    <div className="">
+    <div>
       <h1 className="lg:text-[32px] text-[24px] font-unbounded font-semibold text-primary lg:mb-12 mb-8">
         Delivery
       </h1>
+
+      {locationError && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-600">
+          <ExclamationCircleIcon className="w-5 h-5" />
+          <span className="font-freize">{locationError}</span>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <input
@@ -105,10 +160,11 @@ export default function ContactForm({netTotal}) {
             placeholder="First Name"
             className="w-full p-3 font-freize text-primary border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
-          {errors.firstName &&
+          {errors.firstName && (
             <p className="text-red-500 text-sm mt-1 font-freize text-primary">
               {errors.firstName.message}
-            </p>}
+            </p>
+          )}
         </div>
 
         <div>
@@ -117,22 +173,30 @@ export default function ContactForm({netTotal}) {
             placeholder="Last Name"
             className="font-freize text-primary w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
-          {errors.lastName &&
+          {errors.lastName && (
             <p className="text-red-500 text-sm mt-1 font-freize text-primary">
               {errors.lastName.message}
-            </p>}
+            </p>
+          )}
         </div>
 
         <div>
           <input
-            {...register("email", { required: "Email is required" })}
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
             placeholder="test@gmail.com"
             className="font-freize text-primary w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
-          {errors.email &&
+          {errors.email && (
             <p className="text-red-500 text-sm mt-1 font-freize text-primary">
               {errors.email.message}
-            </p>}
+            </p>
+          )}
         </div>
 
         <div>
@@ -141,78 +205,27 @@ export default function ContactForm({netTotal}) {
             placeholder="Address"
             className="font-freize text-primary w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
-          {errors.address &&
+          {errors.address && (
             <p className="text-red-500 text-sm mt-1 font-freize text-primary">
               {errors.address.message}
-            </p>}
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <input
               {...register("phoneNumber", {
-                required: "Phone Number is required"
+                required: "Phone Number is required",
               })}
               placeholder="Phone Number"
               className="font-freize text-primary w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
             />
-            {errors.phoneNumber &&
+            {errors.phoneNumber && (
               <p className="text-red-500 text-sm mt-1 font-freize text-primary">
                 {errors.phoneNumber.message}
-              </p>}
-          </div>
-
-          <div>
-            <Controller
-              name="city"
-              control={control}
-              rules={{ required: "City is required" }}
-              render={({ field: { onChange, value } }) =>
-                <Listbox
-                  value={cities.find(city => city.name === value) || null}
-                  onChange={selectedCity => {
-                    onChange(selectedCity.name);
-                  }}
-                >
-                  <div className="relative">
-                    <Listbox.Button className="w-full flex items-center justify-between p-3 border rounded-lg bg-white text-left focus:ring-2 focus:ring-gray-300">
-                      <span className="font-freize text-primary">
-                        {value || "Select City"}
-                      </span>
-                      <ChevronDownIcon className="w-5 h-5 text-gray-500" />
-                    </Listbox.Button>
-                    <Listbox.Options className="absolute w-full bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto z-50 border border-gray-200">
-                      {cities.map(city =>
-                        <Listbox.Option
-                          key={city.id}
-                          value={city}
-                          className="p-3 hover:bg-gray-100 cursor-pointer font-freize text-primary"
-                        >
-                          {city.name}
-                        </Listbox.Option>
-                      )}
-                    </Listbox.Options>
-                  </div>
-                </Listbox>}
-            />
-            {errors.city &&
-              <p className="text-red-500 text-sm mt-1 font-freize text-primary">
-                {errors.city.message}
-              </p>}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <input
-              {...register("state", { required: "State is required" })}
-              placeholder="State"
-              className="font-freize text-primary w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
-            />
-            {errors.state &&
-              <p className="text-red-500 text-sm mt-1 font-freize text-primary">
-                {errors.state.message}
-              </p>}
+              </p>
+            )}
           </div>
 
           <div>
@@ -220,40 +233,118 @@ export default function ContactForm({netTotal}) {
               name="country"
               control={control}
               rules={{ required: "Country is required" }}
-              render={({ field: { onChange, value } }) =>
+              render={({ field: { value } }) => (
                 <Listbox
-                  value={
-                    countries.find(country => country.name === value) || null
-                  }
-                  onChange={selectedCountry => {
-                    onChange(selectedCountry.name);
-                  }}
+                  value={countries?.find((country) => country.name === value) || null}
+                  onChange={handleCountryChange}
+                  disabled={loadingCountries}
                 >
                   <div className="relative">
-                    <Listbox.Button className="font-freize text-primary w-full flex items-center justify-between p-3 border rounded-lg bg-white text-left focus:ring-2 focus:ring-gray-300">
-                      <span>
-                        {value || "Select Country"}
-                      </span>
+                    <Listbox.Button className="w-full flex items-center font-freize justify-between p-3 border rounded-lg bg-white">
+                      <span>{loadingCountries ? "Loading..." : value || "Select Country"}</span>
                       <ChevronDownIcon className="w-5 h-5 text-gray-500" />
                     </Listbox.Button>
-                    <Listbox.Options className="absolute w-full font-freize text-primary bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto z-50 border border-gray-200">
-                      {countries.map(country =>
+                    <Listbox.Options className="absolute z-50 w-full bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto">
+                      {countries?.map((country) => (
                         <Listbox.Option
                           key={country.id}
                           value={country}
-                          className="p-3 hover:bg-gray-100 cursor-pointer font-freize text-primary"
+                          className="p-3 font-freize hover:bg-gray-100 cursor-pointer"
                         >
                           {country.name}
                         </Listbox.Option>
-                      )}
+                      ))}
                     </Listbox.Options>
                   </div>
-                </Listbox>}
+                </Listbox>
+              )}
             />
-            {errors.country &&
-              <p className="text-red-500 text-sm mt-1">
+            {errors.country && (
+              <p className="text-red-500 text-sm mt-1 font-freize">
                 {errors.country.message}
-              </p>}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Controller
+              name="state"
+              control={control}
+              rules={{ required: "State is required" }}
+              render={({ field: { value } }) => (
+                <Listbox
+                  value={states?.find((state) => state.name === value) || null}
+                  onChange={handleStateChange}
+                  disabled={!selectedCountry || loadingStates}
+                >
+                  <div className="relative">
+                    <Listbox.Button className="w-full flex items-center justify-between p-3 border rounded-lg bg-white font-freize">
+                      <span>{loadingStates ? "Loading..." : value || "Select State"}</span>
+                      <ChevronDownIcon className="w-5 h-5 text-gray-500" />
+                    </Listbox.Button>
+                    <Listbox.Options className="absolute z-50 w-full bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto">
+                      {states?.map((state) => (
+                        <Listbox.Option
+                          key={state.id}
+                          value={state}
+                          className="p-3 hover:bg-gray-100 cursor-pointer font-freize"
+                        >
+                          {state.name}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </div>
+                </Listbox>
+              )}
+            />
+            {errors.state && (
+              <p className="text-red-500 text-sm mt-1 font-freize text-primary">
+                {errors.state.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <Controller
+              name="city"
+              control={control}
+              rules={{ required: "City is required" }}
+              render={({ field: { onChange, value } }) => (
+                <Listbox
+                  value={cities?.find((city) => city.name === value) || null}
+                  onChange={(selectedCity) => onChange(selectedCity.name)}
+                  disabled={!selectedState || loadingCities}
+                >
+                  <div className="relative">
+                    <Listbox.Button className="w-full flex items-center justify-between p-3 border rounded-lg bg-white text-left focus:ring-2 focus:ring-gray-300">
+                      <span className="font-freize text-primary">
+                        {loadingCities ? "Loading..." : value || "Select City"}
+                      </span>
+                      <ChevronDownIcon className="w-5 h-5 text-gray-500" />
+                    </Listbox.Button>
+                    <Listbox.Options className="absolute z-50 w-full bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto border border
+-gray-200">
+                      {cities?.map((city) => (
+                        <Listbox.Option
+                          key={city.id}
+                          value={city}
+                          className="p-3 hover:bg-gray-100 cursor-pointer font-freize text-primary"
+                        >
+                          {city.name}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </div>
+                </Listbox>
+              )}
+            />
+            {errors.city && (
+              <p className="text-red-500 text-sm mt-1 font-freize text-primary">
+                {errors.city.message}
+              </p>
+            )}
           </div>
         </div>
 

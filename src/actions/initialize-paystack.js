@@ -1,6 +1,8 @@
 import axios from "axios";
 
 export const initialize = async params => {
+  console.log({key: process.env.TEST_SECRET_KEY});
+  
   try {
     const response = await axios.post(
       "https://api.paystack.co/transaction/initialize",
@@ -15,7 +17,7 @@ export const initialize = async params => {
     
     return response;
   } catch (error) {
-    console.log(error);
+    console.log({error});
     return null;
   }
 };

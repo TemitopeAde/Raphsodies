@@ -2,8 +2,8 @@ import Link from 'next/link'
 import React from 'react'
 
 
-const Product = ({data, type}) => {
-    
+const Product = ({data, type, countryCode}) => {
+   
   return (
     <div className={`grid grid-cols-1  ${type==="other"? "": "px-8 lg:px-24"} md:grid-cols-2 lg:grid-cols-4 gap-10 lg:justify-between`}>
         {data?.map((item, index) => (
@@ -13,15 +13,23 @@ const Product = ({data, type}) => {
             <div className='flex flex-col flex-grow justify-between gap-3 h-full'>
                 <div className='mt-3'>
                   <h1 className="text-[#C78700] font-bold lg:text-base lg:leading-5 font-unbounded text-[15px]">
-                      <Link href={`/products/${index}`}>
+                      <Link href={`/products/${item.id}`}>
                         {item?.name}
                       </Link>
                   </h1>
                   <h3 className='font-freize text-xs mt-1 lg:text-sm lg:leading-4'>{item?.label}</h3>
                 </div>
-                <button className='mt-3 cursor-none font-unbounded w-full py-2 rounded-[20px] bg-[#292F4A] text-white lg:text-[18px] font-bold'>
-                NGN {item?.price?.toLocaleString('en-NG')}
+                <button className="mt-3 cursor-none font-unbounded w-full py-2 rounded-[20px] bg-[#292F4A] text-white lg:text-[18px] font-bold">
+                  {countryCode === "NG"
+                    ? item?.price !== undefined && item?.price !== null
+                      ? `NGN ${item?.price?.toLocaleString("en-NG")}`
+                      : "Unavailable"
+                    : item?.priceDollar !== undefined && item?.priceDollar !== null
+                      ? `$ ${item?.priceDollar?.toLocaleString("en-US")}`
+                      : "Unavailable"}
                 </button>
+
+
             </div>
             </div>
         ))}

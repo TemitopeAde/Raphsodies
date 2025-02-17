@@ -2,19 +2,59 @@
 
 import Modals from "@/components/main/modal";
 import Product from "@/components/main/Product";
+import { useSingleProduct } from "@/hooks/admin/useSingleProduct";
 import useCartStore from "@/hooks/store/cartStore";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const page = () => {
+const page = ({params}) => {
   const [openModal, setOpenModal] = useState(false);
   const {addToCart, cart} = useCartStore();  
   const [quantity, setQuantity] = useState(1)
+  const [productId, setProductId] = useState(null)
+  const [product, setProduct] = useState({})
 
+  const [location, setLocation] = useState(null); 
+  const [countryCode, setCountryCode] = useState("")
+  const router = useRouter()
+  
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const resolvedParams = await params; 
+        setProductId(resolvedParams?.products); 
+      } catch (error) {
+        console.error("Error resolving params:", error);
+      }
+    })();
+  }, [params]);
+  
   const increaseQuantity = () => setQuantity(prev => prev + 1);
   const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
+  const handleAddToCart = () => {
+    const currency = countryCode === "NG" ? "NGN" : "USD"; // Determine currency
+    const price = countryCode === "NG" ? product.price : product.priceDollar; // Use price or priceDollar
+  
+    addToCart({
+      ...product,
+      quantity,
+      currency, // Add currency to the product
+      price, // Add the correct price
+    });
+    setOpenModal(true);
+    setQuantity(1);
+  
+    setTimeout(() => {
+      setOpenModal(false);
+    }, 6000);
+  };
+
+  const {data, isError, isLoading} = useSingleProduct(productId);
+  
+  console.log(data);
+  
   const products = [
     {
       id: 1,
@@ -46,15 +86,16 @@ const page = () => {
     }
   ];
 
-  const product = {
-    id: 5,
-    name: 'Nefertiti Face Moisturizer',
-    label: 'Moisturizing + Illuminating',
-    price: 11999,
-    image: '/images/product-6.png',
-  };
+  useEffect(() => {
+    setProduct(data?.data.product)
+  }, [data])
 
-  const router = useRouter()
+  useEffect(() => {
+      setLocation(data?.location)
+      setCountryCode(data?.location?.countryCode)
+  }, [data]);
+  
+  
 
   return (
     <section className="bg-custom-bg mt-20">
@@ -107,11 +148,26 @@ const page = () => {
           </h2>
         </div>
 
-        <div className="flex flex-col gap-10">
-          <div className="lg:flex-row flex-col flex lg:gap-20 gap-10 text-primary">
+        {isLoading ? (
+          <div className="flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+        ) : isError ? (
+          <div className="text-primary font-semibold font-freize  text-center">
+            <p>Failed to load product details. Please try again.</p>
+            <button
+              onClick={() => router.refresh()}
+              className="bg-red-500 text-white px-4 py-2 mt-4 rounded font-freize"
+            >
+              Retry
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-10">
+            <div className="lg:flex-row flex-col flex lg:gap-20 gap-10 text-primary">
             <div className="basis-1/2">
               <img
-                src={product?.image}
+                src={product?.imageUrl}
                 alt={product?.name}
                 className="w-full rounded-[30px] h-full object-cover"
               />
@@ -123,7 +179,7 @@ const page = () => {
                 </h2>
                 <span>
                   <h3 className="font-freize lg:text-[20px] text-[15px] font-normal lg:leading-[23px]">
-                    {product.label}
+                    {product?.label}
                   </h3>
                   {/* <h3 className="text-[15px] font-freize lg:text-[20px] font-normal lg:leading-[23px]">
                     With Camellia sinensis, Oat extract & Licorice root
@@ -131,7 +187,13 @@ const page = () => {
                 </span>
                 <div className="flex lg:flex-col flex-row justify-between items-center lg:items-start gap-2">
                   <span className="text-[28px] font-unbounded font-semibold lg:text-[32px] lg:leading-[34px]">
-                    NGN {product?.price}
+                  {countryCode === "NG"
+                    ? product?.price !== undefined && product?.price !== null
+                      ? `NGN ${item?.price?.toLocaleString("en-NG")}`
+                      : "Unavailable"
+                    : product?.priceDollar !== undefined && product?.priceDollar !== null
+                      ? `$ ${product?.priceDollar?.toLocaleString("en-US")}`
+                      : "Unavailable"}
                   </span>
 
                   <div className="flex items-center gap-2">
@@ -194,16 +256,7 @@ const page = () => {
                   type="button"
                   className="font-freize transition flex lg:h-[60px] lg:text-[22px] text-[15px] gap-2 rounded-[20px] px-3 w-fit items-center lg:gap-3 lg:px-4 py-2 text-base font-normal duration-300 bg-background text-primary"
                 >
-                  <span onClick={() => {
-                    addToCart({...product, quantity})
-                    setOpenModal(true)
-
-                    setQuantity(1)
-
-                    setTimeout(() => {
-                      setOpenModal(false)
-                    }, 6000);
-                  }} className="flex items-center text-primary">
+                  <span onClick={handleAddToCart} className="flex items-center text-primary">
                     Add to Cart
                   </span>
                   <span className="lg:block hidden">
@@ -296,19 +349,14 @@ const page = () => {
               Description
             </h1>
             <p className="font-freize font-normal lg:text-2xl lg:leading-[35px]">
-              A good Face cream should keep moisture and elasticity in your
-              skin. Our Nefertiti Face Cream draws inspiration from the timeless
-              beauty of Queen Nefertiti and is enriched with a blend of oils,
-              proteins, and plant extracts. Here's what it does: Enhances your
-              natural radiance, leaving your skin glowing and youthful.Targets
-              wrinkles, age spots, and fine lines, providing powerful anti-aging
-              benefits. Enriched with: Avena sativa (oat extract), Lavandula
-              Angustifolia, Vitamin B5, Vitamin B3, Proteins, Ceramides,
-              Glycerol, EDTA, Beerberry extract, hyaluronan, Aqua, Cetyl
-              acholohol, Wax.
+              {product?.description}
             </p>
           </div>
-        </div>
+          </div>
+        )}
+
+
+        
 
         <div className="pb-36">
           <div className="flex flex-col gap-20">
@@ -333,16 +381,27 @@ const page = () => {
 
             <div className="flex gap-6 justify-start">
               <div className="basis-24">
-                <img className="h-full object-cover rounded-md" src={product?.image} alt={product?.name} />
+                <img
+                  className="h-full object-cover rounded-md"
+                  src={product?.image}
+                  alt={product?.name}
+                />
               </div>
 
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-bold">{product?.name}</h2>
-                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-semibold">NGN {product.price}</h2>
+                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-bold">
+                    {product?.name}
+                  </h2>
+                  <h2 className="text-left font-unbounded text-sm leading-4 text-primary font-semibold">
+                    {countryCode === "NG"
+                      ? `NGN ${product?.price?.toLocaleString("en-NG")}`
+                      : `$ ${product?.priceDollar?.toLocaleString("en-US")}`}
+                  </h2>
                 </div>
 
-                {/* <div className="flex items-center ">
+                {/* Quantity Selector (Optional) */}
+                {/* <div className="flex items-center">
                   <div className="flex items-center gap-2">
                     <button className="">
                       <svg

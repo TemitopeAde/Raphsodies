@@ -13,7 +13,8 @@ const Page = () => {
   const [maxPrice, setMaxPrice] = useState("");
   const [page, setPage] = useState(1);
   const [location, setLocation] = useState(null); 
-  const limit = 10;
+  const [countryCode, setCountryCode] = useState("")
+  const limit = 100;
 
   const { data, isLoading, isError } = useProducts({
     page,
@@ -24,19 +25,13 @@ const Page = () => {
   });
 
   
-  
-  
-
-  // Update products state when data changes
   useEffect(() => {
-    console.log({location:data?.location});
+    setLocation(data?.location)
+    setCountryCode(data?.location?.countryCode)
     if (data?.products) {
-      setProducts(data.products);
+      setProducts(data.products.products);
     }
   }, [data]);
-
-  console.log(products);
-  
 
   // Loading state
   if (isLoading) {
@@ -114,7 +109,7 @@ const Page = () => {
 
         <div className="flex flex-col gap-48 pb-20">
           {products.length > 0 ? (
-            <Product data={products} />
+            <Product data={products} countryCode={countryCode}/>
           ) : (
             <p className="text-center text-gray-500">No products found.</p>
           )}

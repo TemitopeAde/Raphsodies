@@ -1,17 +1,23 @@
 'use client'
 
 import CheckOutForm from "@/components/main/CheckoutForm";
+import { useCountries } from "@/hooks/payment/useCountries";
 import useCartStore from "@/hooks/store/cartStore";
 
 const page = () => {
   const {cart} = useCartStore();
-  const deliveryFee = 300
+  const { data: countryList, isLoading: loadingCountries, isError: hasCountryError, error: countryError } = useCountries();
+  
+  const deliveryFee = 10;
   const totalCost = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const netTotal = totalCost + deliveryFee
+
+  
+  
   return (
     <section className="bg-custom-bg mt-20">
       <div className="px-10 lg:px-24 flex flex-col gap-20 py-8">
-        <div className="flex gap-3 items-center">
+        <div className="lg:flex gap-3 items-center hidden">
           <h2 className="font-freize lg:text-[22px] text-xs leading-[26px] font-normal">
             Home
           </h2>
@@ -84,49 +90,63 @@ const page = () => {
           
 
           <div className="flex lg:flex-row lg:justify-between lg:gap-16 flex-col-reverse gap-9">
-            <CheckOutForm netTotal={netTotal} />
+            <CheckOutForm 
+              netTotal={netTotal} 
+              countryList={countryList}  
+              loadingCountries={loadingCountries}
+              countryError={countryError}
+              hasCountryError={hasCountryError}
+
+             
+            />
             <div className="basis-1/2 flex flex-col gap-4">
-            {
-                cart.map((item, index) => (
-                  <div key={index} className="flex items-center lg:flex-row h-fit border-dashed border-[#292F4A] border-b-2 pb-8 justify-between">
+              {cart?.map((item, index) => (
+                <div key={index} className="flex items-center lg:flex-row h-fit border-dashed border-[#292F4A] border-b-2 pb-8 justify-between">
                   <div className="lg:basis-3/5 gap-2 flex lg:gap-6 items-center">
                     <img
-                      src={item.image}
-                      alt={item.name}
+                      src={item?.imageUrl}
+                      alt={item?.name}
                       className="lg:h-[77px] w-[72px] h-[72px] lg:w-[72px] rounded-xl"
                     />
                     <h2 className="text-primary lg:text-[18px] font-semibold font-unbounded lg:leading-5">
-                      {item.name}
+                      {item?.name}
                     </h2>
                   </div>
-  
-                  <div className="lg:basis-2/5">
+
+                  <div className="lg:basis-2/5 text-end">
+                   
                     <h1 className="text-primary lg:text-[18px] font-semibold font-unbounded lg:leading-5">
-                      NGN {item.price}
+                      {item?.currency === 'USD' ? `$${item?.priceDollar}` : `NGN ${item?.price}`}
                     </h1>
                   </div>
                 </div>
-                ))
-              }
-              
-
-              
+              ))}
 
               <div className="flex flex-col gap-3 pt-8">
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Sub Total</h2>
-                  <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">NGN {totalCost}</h2>
+                  <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
+                    {/* Handle sub total with currency check */}
+                    {cart?.some(item => item.currency === 'USD') ? `$${totalCost}` : `NGN ${totalCost}`}
+                  </h2>
                 </div>
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Delivery</h2>
-                  <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">{deliveryFee}</h2>
+                  <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
+                    {/* Handle delivery fee with currency check */}
+                    {cart?.some(item => item.currency === 'USD') ? `$${deliveryFee}` : `NGN ${deliveryFee}`}
+                  </h2>
                 </div>
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-bold font-freize lg:text-[25px] lg:leading-[34px]">Total</h2>
-                  <h2 className="text-primary  font-bold font-freize lg:text-[25px] lg:leading-[34px]">NGN {totalCost + deliveryFee}</h2>
+                  <h2 className="text-primary font-bold font-freize lg:text-[25px] lg:leading-[34px]">
+                    {/* Handle total cost with currency check */}
+                    {cart?.some(item => item.currency === 'USD') ? `$${totalCost + deliveryFee}` : `NGN ${totalCost + deliveryFee}`}
+                  </h2>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>

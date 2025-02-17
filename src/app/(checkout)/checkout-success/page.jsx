@@ -35,7 +35,7 @@ const page = () => {
         </div>
         <div className="flex justify-center items-center">
           <button
-            onclick={() => router.push("/products")}
+            onClick={() => router.push("/products")}
             type="submit"
             className="transition flex text-center justify-center items-center lg:text-[22px] gap-2 py-2 px-4 lg:h-[60px] rounded-[20px] text-base font-normal duration-300 bg-background text-primary w-fit"
           >
