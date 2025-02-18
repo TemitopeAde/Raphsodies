@@ -20,6 +20,9 @@ const Page = () => {
   const router = useRouter();
 
   const { user, loading, isAuthenticated } = useAuth();
+  console.log(products);
+  
+  
 
   // useEffect(() => {
   //   if (!loading && !isAuthenticated) {
@@ -125,7 +128,7 @@ const Page = () => {
             {products.length > 0 ? (
               <Product data={products} countryCode={countryCode}/>
             ) : (
-              <p className="text-center text-gray-500">No products found.</p>
+              <p className='font-freize font-semibold text-base text-center'>No products found.</p>
             )}
 
             <ProductKit data={Kits} />
