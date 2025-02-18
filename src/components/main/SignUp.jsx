@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateUser } from "@/hooks/store/useSignup";
@@ -9,19 +9,21 @@ import { FaUser, FaEnvelope, FaLock, FaCheck } from "react-icons/fa";
 import Link from "next/link";
 
 export default function AuthForm() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AuthFormContent />
+    </Suspense>
+  );
+}
+
+function AuthFormContent() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({ fullName: "", email: "", password: "", confirmPassword: "" });
   const [errors, setErrors] = useState({});
   const router = useRouter();
-  const [info, setInfo] = useState();
-
+  
   const searchParams = useSearchParams();
-  console.log({searchParams});
-  
   const redirect = searchParams.get("redirect") || "/";
-
-  // console.log({redirect});
-  
 
   const { mutate: createUser, isPending } = useCreateUser();
   const { mutate: loginUser, isPending: loginLoading } = useLogin();
@@ -67,10 +69,8 @@ export default function AuthForm() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-[#00EEAE] to-[#171717] px-4 py-10 font-unbounded">
       <div className="w-full max-w-4xl rounded-2xl bg-white shadow-lg md:flex">
-        <div
-          className="relative flex w-full flex-col justify-center rounded-l-2xl p-10 text-white md:w-1/2 bg-cover bg-center"
-          style={{ backgroundImage: 'url("/images/lp.png")' }}
-        ></div>
+        <div className="relative flex w-full flex-col justify-center rounded-l-2xl p-10 text-white md:w-1/2 bg-cover bg-center"
+          style={{ backgroundImage: 'url("/images/lp.png")' }}></div>
 
         <div className="w-full p-10 md:w-1/2">
           <button onClick={() => router.back()} className="mb-4 text-[#292F4A] hover:text-[#00EEAE]">&larr; Back</button>
@@ -107,31 +107,13 @@ export default function AuthForm() {
               {errors.password && <p className="mt-1 text-sm text-[#FF4D4D]">{errors.password}</p>}
             </div>
 
-            {isSignUp && (
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <FaCheck className="text-gray-400" />
-                </div>
-                <input type="password" placeholder="Verify Password" className="w-full rounded-lg border px-4 py-3 pl-10 focus:ring-[#00EEAE]" value={formData.confirmPassword} onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} />
-                {errors.confirmPassword && <p className="mt-1 text-sm text-[#FF4D4D]">{errors.confirmPassword}</p>}
-              </div>
-            )}
-
             <button type="submit" className="w-full flex items-center justify-center rounded-lg bg-[#00EEAE] py-3 text-white hover:bg-[#00C898] disabled:opacity-35" disabled={isPending || loginLoading}>
-              {(isPending || loginLoading) ? (
-                <>
-                  <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l4-4-4-4v4a8 8 0 00-8 8z"></path>
-                  </svg>
-                  Processing...
-                </>
-              ) : isSignUp ? "Sign Up" : "Sign In"}
+              {(isPending || loginLoading) ? "Processing..." : isSignUp ? "Sign Up" : "Sign In"}
             </button>
 
             {!isSignUp && (
               <p className="text-sm text-gray-600 text-center mt-4">
-                <Link href="/forget-password"  className="text-[#00C898] font-semibold">Forgot Password?</Link>
+                <Link href="/forget-password" className="text-[#00C898] font-semibold">Forgot Password?</Link>
               </p>
             )}
           </form>

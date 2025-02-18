@@ -1,10 +1,18 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
-const VerifyPage = () => {
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={<div>Verifying...</div>}>
+      <VerifyPageContent />
+    </Suspense>
+  );
+}
+
+function VerifyPageContent() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const router = useRouter();
@@ -70,6 +78,4 @@ const VerifyPage = () => {
       </div>
     </div>
   );
-};
-
-export default VerifyPage;
+}
