@@ -26,7 +26,7 @@ const page = () => {
       name: "pH Refreshing Face Wash",
       label: "Detoxifying Cleanser for Women",
       price: 10999,
-      image: "/images/grandma/5.png"
+      image: "/images/grandma/5.jpg"
     },
     {
       id: 2,

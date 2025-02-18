@@ -53,9 +53,10 @@ const ProductTable = () => {
     maxPrice: maxPrice || null,
   });
 
-  const products = data?.products || [];
+  const products = data?.products.products || [];
   const totalPages = data?.totalPages || 1;
-
+  console.log(products);
+  
   const handleAddProduct = (product) => {
     products.push({ ...product, id: `PRD00${products.length + 1}` });
   };
@@ -169,7 +170,7 @@ const ProductTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product, index) => (
+                  {products?.map((product, index) => (
                     <tr key={product.id} className="border-b hover:bg-gray-800">
                       <td className="px-4 py-3 text-sm">{index + 1}</td>
                       <td className="px-4 py-3">

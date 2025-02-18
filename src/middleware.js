@@ -19,6 +19,9 @@ export async function middleware(request) {
   response.headers.set('Access-Control-Expose-Headers', 'X-User-Location')
   response.headers.set('Access-Control-Max-Age', '86400')
 
+  console.log(request.nextUrl);
+  
+
   // Get IP and fetch location
   const forwarded = request.headers.get("x-forwarded-for")
   const ip = forwarded ? forwarded.split(",")[0] : request.ip || "0.0.0.0"

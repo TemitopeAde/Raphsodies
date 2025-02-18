@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateUser } from "@/hooks/store/useSignup";
 import { useLogin } from "@/hooks/store/useLogin";
 import { FaUser, FaEnvelope, FaLock, FaCheck } from "react-icons/fa";
@@ -14,6 +14,14 @@ export default function AuthForm() {
   const [errors, setErrors] = useState({});
   const router = useRouter();
   const [info, setInfo] = useState();
+
+  const searchParams = useSearchParams();
+  console.log({searchParams});
+  
+  const redirect = searchParams.get("redirect") || "/";
+
+  // console.log({redirect});
+  
 
   const { mutate: createUser, isPending } = useCreateUser();
   const { mutate: loginUser, isPending: loginLoading } = useLogin();
@@ -46,7 +54,11 @@ export default function AuthForm() {
       });
     } else {
       loginUser({ email: formData.email, password: formData.password }, {
-        onSuccess: () => router.push("/"),
+        onSuccess: () => {
+          setTimeout(() => {
+            router.push(redirect);
+          }, 1000); 
+        },
         onError: (err) => toast.error(`${err}`, { theme: "colored" }),
       });
     }

@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "@/components/main/footer";
 import ReactQueryProvider from "@/lib/ReactQueryProvide";
 import ToastProvider from "@/lib/ToastProvider";
+import { AuthProvider } from "@/hooks/store/useAuth";
 
 const unbounded = Unbounded({
   variable: "--font-unbounded",
@@ -20,10 +21,12 @@ export default function RootLayout({ children }) {
       <body className={`${unbounded.variable} text-primary antialiased h-full`}>
         <ReactQueryProvider>
           <ToastProvider>
+            <AuthProvider>
             {children}
+            </AuthProvider>
           </ToastProvider>
         </ReactQueryProvider>
-        {/* <Footer /> */}
+        
       </body>
     </html>
   );

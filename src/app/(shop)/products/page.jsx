@@ -2,7 +2,10 @@
 
 import Product from "@/components/main/Product";
 import ProductKit from "@/components/main/ProductKit";
+import ProtectedRoute from "@/components/main/ProtectedRoute";
 import { useProducts } from "@/hooks/admin/useProducts";
+import { useAuth } from "@/hooks/store/useAuth";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 const Page = () => {
@@ -14,6 +17,15 @@ const Page = () => {
   const [location, setLocation] = useState(null); 
   const [countryCode, setCountryCode] = useState("")
   const limit = 100;
+  const router = useRouter();
+
+  const { user, loading, isAuthenticated } = useAuth();
+
+  // useEffect(() => {
+  //   if (!loading && !isAuthenticated) {
+  //     router.push("/sign-in"); 
+  //   }
+  // }, [loading, isAuthenticated, router]);
 
   const { data, isLoading, isError } = useProducts({
     page,
@@ -76,49 +88,51 @@ const Page = () => {
   };
 
   return (
-    <section>
-      <section className="relative h-screen w-screen">
-        <div className="absolute inset-0">
-          <img className="w-full h-full object-cover" src="/images/lp.png" />
-        </div>
+    // <ProtectedRoute>
+      <section>
+        <section className="relative h-screen w-screen">
+          <div className="absolute inset-0">
+            <img className="w-full h-full object-cover" src="/images/lp.png" />
+          </div>
 
-        <div className="absolute inset-0 z-10 flex items-center justify-center px-8 lg:px-24 lg:justify-start">
-          <div className="text-white flex flex-col gap-10 text-center">
-            <div className="flex flex-col gap-6 lg:px-16">
-              <h1 className="text-[28px] lg:px-6 font-unbounded font-bold text-center lg:text-[52px] lg:leading-[68px]">
-                Research Based African Inspired Beauty Brand for the Clearest,
-                Stunning Skin
-              </h1>
-              <h3 className="font-freize font-normal text-[15px] lg:px-32 leading-[28px] lg:text-[18px] lg:leading-[35px]">
-                Our products include a luxurious collection of soaps, oils, body
-                milk, salves, scrubs, serums and body butters.
-              </h3>
+          <div className="absolute inset-0 z-10 flex items-center justify-center px-8 lg:px-24 lg:justify-start">
+            <div className="text-white flex flex-col gap-10 text-center">
+              <div className="flex flex-col gap-6 lg:px-16">
+                <h1 className="text-[28px] lg:px-6 font-unbounded font-bold text-center lg:text-[52px] lg:leading-[68px]">
+                  Research Based African Inspired Beauty Brand for the Clearest,
+                  Stunning Skin
+                </h1>
+                <h3 className="font-freize font-normal text-[15px] lg:px-32 leading-[28px] lg:text-[18px] lg:leading-[35px]">
+                  Our products include a luxurious collection of soaps, oils, body
+                  milk, salves, scrubs, serums and body butters.
+                </h3>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
+
+        <section className="bg-custom-bg">
+          <div className="flex flex-col gap-6 items-center py-20">
+            <h1 className="font-unbounded font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
+              Our Products
+            </h1>
+            <p className="lg:text-2xl font-freize lg:leading-[35px] text-[15px]">
+              African Rhapsody Products
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-48 pb-20">
+            {products.length > 0 ? (
+              <Product data={products} countryCode={countryCode}/>
+            ) : (
+              <p className="text-center text-gray-500">No products found.</p>
+            )}
+
+            <ProductKit data={Kits} />
+          </div>
+        </section>
       </section>
-
-      <section className="bg-custom-bg">
-        <div className="flex flex-col gap-6 items-center py-20">
-          <h1 className="font-unbounded font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
-            Our Products
-          </h1>
-          <p className="lg:text-2xl font-freize lg:leading-[35px] text-[15px]">
-            African Rhapsody Products
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-48 pb-20">
-          {products.length > 0 ? (
-            <Product data={products} countryCode={countryCode}/>
-          ) : (
-            <p className="text-center text-gray-500">No products found.</p>
-          )}
-
-          <ProductKit data={Kits} />
-        </div>
-      </section>
-    </section>
+    // </ProtectedRoute>
   );
 };
 

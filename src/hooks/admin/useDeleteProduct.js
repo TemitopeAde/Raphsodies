@@ -18,7 +18,9 @@ export const useDeleteProduct = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete product");
+        console.warn("Failed to delete product");
+        
+        // throw new Error("Failed to delete product");
       }
 
       return response.json();

@@ -12,6 +12,7 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import imageCompression from "browser-image-compression";
 
 const ORIGIN = "https://raphsodies.vercel.app";
 
@@ -137,11 +138,16 @@ const ProductForm = ({ isOpen, onClose }) => {
 
   const isFormComplete = isValid && isDirty && imageUrl && description && !isUploading;
 
+  const compressImage = async (imageFile) => {
+    const options = { maxSizeMB: 0.5, maxWidthOrHeight: 800, useWebWorker: true };
+    return await imageCompression(imageFile, options);
+  };
+
   const uploadImage = async imageFile => {
     setIsUploading(true);
-
+    const compressedFile = await compressImage(imageFile);
     const formData = new FormData();
-    formData.append("file", imageFile);
+    formData.append("file", compressedFile);
 
     try {
       const response = await fetch(`${ORIGIN}/api/products/upload-image`, {

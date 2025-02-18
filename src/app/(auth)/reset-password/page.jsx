@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const ResetPasswordPage = () => {
+const ResetPasswordForm = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  
+
   const {
     register,
     handleSubmit,
@@ -110,6 +110,14 @@ const ResetPasswordPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const ResetPasswordPage = () => {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 };
 
