@@ -6,6 +6,8 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const token = searchParams.get('token');
 
+    console.log({token});
+  
     if (!token) {
       return NextResponse.json({ message: 'Invalid or missing token' }, { status: 400 });
     }

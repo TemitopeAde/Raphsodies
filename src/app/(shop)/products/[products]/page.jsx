@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = ({params}) => {
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const {addToCart, cart} = useCartStore();  
   const [quantity, setQuantity] = useState(1)
   const [productId, setProductId] = useState(null)

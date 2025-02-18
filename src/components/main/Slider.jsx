@@ -16,33 +16,38 @@ export default function ProductSwiper() {
 
   return (
     <section className="bg-gray-50">
-      <Swiper
-        spaceBetween={0}
-        slidesPerView={5}
-        autoplay={{
-          delay: 3000, 
-          disableOnInteraction: false,
-        }}
-        breakpoints={{
-          640: { slidesPerView: 2 },
-          768: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
-        }}
-        modules={[Autoplay]} 
-        className="product-swiper"
-      >
-        {products.map((product) => (
-          <SwiperSlide key={product.id}>
-            <div className="shadow-lg overflow-hidden">
-              <img
-                src={product.img}
-                alt={product.alt}
-                className="w-full h-[169px] object-cover"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+     <Swiper
+  spaceBetween={0}
+  slidesPerView={1} // Default slidesPerView for mobile (smallest screens)
+  loop={true}
+  speed={1000}
+  autoplay={{
+    delay: 1000,
+    disableOnInteraction: false,
+  }}
+  breakpoints={{
+    // Breakpoints for different screen sizes
+    320: { slidesPerView: 1 }, // Mobile screens (smallest)
+    640: { slidesPerView: 2 }, // Small tablets
+    768: { slidesPerView: 3 }, // Tablets
+    1024: { slidesPerView: 4 }, // Laptops
+    1280: { slidesPerView: 5 }, // Larger screens
+  }}
+  modules={[Autoplay]}
+  className="product-swiper"
+>
+  {products.map((product) => (
+    <SwiperSlide key={product.id}>
+      <div className="shadow-lg overflow-hidden">
+        <img
+          src={product.img}
+          alt={product.alt}
+          className="w-full h-[60px] lg:h-[169px] object-cover"
+        />
+      </div>
+    </SwiperSlide>
+  ))}
+</Swiper>
     </section>
   );
 }

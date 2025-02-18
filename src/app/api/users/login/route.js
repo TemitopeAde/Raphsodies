@@ -1,7 +1,7 @@
 import { loginUser } from '@/actions/loginUsers';
 import { createJWTToken } from '@/utils/jwt';
 import { NextResponse } from 'next/server';
-import * as cookie from 'cookie';
+import { cookies } from 'next/headers';
 
 export async function POST(request) {
   try {
@@ -33,21 +33,29 @@ export async function POST(request) {
 
     const token = createJWTToken(user);
 
-    const cookieOptions = {
+    cookies().set({
+      name: 'authToken',
+      value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Strict',
-      maxAge: 60 * 60 * 24,
+      maxAge: 86400, // 1 day
       path: '/',
-    };
+    });
 
-    const cookies = cookie.serialize('token', token, cookieOptions);
+    // const cookieOptions = {
+    //   httpOnly: false,
+    //   secure: true,
+    //   sameSite: "None",
+    //   signed: true,
+    //   maxAge: 1000 * 60 * 60 * 24 * 7
+    // };
+
+    // const cookies = cookie.serialize('token', token, cookieOptions);
 
     const response = NextResponse.json(
-      { message: 'Login successful', token },
+      { message: 'Login successful'},
       { status: 200 }
     );
-    response.headers.set('Set-Cookie', cookies);
     
     return response;
   } catch (error) {

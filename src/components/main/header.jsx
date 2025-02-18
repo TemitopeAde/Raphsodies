@@ -15,8 +15,6 @@ const Header = () => {
   const pathname = usePathname();
 
   const {cart} = useCartStore()
-
-  // console.log({carts: cart.length});
   
 
   useEffect(() => {
@@ -103,6 +101,10 @@ const Header = () => {
                       fill="#292F4A"
                     />
                   </svg>
+                 
+                  <span className='bg-[#C78700] text-[9px] left-[48px] bottom-[0px] flex justify-center items-center w-[13px] h-[13px] rounded-full text-white absolute'>
+                    <p>{cart?.length}</p>
+                  </span>
                 </span>
 
                 <span className='hidden lg:block'>
@@ -121,7 +123,7 @@ const Header = () => {
                   </svg>
 
                   <span className='bg-[#C78700] left-[67px] bottom-[3px] flex justify-center items-center w-[18px] h-[18px] rounded-full text-white absolute'>
-                    <p>{cart.length}</p>
+                    <p>{cart?.length}</p>
                   </span>
                 </span>
               </button>
@@ -141,7 +143,6 @@ const Header = () => {
                     />
                   </svg>
                 </span>
-
                 <span className='hidden lg:block'>
                   <svg
                     width="24"
@@ -156,7 +157,6 @@ const Header = () => {
                     />
                   </svg>
                 </span>
-                
               </button>
             </div>
 

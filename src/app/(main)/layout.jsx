@@ -1,3 +1,4 @@
+import Footer from "@/components/main/footer";
 import Header from "@/components/main/header";
 import React from "react";
 
@@ -6,6 +7,7 @@ const layout = ({ children }) => {
     <div>
       <Header />
       {children}
+      <Footer />
     </div>
   );
 };

@@ -64,7 +64,7 @@ const Page = () => {
             <img
               src="/images/story.png"
               alt=""
-              className="w-full h-[316px] object-cover rounded-[24px]"
+              className="w-full h-full lg:h-[316px] object-cover rounded-[24px]"
             />
           </div>
 
@@ -91,7 +91,7 @@ const Page = () => {
             <img
               src="/images/product-bottle.png"
               alt=""
-              className="w-full h-[316px] lg:h-full object-contain rounded-[24px]"
+              className="w-full h-full lg:h-[316px] object-contain rounded-[24px]"
             />
           </div>
 
@@ -118,7 +118,7 @@ const Page = () => {
             <img
               src="/images/image-1.png"
               alt=""
-              className="w-full h-[316px] lg:h-full object-cover rounded-[24px]"
+              className="w-full h-full lg:h-[316px] object-cover rounded-[24px]"
             />
           </div>
 
