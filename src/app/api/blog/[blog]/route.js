@@ -43,7 +43,7 @@ export async function DELETE(req) {
   try {
     const url = new URL(req.url);
     const id = url.pathname.split("/").pop();
-    console.log({ id });
+    
 
     // Delete the blog from your database
     await prisma.blog.delete({
@@ -55,3 +55,29 @@ export async function DELETE(req) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+
+export async function GET(req) {
+  try {
+    const url = new URL(req.url);
+    const id = url.pathname.split("/").pop();
+
+    if (!id) {
+      return NextResponse.json({ error: "Blog ID is required" }, { status: 400 });
+    }
+
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+    });
+
+    if (!blog) {
+      return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(blog, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
+

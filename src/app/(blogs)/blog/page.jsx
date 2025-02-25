@@ -1,18 +1,31 @@
-import Link from "next/link";
-import React from "react";
+"use client";
 
-const page = () => {
-  const Blog = [
-    {
-      image: "/images/image-3.png",
-      title:
-        "Harnessing Africa Botanicals: Top Skincare Ingredients from the Continent"
-    },
-    {
-      image: "/images/image-4.png",
-      title: "Natural Skincare Tips for Different African Skin Types"
-    }
-  ];
+import Link from "next/link";
+import { useQuery, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react"; // ShadCN loader icon
+
+const queryClient = new QueryClient();
+
+const fetchBlogs = async () => {
+  const response = await fetch("/api/blog");
+  if (!response.ok) throw new Error("Failed to fetch blogs");
+  return response.json();
+};
+
+export default function Page() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BlogPage />
+    </QueryClientProvider>
+  );
+}
+
+function BlogPage() {
+  const { data: blogs, isLoading, isError } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: fetchBlogs,
+  });
+
   return (
     <section className="gap-16 pt-36 pb-8 px-4 bg-custom-bg flex flex-col justify-center text-center">
       <div className="flex flex-col gap-8">
@@ -21,24 +34,31 @@ const page = () => {
             Unlock the Secrets to Radiant Skin
           </h1>
           <p className="font-freize text-[15px] font-normal">
-            Discover tips, trends, and must-have products for the glowing skin
-            you’ve always wanted!
+            Discover tips, trends, and must-have products for the glowing skin you’ve always wanted!
           </p>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-around lg:w-[80%] mx-auto gap-10">
-        {Blog.map((item, index) =>
-          <div key={index} className="w-full flex flex-col text-center gap-4">
-            <img src={item.image} className="w-full" />
-            <Link href={`/blog/${index}`} className="font-unbounded font-bold lg:text-[26px] lg:leading-[37px]">
-              {item.title}
-            </Link>
-          </div>
-        )}
-      </div>
+      {isLoading && (
+        <div className="flex justify-center items-center py-10">
+          <Loader2 className="animate-spin w-10 h-10 text-gray-500" />
+        </div>
+      )}
+      
+      {isError && <p className="text-center text-lg text-red-500">Failed to load blogs</p>}
+
+      {!isLoading && !isError && (
+        <div className="flex flex-col lg:flex-row justify-around lg:w-[80%] mx-auto gap-10">
+          {blogs.map((item) => (
+            <div key={item.id} className="w-full flex flex-col text-center gap-4">
+              <img src={item.image} alt={item.title} className="w-full rounded-lg shadow-md h-96" />
+              <Link href={`/blog/${item.id}`} className="font-unbounded font-bold lg:text-[26px] lg:leading-[37px] hover:underline">
+                {item.title}
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
-};
-
-export default page;
+}
