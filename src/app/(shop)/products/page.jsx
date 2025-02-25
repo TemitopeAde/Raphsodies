@@ -72,22 +72,23 @@ const Page = () => {
     label: "Face & Body Rejuvenation Kit",
     images: [
       {
-        src: "/images/image-1.png",
+        src: "/images/face/37.png",
       },
       {
-        src: "/images/image-1.png",
+        src: "/images/face/38.png",
       },
       {
-        src: "/images/image-1.png",
+        src: "/images/face/39.png",
       },
       {
-        src: "/images/image-1.png",
+        src: "/images/face/40.png",
       },
       {
-        src: "/images/image-1.png",
+        src: "/images/face/41.png",
       },
     ],
     price: "45643",
+    priceDollar: "39"
   };
 
   return (

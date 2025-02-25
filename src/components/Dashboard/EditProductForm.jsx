@@ -125,6 +125,7 @@ const ImageDropzone = ({ onImageSelect, imagePreview, isUploading, onRemoveImage
 };
 
 const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
+  
   const queryClient = useQueryClient();
   const [imagePreview, setImagePreview] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -144,16 +145,11 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
       name: '',
       price: '',
       stock: '',
-      category: '',
-      attributes: ''
     }
   });
   
   const watchedFields = watch(); // Watches all form fields dynamically
-  console.log({watchedFields});
-  
-  
-  
+    
 
   const createInitialEditorState = (text) => {
     return {
@@ -322,7 +318,26 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
     setImageUrl(null);
   };
 
+  // const extractTextFromDescription = (descriptionJSON) => {
+  //   try {
+  //     const parsedDescription = JSON.parse(descriptionJSON);
+  //     const children = parsedDescription?.root?.children || [];
+  
+  //     return children
+  //       .map((child) =>
+  //         child.children?.map((textNode) => textNode.text).join(" ")
+  //       )
+  //       .join("\n")
+  //       .trim();
+  //   } catch (error) {
+  //     console.error("Error parsing description:", error);
+  //     return "";
+  //   }
+  // };
+
   const extractTextFromDescription = (descriptionJSON) => {
+    if (!descriptionJSON) return ""; 
+  
     try {
       const parsedDescription = JSON.parse(descriptionJSON);
       const children = parsedDescription?.root?.children || [];
@@ -335,9 +350,10 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
         .trim();
     } catch (error) {
       console.error("Error parsing description:", error);
-      return "";
+      return ""; 
     }
   };
+
 
   const updateProduct = async data => {
     if (!imageUrl) throw new Error("Image upload required");
@@ -495,7 +511,7 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
             <Label htmlFor="category">Category</Label>
             <Input
               id="category"
-              {...register("category", { required: "Category is required" })}
+              {...register("category")}
             />
             {errors.category && (
               <p className="text-red-500 text-sm">{errors.category.message}</p>
@@ -507,9 +523,7 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
             <Input
               id="attributes"
               placeholder="Comma separated values"
-              {...register("attributes", {
-                required: "Attributes is required"
-              })}
+              {...register("attributes")}
             />
             {errors.attributes && (
               <p className="text-red-500 text-sm">{errors.attributes.message}</p>
@@ -525,7 +539,7 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           
           <Button
             type="submit"
-            disabled={!isValid || isUploading || mutation.isPending}
+            disabled={ isUploading || mutation.isPending}
             className={`w-full font-bold text-xl mt-4 flex items-center justify-center gap-2 
                 ${!isValid || isUploading ? "bg-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"}`}
             >

@@ -23,10 +23,10 @@ const Product = ({ data, type, countryCode }) => {
               <button className="mt-3 cursor-none font-unbounded w-full py-2 rounded-[20px] bg-[#292F4A] text-white lg:text-[18px] font-bold">
                 {countryCode === "NG"
                   ? item?.price !== undefined && item?.price !== null
-                    ? `NGN ${item?.price?.toLocaleString("en-NG")}`
+                    ? `NGN ${parseFloat(item?.price).toLocaleString("en-NG", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
                     : "Unavailable"
                   : item?.priceDollar !== undefined && item?.priceDollar !== null
-                    ? `$ ${item?.priceDollar?.toLocaleString("en-US")}`
+                    ? `$ ${parseFloat(item?.priceDollar).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
                     : "Unavailable"}
               </button>
             </div>

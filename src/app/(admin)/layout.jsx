@@ -9,8 +9,12 @@ import {
   ShoppingCart, 
   Users, 
   Menu, 
-  X
+  X,
+  Paperclip,
+  NewspaperIcon,
+  Contact2Icon
 } from 'lucide-react';
+import { FaBlog } from 'react-icons/fa';
 
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,6 +25,8 @@ const Layout = ({ children }) => {
     { title: 'Products', icon: <Package className="w-5 h-5" />, href: '/admin/products' },
     { title: 'Orders', icon: <ShoppingCart className="w-5 h-5" />, href: '/admin/orders' },
     { title: 'Users', icon: <Users className="w-5 h-5" />, href: '/admin/users' },
+    { title: 'Blog', icon: <NewspaperIcon className="w-5 h-5" />, href: '/admin/blog' },
+    { title: 'Contacts', icon: <Contact2Icon className="w-5 h-5" />, href: '/admin/contact-us' }
   ];
 
   return (

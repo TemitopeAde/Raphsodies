@@ -19,12 +19,12 @@ export async function createProduct(data) {
       data: {
         name: data.name,
         description: data.description || '',
-        price: parseFloat(data.price),
-        stock: data.stock,
+        price: parseFloat(data.price) || 0,
+        stock: data.stock || 0,
         imageUrl: data.imageUrl || '',
-        categoryId: category.id,
+        categoryId: category.id || "",
         attributes: data.attributes || [],
-        priceDollar: data.priceDollar
+        priceDollar: data.priceDollar || 0
       },
     });
 

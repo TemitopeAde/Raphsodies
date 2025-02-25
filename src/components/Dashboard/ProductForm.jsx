@@ -136,7 +136,9 @@ const ProductForm = ({ isOpen, onClose }) => {
     mode: 'onChange'
   });
 
-  const isFormComplete = isValid && isDirty && imageUrl && description && !isUploading;
+  // const isFormComplete = isValid && isDirty && imageUrl && !isUploading;
+  const isFormComplete = !!(imageUrl && !isUploading && errors.name === undefined && errors.price === undefined);
+
 
   const compressImage = async (imageFile) => {
     const options = { maxSizeMB: 0.5, maxWidthOrHeight: 800, useWebWorker: true };
@@ -192,7 +194,10 @@ const ProductForm = ({ isOpen, onClose }) => {
     setImageUrl(null);
   };
 
+
   const extractTextFromDescription = (descriptionJSON) => {
+    if (!descriptionJSON) return ""; 
+  
     try {
       const parsedDescription = JSON.parse(descriptionJSON);
       const children = parsedDescription?.root?.children || [];
@@ -205,9 +210,10 @@ const ProductForm = ({ isOpen, onClose }) => {
         .trim();
     } catch (error) {
       console.error("Error parsing description:", error);
-      return "";
+      return ""; 
     }
   };
+  
 
   const createProduct = async data => {
     if (!imageUrl) throw new Error("Image upload required");
@@ -217,13 +223,13 @@ const ProductForm = ({ isOpen, onClose }) => {
 
     const productData = {
       name: data.name,
-      description: extractedText,
+      description: extractedText || data.name,
       price: Number(data.price),
-      stock: Number(data.stock),
-      attributes: attrArray,
-      categoryName: data.category,
+      stock: data.stock ? Number(data.stock) : 0,
+      attributes: attrArray || [],
+      categoryName: data.name.split(" ").pop() || "",
       imageUrl: imageUrl,
-      priceDollar: data.priceDollar
+      priceDollar: data.priceDollar ? Number(data.priceDollar) : 0
     };
 
     const response = await fetch(`${ORIGIN}/api/products/create-product`, {
@@ -377,7 +383,7 @@ const ProductForm = ({ isOpen, onClose }) => {
             <Label htmlFor="category">Category</Label>
             <Input
               id="category"
-              {...register("category", { required: "Category is required" })}
+              {...register("category")}
             />
             {errors.category && (
               <p className="text-red-500 text-sm">{errors.category.message}</p>
@@ -389,9 +395,7 @@ const ProductForm = ({ isOpen, onClose }) => {
             <Input
               id="attributes"
               placeholder="Comma separated values"
-              {...register("attributes", {
-                required: "Attributes is required"
-              })}
+              {...register("attributes")}
             />
             {errors.attributes && (
               <p className="text-red-500 text-sm">{errors.attributes.message}</p>

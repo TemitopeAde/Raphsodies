@@ -19,7 +19,6 @@ import { useProducts } from "@/hooks/admin/useProducts";
 import { useDeleteProduct } from "@/hooks/admin/useDeleteProduct";
 import { toast } from 'react-toastify';
 import { useSingleProduct } from "@/hooks/admin/useSingleProduct";
-import { isPending } from "@reduxjs/toolkit";
 import EditProductForm from "../Dashboard/EditProductForm";
 import { Input } from "../ui/input";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
@@ -55,8 +54,8 @@ const ProductTable = () => {
 
   const products = data?.products.products || [];
   const totalPages = data?.totalPages || 1;
-  console.log(products);
   
+
   const handleAddProduct = (product) => {
     products.push({ ...product, id: `PRD00${products.length + 1}` });
   };
@@ -73,11 +72,11 @@ const ProductTable = () => {
 
   const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
   const { data: singleData, isPending: singlePending, isError: singleError } = useSingleProduct(productId)
-
+  
 
   useEffect(() => {
-    if (singleData) {
-      setProductsData(singleData?.product);
+    if (singleData) { 
+      setProductsData(singleData?.data.product);
     }
   }, [singleData]); 
   
@@ -181,8 +180,12 @@ const ProductTable = () => {
                         />
                       </td>
                       <td className="px-4 py-3 text-sm">{product.name}</td>
-                      <td className="px-4 py-3 text-sm">₦{parseFloat(product?.price).toFixed(2)}</td>
-                      <td className="px-4 py-3 text-sm">${parseFloat(product?.priceDollar).toFixed(2)}</td>
+                      <td className="px-4 py-3 text-sm">
+                        ₦{parseFloat(product?.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
+                      <td className="px-4 py-3 text-sm">
+                        ${parseFloat(product?.priceDollar).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
                       <td className="px-4 py-3 text-sm">{product.category.name}</td>
                       <td className="px-4 py-3 text-sm">{product.stock} units</td>
                       <td className="px-4 py-3">

@@ -10,7 +10,7 @@ const productSchema = Joi.object({
   imageUrl: Joi.string().uri().optional(),
   label: Joi.string().optional(),
   otherDetails: Joi.object().optional(),
-  categoryName: Joi.string().optional(),
+  categoryName: Joi.string().optional().allow("").empty(""),
   attributes: Joi.array().optional(),
   priceDollar: Joi.number().positive().required()
 });
