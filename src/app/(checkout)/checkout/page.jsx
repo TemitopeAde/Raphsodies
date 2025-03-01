@@ -5,28 +5,47 @@ import { useCountries } from "@/hooks/payment/useCountries";
 import useCartStore from "@/hooks/store/cartStore";
 import { useAuth } from "@/hooks/store/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const page = () => {
   const {cart} = useCartStore();
-  const router = useRouter()
+  const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
   const { data: countryList, isLoading: loadingCountries, isError: hasCountryError, error: countryError } = useCountries();
   
   const deliveryFee = 10;
-  const totalCost = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const netTotal = totalCost + deliveryFee
+  const totalCost = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
+  const netTotal = totalCost + deliveryFee;
 
   const { user, loading, isAuthenticated } = useAuth();
     
   useEffect(() => {
-    console.log({user, loading, isAuthenticated});
-    
-    if (!loading && !isAuthenticated) {
-      router.push("/sign-in"); 
+    // Only run the authentication check when the auth state is fully loaded
+    if (!loading) {
+      console.log({user, loading, isAuthenticated});
+      
+      if (!isAuthenticated) {
+        // Store the current URL as a redirect target after login
+        // router.push("/sign-in?redirect=/checkout");
+        window.location.href = "/sign-in?redirect=/checkout";
+      } else {
+        // Mark authentication as checked to render the page content
+        setAuthChecked(true);
+      }
     }
-  }, [isAuthenticated, loading, router]);
+  }, [isAuthenticated, loading, router, user]);
 
-  
+  // Show loading state while authentication is being checked
+  if (loading || !authChecked) {
+    return (
+      <section className="bg-custom-bg mt-20">
+        <div className="px-10 lg:px-24 flex justify-center items-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+          {/* <p className="font-freize text-lg">Loading...</p> */}
+        </div>
+      </section>
+    );
+  }
   
   return (
     <section className="bg-custom-bg mt-20">
@@ -74,9 +93,9 @@ const page = () => {
               />
             </svg>
           </span>
-          <h2 className="font-freize font-normal lg:text-[22px] text-xs leading-[26px] lg:leading-[35px]">
+          {/* <h2 className="font-freize font-normal lg:text-[22px] text-xs leading-[26px] lg:leading-[35px]">
             <span>Nefertiti Face </span>
-          </h2>
+          </h2> */}
           <span>
             <svg
               width="17"
@@ -101,8 +120,6 @@ const page = () => {
         </div>
 
         <div>
-          
-
           <div className="flex lg:flex-row lg:justify-between lg:gap-16 flex-col-reverse gap-9">
             <CheckOutForm 
               netTotal={netTotal} 
@@ -110,8 +127,6 @@ const page = () => {
               loadingCountries={loadingCountries}
               countryError={countryError}
               hasCountryError={hasCountryError}
-
-             
             />
             <div className="basis-1/2 flex flex-col gap-4">
               {cart?.map((item, index) => (
@@ -128,7 +143,6 @@ const page = () => {
                   </div>
 
                   <div className="lg:basis-2/5 text-end">
-                   
                     <h1 className="text-primary lg:text-[18px] font-semibold font-unbounded lg:leading-5">
                       {item?.currency === 'USD' ? `$${item?.priceDollar}` : `NGN ${item?.price}`}
                     </h1>
@@ -140,27 +154,23 @@ const page = () => {
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Sub Total</h2>
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
-                    {/* Handle sub total with currency check */}
                     {cart?.some(item => item.currency === 'USD') ? `$${totalCost}` : `NGN ${totalCost}`}
                   </h2>
                 </div>
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Delivery</h2>
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
-                    {/* Handle delivery fee with currency check */}
                     {cart?.some(item => item.currency === 'USD') ? `$${deliveryFee}` : `NGN ${deliveryFee}`}
                   </h2>
                 </div>
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-bold font-freize lg:text-[25px] lg:leading-[34px]">Total</h2>
                   <h2 className="text-primary font-bold font-freize lg:text-[25px] lg:leading-[34px]">
-                    {/* Handle total cost with currency check */}
                     {cart?.some(item => item.currency === 'USD') ? `$${totalCost + deliveryFee}` : `NGN ${totalCost + deliveryFee}`}
                   </h2>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

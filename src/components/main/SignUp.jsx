@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateUser } from "@/hooks/store/useSignup";
 import { useLogin } from "@/hooks/store/useLogin";
-import { FaUser, FaEnvelope, FaLock, FaCheck } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import Link from "next/link";
 
 export default function AuthForm() {
@@ -22,9 +22,6 @@ function AuthFormContent() {
   const [errors, setErrors] = useState({});
   const router = useRouter();
   
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/";
-
   const { mutate: createUser, isPending } = useCreateUser();
   const { mutate: loginUser, isPending: loginLoading } = useLogin();
 
@@ -57,10 +54,12 @@ function AuthFormContent() {
     } else {
       loginUser({ email: formData.email, password: formData.password }, {
         onSuccess: () => {
-          router.push("/checkout");
-          // setTimeout(() => {
-            
-          // }, 1000); 
+          toast.success("Login successful! Redirecting...", { theme: "colored" });
+          
+          setTimeout(() => {
+            window.location.href = '/checkout'
+            // router.push("/checkout");
+          }, 1500); 
         },
         onError: (err) => toast.error(`${err}`, { theme: "colored" }),
       });
@@ -107,6 +106,16 @@ function AuthFormContent() {
               <input type="password" placeholder="Password" className="w-full rounded-lg border px-4 py-3 pl-10 focus:ring-[#00EEAE]" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
               {errors.password && <p className="mt-1 text-sm text-[#FF4D4D]">{errors.password}</p>}
             </div>
+
+            {isSignUp && (
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <FaLock className="text-gray-400" />
+                </div>
+                <input type="password" placeholder="Confirm Password" className="w-full rounded-lg border px-4 py-3 pl-10 focus:ring-[#00EEAE]" value={formData.confirmPassword} onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} />
+                {errors.confirmPassword && <p className="mt-1 text-sm text-[#FF4D4D]">{errors.confirmPassword}</p>}
+              </div>
+            )}
 
             <button type="submit" className="w-full flex items-center justify-center rounded-lg bg-[#00EEAE] py-3 text-white hover:bg-[#00C898] disabled:opacity-35" disabled={isPending || loginLoading}>
               {(isPending || loginLoading) ? "Processing..." : isSignUp ? "Sign Up" : "Sign In"}
