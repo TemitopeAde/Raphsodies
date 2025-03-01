@@ -29,7 +29,7 @@ const page = () => {
         // router.push("/sign-in?redirect=/checkout");
         window.location.href = "/sign-in?redirect=/checkout";
       } else {
-        // Mark authentication as checked to render the page content
+
         setAuthChecked(true);
       }
     }

@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const initialize = async params => {
-  console.log({key: process.env.TEST_SECRET_KEY});
   
   try {
     const response = await axios.post(

@@ -9,11 +9,14 @@ export async function POST(req) {
     const body = await req.json();
     console.log({body});
     
-    const { email, amount, cartItems, deliveryInfo } = body;
+    const { email, cartItems, deliveryInfo, userId } = body;
+
+    // console.log({ email, amount, cartItems, deliveryInfo, userId });
     
-    if (!email || !amount || !cartItems?.length || !deliveryInfo) {
+    
+    if (!email ||  !cartItems?.length || !deliveryInfo || !userId) {
       return NextResponse.json({ 
-        message: 'Email, amount, cart items, and delivery info are required' 
+        message: 'Email, userId, cart items, and delivery info are required' 
       }, { status: 400 });
     }
     
@@ -28,16 +31,21 @@ export async function POST(req) {
 
     const currency = uniqueCurrencies[0]; 
 
+    console.log({cartItems});
+    
+
+    const netAmount = cartItems?.reduce((acc, item) => {
+      const itemPrice = Number(item.price) || 0;
+      return acc + itemPrice * item.quantity;
+    }, 0) * 100;
     
     const params = {
       email,
-      amount: cartItems.reduce((acc, item) => {
-        const itemPrice = item.currency === 'USD' ? item.priceDollar : item.price;
-        return acc + itemPrice * item.quantity;
-      }, 0) * 100,
+      amount: netAmount,
       currency: currency,
       callback_url: `${ORIGIN}/checkout-success`,
       metadata: {
+        userId,
         cartItems: cartItems.map((item) => ({
           id: item.id,
           name: item.name,
@@ -57,13 +65,13 @@ export async function POST(req) {
         }
       }
     };
-    
 
+    
     const response = await initialize(params);
-    // console.log({response});
+    console.log({response});
     return NextResponse.json(response?.data, { status: 200 });
   } catch (error) {
-    console.error("Paystack API error:", error);
+    console.error("Paystack API error:", error.message);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

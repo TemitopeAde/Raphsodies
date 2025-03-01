@@ -47,5 +47,7 @@ export async function POST(request) {
 async function handleSuccessfulCharge(chargeData) {
 
   console.log('Successful charge:', chargeData);
+  console.log('cart', chargeData.metadata.cartItems);
+  
 }
 
