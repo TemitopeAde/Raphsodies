@@ -4,6 +4,7 @@ import CartPage from "@/components/Cart";
 import Modals from "@/components/main/modal";
 import Product from "@/components/main/Product";
 import { DialogCustomAnimation } from "@/components/Modal";
+import { useProducts } from "@/hooks/admin/useProducts";
 import { useSingleProduct } from "@/hooks/admin/useSingleProduct";
 import useCartStore from "@/hooks/store/cartStore";
 import { useRouter } from "next/navigation";
@@ -19,6 +20,15 @@ const page = ({params}) => {
   const [location, setLocation] = useState(null); 
   const [countryCode, setCountryCode] = useState("")
   const router = useRouter()
+  const [item, setItem] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+    const [minPrice, setMinPrice] = useState("");
+    const [maxPrice, setMaxPrice] = useState("");
+    const [page, setPage] = useState(1);
+    const limit = 4;
+
+
   
 
   useEffect(() => {
@@ -97,9 +107,27 @@ const page = ({params}) => {
       setLocation(data?.location)
       setCountryCode(data?.location?.countryCode)
   }, [data]);
-  
-  
 
+  
+  const { data: productData, isLoading: productLoading, isError: productError } = useProducts({
+    page: 1,  // Fetch all products
+    limit: 1000,  // Set a high limit to get all products
+    search: "",
+    minPrice: null,
+    maxPrice: null,
+  });
+
+  const [randomProducts, setRandomProducts] = useState([]);
+  
+  useEffect(() => {
+    if (productData?.products?.products.length > 0) {
+      const shuffled = [...productData.products.products].sort(() => 0.5 - Math.random());
+      setRandomProducts(shuffled.slice(0, 4)); // Select 4 random products
+    }
+  }, [productData]);
+
+  console.log({productData, item});
+  
   return (
     <section className="bg-custom-bg mt-20">
       <div className="px-10 lg:px-24 flex flex-col gap-20 py-8">
@@ -369,7 +397,7 @@ const page = ({params}) => {
             </h1>
 
             <div>
-              <Product data={products} type="other" />
+              <Product data={randomProducts} type="other" />
             </div>
           </div>
         </div>
