@@ -512,14 +512,14 @@ const page = () => {
         </span>
       </span>
 
-          {/* <video
+          <video
             ref={videoRef}
             className="w-full h-full object-cover rounded-[13px]"
             src="/videos/video.mp4"    
             loop
             poster="/images/thumb-one.png"
            
-          /> */}
+          />
           <div className="flex justify-center lg:hidden">
             <div>
               <span
