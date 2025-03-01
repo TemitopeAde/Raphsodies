@@ -3,14 +3,28 @@
 import CheckOutForm from "@/components/main/CheckoutForm";
 import { useCountries } from "@/hooks/payment/useCountries";
 import useCartStore from "@/hooks/store/cartStore";
+import { useAuth } from "@/hooks/store/useAuth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const page = () => {
   const {cart} = useCartStore();
+  const router = useRouter()
   const { data: countryList, isLoading: loadingCountries, isError: hasCountryError, error: countryError } = useCountries();
   
   const deliveryFee = 10;
   const totalCost = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const netTotal = totalCost + deliveryFee
+
+  const { user, loading, isAuthenticated } = useAuth();
+    
+  useEffect(() => {
+    console.log({user, loading, isAuthenticated});
+    
+    if (!loading && !isAuthenticated) {
+      router.push("/sign-in"); 
+    }
+  }, [isAuthenticated, loading, router]);
 
   
   

@@ -57,9 +57,10 @@ function AuthFormContent() {
     } else {
       loginUser({ email: formData.email, password: formData.password }, {
         onSuccess: () => {
-          setTimeout(() => {
-            router.push(redirect);
-          }, 1000); 
+          router.push("/checkout");
+          // setTimeout(() => {
+            
+          // }, 1000); 
         },
         onError: (err) => toast.error(`${err}`, { theme: "colored" }),
       });

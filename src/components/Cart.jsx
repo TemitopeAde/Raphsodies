@@ -48,7 +48,7 @@ const CartPage = ({ setOpen, open }) => {
                     {/* Product Details */}
                     <div className="flex-1 px-4">
                       <p className="text-[#171717] font-medium">{item?.name}</p>
-                      <p className="text-sm text-gray-500">PS4</p>
+                      {/* <p className="text-sm text-gray-500">PS4</p> */}
                       <button onClick={() => removeItem(item?.id)} className="text-red-500 text-sm mt-1">
                         Remove
                       </button>
