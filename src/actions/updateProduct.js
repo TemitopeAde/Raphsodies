@@ -19,7 +19,7 @@ export async function updateProduct(productId, updatedData) {
     if (!category) {
       category = await prisma.category.create({
         data: {
-          name: data.categoryName
+          name: updatedData.categoryName
         }
       });
     }

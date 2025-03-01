@@ -147,7 +147,7 @@ const page = ({params}) => {
             </svg>
           </span>
           <h2 className="font-freize font-bold lg:text-[22px] text-base leading-[26px] lg:leading-[35px]">
-            <span>Nefertiti Face Moisturizer</span>
+            <span>{product?.name}</span>
           </h2>
         </div>
 

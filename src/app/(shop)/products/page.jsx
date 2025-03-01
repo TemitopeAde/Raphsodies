@@ -38,6 +38,8 @@ const Page = () => {
     maxPrice: maxPrice || null,
   });
 
+  console.log({data});
+  
   
   useEffect(() => {
     setLocation(data?.location)
@@ -72,12 +74,15 @@ const Page = () => {
     label: "Face & Body Rejuvenation Kit",
     images: [
       {
+        id: "cm7h850fj000jl503f54p8u1b",
         src: "/images/face/37.png",
       },
       {
+        id: "cm7klov5y000jjv03dmm376a4",
         src: "/images/face/38.png",
       },
       {
+        id: "cm7h83h2z000hl503z6wk6ngi",
         src: "/images/face/39.png",
       },
       {
@@ -87,7 +92,7 @@ const Page = () => {
         src: "/images/face/41.png",
       },
     ],
-    price: "45643",
+    price: "57,500",
     priceDollar: "39"
   };
 

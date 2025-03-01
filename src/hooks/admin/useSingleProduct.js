@@ -9,7 +9,7 @@ export function useSingleProduct(productId) {
     queryFn: async () => {
       if (!productId) throw new Error("Product ID is required");
 
-      const response = await fetch(`${ORIGIN}/api/products/products/${productId}`);
+      const response = await fetch(`/api/products/products/${productId}`);
       const locationHeader = response.headers.get('X-User-Location');
       const location = locationHeader ? JSON.parse(locationHeader) : null;
 

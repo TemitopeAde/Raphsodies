@@ -42,7 +42,7 @@ const ProductTable = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [page, setPage] = useState(1);
-  const limit = 10;
+  const limit = 200;
   
   const { data, isLoading, isError } = useProducts({
     page,

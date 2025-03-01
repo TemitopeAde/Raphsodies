@@ -15,17 +15,9 @@ export async function getAllProducts({ page = 1, limit = 10, search = "", catego
     }
 
     if (category) {
-      // Convert category name to category ID
-      const categoryData = await prisma.category.findUnique({
-        where: { name: category },
-        select: { id: true },
-      });
-
-      if (categoryData) {
-        filters.categoryId = categoryData.id;
-      } else {
-        return { products: [], totalProducts: 0, totalPages: 0 }; 
-      }
+      filters.category = {
+        name: { equals: category, mode: "insensitive" }
+      };
     }
 
     if (minPrice) {

@@ -9,11 +9,10 @@ export const useDeleteProduct = () => {
 
   return useMutation({
     mutationFn: async (productId) => {
-      const response = await fetch(`${ORIGIN}/api/products/products/${productId}`, {
+      const response = await fetch(`/api/products/products/${productId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Cookie": "accessToken=YOUR_ACCESS_TOKEN_HERE",
         },
       });
 

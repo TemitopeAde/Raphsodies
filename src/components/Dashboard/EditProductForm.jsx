@@ -290,7 +290,7 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
     formData.append("file", imageFile);
 
     try {
-      const response = await fetch(`${ORIGIN}/api/products/upload-image`, {
+      const response = await fetch(`/api/products/upload-image`, {
         method: "POST",
         body: formData
       });
@@ -375,7 +375,7 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
 
     if (product) {
       
-      const response = await fetch(`${ORIGIN}/api/products/products/${product.id}`, {
+      const response = await fetch(`/api/products/products/${product.id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer YOUR_ACCESS_TOKEN`,
@@ -388,7 +388,7 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
       return response.json();
     } else {
       // Create new product
-      const response = await fetch(`${ORIGIN}/api/products/create-product`, {
+      const response = await fetch(`/api/products/create-product`, {
         method: "POST",
         headers: {
           Authorization: `Bearer YOUR_ACCESS_TOKEN`,
