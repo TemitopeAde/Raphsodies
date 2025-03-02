@@ -29,7 +29,7 @@ export async function createPayment({ userId, amount, reference, products, deliv
         reference,
         delivery,
         totalItems: Number(totalItems),
-        amount,
+        amount: Number(amount),
         status: "success",
         products: {
           connect: productIds.map((id) => ({ id })),
