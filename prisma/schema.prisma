@@ -56,6 +56,7 @@ model Category {
 
 model Payment {
   id          String   @id @default(uuid())  
+  userSnapshot Json?
   userId      Int      
   reference   String   @unique 
   amount      Int      

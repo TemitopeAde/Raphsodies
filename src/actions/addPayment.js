@@ -21,6 +21,7 @@ export async function createPayment({ userId, amount, reference, products, deliv
     const payment = await prisma.payment.create({
       data: {
         userId,
+        userSnapshot: user,
         reference,
         delivery,
         totalItems,
