@@ -7,7 +7,7 @@ export async function createPayment({ userId, amount, reference, products, deliv
       throw new Error("Missing required fields");
     }
 
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+    const user = await prisma.user.findUnique({ where: { id: Number(userId) } });
     if (!user) throw new Error("User not found");
 
     const existingProducts = await prisma.product.findMany({
@@ -20,7 +20,7 @@ export async function createPayment({ userId, amount, reference, products, deliv
 
     const payment = await prisma.payment.create({
       data: {
-        userId,
+        userId: Number(userId),
         userSnapshot: user,
         reference,
         delivery,
