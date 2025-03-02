@@ -23,7 +23,7 @@ const slides = [
   },
   {
     id: 2,
-    image: "https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740898551/uo475bsfn6afbwdx19pi.png",
+    image: "https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740906785/exjooy0jc8kfuatioi8p.jpg",
     heading: "Discover African Rhapsody",
     buttons: [
       { id: 1, text: "Our Products", link: "/products", icon: (<svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
