@@ -46,8 +46,22 @@ export async function POST(request) {
 
 async function handleSuccessfulCharge(chargeData) {
 
-  console.log('Successful charge:', chargeData);
-  console.log('cart', chargeData.metadata.cartItems);
+  try {
+    console.log('Successful charge:', chargeData);
+    console.log('cart', chargeData.metadata.cartItems);
+
+    const userId = chargeData?.metadata.userId;
+    const amount = Number(chargeData?.amount)/100;
+    const reference = chargeData?.reference
+    const products = chargeData?.metadata.cartItems 
+    const delivery = chargeData?.metadata.delivery
+    const totalItems = chargeData.metadata.totalItems
+
+    const res = await createPayment({ userId, amount, reference, products, delivery, totalItems })
+    console.log(res);
+  } catch (error) {
+    console.warn(error);
+  }
   
 }
 

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function createPayment({ userId, amount, reference, products }) {
+export async function createPayment({ userId, amount, reference, products, delivery, totalItems }) {
   try {
     if (!userId || !amount || !reference || !Array.isArray(products) || products.length === 0) {
       throw new Error("Missing required fields");
@@ -22,6 +22,8 @@ export async function createPayment({ userId, amount, reference, products }) {
       data: {
         userId,
         reference,
+        delivery,
+        totalItems,
         amount,
         status: "success",
         products: {
