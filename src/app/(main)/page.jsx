@@ -555,7 +555,7 @@ const page = () => {
         </div>
       </section>
 
-      <ProductSwiper />
+      {/* <ProductSwiper /> */}
 
       <section className="lg:items-center flex flex-col gap-16 lg:flex-row-reverse lg:px-32 lg:py-40 py-16 px-8 bg-read5m lg:bg-green-bg bg-cover bg-no-repeat lg:bg-bottom">
         <div className="flex-1 basis-1/2 flex flex-col gap-6">

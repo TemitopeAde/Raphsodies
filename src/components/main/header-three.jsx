@@ -10,6 +10,7 @@ import useCartStore from '@/hooks/store/cartStore';
 import LogoutDialog from './LogoutDialog';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useAuth } from '@/hooks/store/useAuth';
 
 const HeaderThree = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -17,6 +18,7 @@ const HeaderThree = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false); 
+   const { user, isAuthenticated, firstChar, logout } = useAuth();
   const router = useRouter()
   const {cart} = useCartStore()
 
