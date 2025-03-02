@@ -20,16 +20,14 @@ const page = () => {
   const { user, loading, isAuthenticated } = useAuth();
     
   useEffect(() => {
-    // Only run the authentication check when the auth state is fully loaded
+   
     if (!loading) {
       console.log({user, loading, isAuthenticated});
       
       if (!isAuthenticated) {
-        // Store the current URL as a redirect target after login
-        // router.push("/sign-in?redirect=/checkout");
-        window.location.href = "/sign-in?redirect=/checkout";
+        window.location.href = "/sign-in"
+        // window.location.href = "/sign-in?redirect=/checkout";
       } else {
-
         setAuthChecked(true);
       }
     }

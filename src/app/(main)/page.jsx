@@ -517,7 +517,7 @@ const page = () => {
             className="w-full h-full object-cover rounded-[13px]"
             src="/videos/video.mp4"    
             loop
-            poster="/images/thumb-one.png"
+            poster="https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740898551/uo475bsfn6afbwdx19pi.png"
            
           />
           <div className="flex justify-center lg:hidden">
@@ -780,7 +780,7 @@ const page = () => {
             <div className="bg-white rounded-[40px] mx-auto p-4">
               <div id="acne">
                 <img
-                  src="/images/acne.png"
+                  src="https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740899090/ojqt1kwnkbtjmljcs5cl.png"
                   alt="acne"
                   className="rounded-[30px] w-full object-cover"
                 />
@@ -792,7 +792,7 @@ const page = () => {
             <div className="bg-white rounded-[40px] mx-auto p-4">
               <div>
                 <img
-                  src="/images/hyper.png"
+                  src="https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740899186/r0maohzhf6amhusr6su1.png"
                   alt="hyperpigmentation"
                   className="rounded-[30px] w-full object-cover"
                 />

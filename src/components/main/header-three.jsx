@@ -2,22 +2,31 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { DialogCustomAnimation } from '../Modal';
 import CartPage from '../Cart';
 import useCartStore from '@/hooks/store/cartStore';
+import LogoutDialog from './LogoutDialog';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const HeaderThree = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false); 
+  const router = useRouter()
   const {cart} = useCartStore()
 
-  // console.log({carts: cart.length});
   
+  const handleLogout = () => {
+    setLogoutDialogOpen(true);
+    logout();
+    toast.success('Logged out successfully!', { theme: 'colored' });
+    router.push('/');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,6 +77,10 @@ const HeaderThree = () => {
   const handleModalClick = () => {
     setOpen(prev => !prev)
   }
+
+  const handleLogoutClick = () => {
+    setLogoutDialogOpen(true); // Open the logout dialog instead of logging out immediately
+  };
 
   return (
     <>
@@ -158,6 +171,12 @@ const HeaderThree = () => {
                 </span>
                 
               </button>
+
+              {isAuthenticated && (
+                <button onClick={handleLogoutClick} className="text-white hover:text-[#bbbcbc]">
+                  <FaSignOutAlt className="w-6 h-6" />
+                </button>
+              )}
             </div>
 
             <div>
@@ -201,6 +220,12 @@ const HeaderThree = () => {
       </header>
 
       <DialogCustomAnimation open={open} setOpen={setOpen} content={<CartPage setOpen={setOpen} open={open} />} />
+
+      <LogoutDialog 
+        open={logoutDialogOpen} 
+        setOpen={setLogoutDialogOpen} 
+        onConfirm={handleLogout} 
+      />
 
       {isSidebarOpen && (
         <div

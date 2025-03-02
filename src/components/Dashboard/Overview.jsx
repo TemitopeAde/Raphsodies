@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
@@ -14,33 +15,61 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+const fetchSummary = async () => {
+  const res = await fetch('/api/summary');
+  if (!res.ok) throw new Error('Failed to fetch summary data');
+  return res.json();
+};
+
+const fetchChartData = async () => {
+  const res = await fetch('/api/chart-data');
+  if (!res.ok) throw new Error('Failed to fetch chart data');
+  return res.json();
+};
+
 const Overview = () => {
   const [chartType, setChartType] = useState('monthly');
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('');
 
-  // Mock data for summary cards
-  const summaryData = {
-    totalProducts: 120,
-    totalOrders: 56,
-    totalUsers: 89,
-  };
+  // Fetch summary data
+  const { data: summaryData, isLoading: summaryLoading, error: summaryError } = useQuery({
+    queryKey: ['summary'],
+    queryFn: fetchSummary,
+  });
 
-  // Monthly data
-  const monthlyData = [
-    { name: 'Jan', products: 40, orders: 24, users: 30 },
-    { name: 'Feb', products: 30, orders: 13, users: 20 },
-    { name: 'Mar', products: 20, orders: 8, users: 15 },
-    { name: 'Apr', products: 27, orders: 19, users: 25 },
-    { name: 'May', products: 18, orders: 10, users: 18 },
-    { name: 'Jun', products: 23, orders: 15, users: 22 },
-  ];
+  // Fetch chart data
+  const { data: chartData, isLoading: chartLoading, error: chartError } = useQuery({
+    queryKey: ['chartData'],
+    queryFn: fetchChartData,
+  });
 
-  // Yearly data
-  const yearlyData = [
-    { name: '2020', products: 200, orders: 150, users: 180 },
-    { name: '2021', products: 250, orders: 180, users: 200 },
-    { name: '2022', products: 300, orders: 210, users: 250 },
-    { name: '2023', products: 350, orders: 260, users: 300 },
-  ];
+  if (summaryLoading || chartLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+      </div>
+    );
+  }
+
+  if (summaryError || chartError) {
+    return <p className="text-red-500 text-center">Error loading data.</p>;
+  }
+
+  const { totalProducts, totalOrders, totalUsers } = summaryData;
+  const { monthlyData, yearlyData } = chartData;
+
+  // Extract unique years from the monthlyData
+  const uniqueYears = [...new Set(monthlyData.map((entry) => entry.year))].sort((a, b) => b - a);
+
+  // Extract unique months
+  const uniqueMonths = [...new Set(monthlyData.map((entry) => entry.name))];
+
+  // Filter monthly data based on selected year and month
+  const filteredMonthlyData = monthlyData.filter((entry) =>
+    (selectedYear ? entry.year === selectedYear : true) &&
+    (selectedMonth ? entry.name === selectedMonth : true)
+  );
 
   return (
     <div className="space-y-4">
@@ -51,7 +80,7 @@ const Overview = () => {
             <CardTitle className="text-sm font-medium">Total Products</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{summaryData.totalProducts}</p>
+            <p className="text-2xl font-bold">{totalProducts}</p>
           </CardContent>
         </Card>
         <Card>
@@ -59,7 +88,7 @@ const Overview = () => {
             <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{summaryData.totalOrders}</p>
+            <p className="text-2xl font-bold">{totalOrders}</p>
           </CardContent>
         </Card>
         <Card>
@@ -67,29 +96,63 @@ const Overview = () => {
             <CardTitle className="text-sm font-medium">Total Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{summaryData.totalUsers}</p>
+            <p className="text-2xl font-bold">{totalUsers}</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Chart */}
+      {/* Chart Section */}
       <Card>
         <CardHeader className="flex justify-between items-center">
-          <CardTitle className="text-sm font-medium">Overview</CardTitle>
-          <Select onValueChange={setChartType} defaultValue={chartType}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="monthly">Monthly</SelectItem>
-              <SelectItem value="yearly">Yearly</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex gap-4">
+            <Select onValueChange={setChartType} defaultValue={chartType}>
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent className="font-freize">
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {chartType === 'monthly' && (
+              <>
+                {/* Year Selection */}
+                <Select onValueChange={setSelectedYear} value={selectedYear}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue placeholder="Select Year" />
+                  </SelectTrigger>
+                  <SelectContent className="font-freize">
+                    {uniqueYears.map((year) => (
+                      <SelectItem key={year} value={year}>
+                        {year}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                {/* Month Selection */}
+                <Select onValueChange={setSelectedMonth} value={selectedMonth}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue placeholder="Select Month" />
+                  </SelectTrigger>
+                  <SelectContent className="font-freize">
+                    {uniqueMonths.map((month) => (
+                      <SelectItem key={month} value={month}>
+                        {month}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </>
+            )}
+          </div>
         </CardHeader>
+
         <CardContent>
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartType === 'monthly' ? monthlyData : yearlyData}>
+              <BarChart data={chartType === 'monthly' ? filteredMonthlyData : yearlyData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />

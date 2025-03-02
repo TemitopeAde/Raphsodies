@@ -31,9 +31,11 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await fetch("/api/users/logout", { method: "POST", credentials: "include" });
-    Cookies.remove("token");
+    Cookies.remove("authToken");
     setUser(null);
-    router.push("/");
+    setTimeout(() => {
+      router.push("/");
+    }, 3000);
   };
 
   return (

@@ -12,7 +12,7 @@ const AccordionSection = () => {
 
   const accordionItems = [
     {
-      title: "Tell me about African Rhapsody / can I see your products?",
+      title: "Tell me about African Rhapsody, can I see your products?",
       content: (
         <>
           Welcome to African Rhapsody!<br /><br />

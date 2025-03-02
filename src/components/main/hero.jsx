@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const slides = [
   {
     id: 1,
-    image: "/images/hero-one.png",
+    image: "https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740898415/jjdvd7nbajqhkmf6p5wt.png",
     heading: "From Africa's Roots to Radiant Skin",
     buttons: [
       { id: 1, text: "Our Products", link: "/products", icon: (<svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,16 +21,23 @@ const slides = [
     ],
     description: "Research Based. African Inspired."
   },
-  // {
-  //   id: 2,
-  //   image: "/images/hero-two.jpg",
-  //   heading: "Beauty Inspired by Nature",
-  //   buttons: [
-  //     { id: 1, text: "Shop Now", link: "/products" },
-  //     { id: 2, text: "Learn More", link: "/learn" }
-  //   ],
-  //   description: "Sustainably Sourced. Ethically Made."
-  // }
+  {
+    id: 2,
+    image: "https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740898551/uo475bsfn6afbwdx19pi.png",
+    heading: "Discover African Rhapsody",
+    buttons: [
+      { id: 1, text: "Our Products", link: "/products", icon: (<svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z" fill="#292F4A"/>
+        <path d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z" fill="#292F4A"/>
+      </svg>) },
+      { id: 2, text: "Our Story", link: "/our-story", icon: (<svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.171 5.97213C12.8775 5.69205 12.8765 5.23696 13.1687 4.95567C13.4344 4.69995 13.851 4.67589 14.1451 4.88406L14.2294 4.95348L20.2794 10.7265C20.547 10.9819 20.5714 11.3826 20.3524 11.6644L20.2794 11.7451L14.2294 17.519C13.9359 17.7992 13.4611 17.7982 13.1688 17.5169C12.9031 17.2612 12.8797 16.8619 13.0982 16.581L13.171 16.5005L18.687 11.2355L13.171 5.97213Z" fill="white"/>
+        <path d="M4 11.2363C4 10.8725 4.28215 10.5717 4.64823 10.5241L4.75 10.5176H19.75C20.1642 10.5176 20.5 10.8394 20.5 11.2363C20.5 11.6002 20.2178 11.9009 19.8518 11.9485L19.75 11.9551L4.75 11.9551C4.33579 11.9551 4 11.6333 4 11.2363Z" fill="white"/>
+        </svg>
+        ) }
+    ],
+    description: "Harnessing Africa’s Botanical Wisdom"
+  }
 ];
 
 export default function HeroSection() {
@@ -39,7 +46,7 @@ export default function HeroSection() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 5000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
@@ -49,8 +56,8 @@ export default function HeroSection() {
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-700 ${
-            index === currentSlide ? "opacity-100" : "opacity-0"
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === currentSlide ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
           style={{
             backgroundImage: `url(${slide.image})`,

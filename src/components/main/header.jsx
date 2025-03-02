@@ -10,18 +10,17 @@ import useCartStore from '@/hooks/store/cartStore';
 import { useAuth } from '@/hooks/store/useAuth';
 import { FaSignOutAlt } from 'react-icons/fa'; // Import logout icon
 import { toast } from 'react-toastify';
+import LogoutDialog from './LogoutDialog';
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false); 
   const pathname = usePathname();
   const { user, isAuthenticated, firstChar, logout } = useAuth();
   const { cart } = useCartStore();
   const router = useRouter()
-
-  console.log(isAuthenticated);
-  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,6 +46,8 @@ const Header = () => {
     { href: '/blog', text: 'Blog' },
   ];
 
+  console.log({isAuthenticated, user});
+  
   function Navbar() {
     return (
       <nav className="flex gap-8">
@@ -71,6 +72,10 @@ const Header = () => {
 
   const handleModalClick = () => {
     setOpen((prev) => !prev);
+  };
+
+  const handleLogoutClick = () => {
+    setLogoutDialogOpen(true); // Open the logout dialog instead of logging out immediately
   };
 
   const handleLogout = () => {
@@ -170,14 +175,13 @@ const Header = () => {
                   </svg>
                 </span>
               </button>
-            </div>
 
-            {/* Logout Icon (Visible when authenticated) */}
-            {isAuthenticated && (
-              <button onClick={handleLogout} className="text-white hover:text-[#00EEAE]">
-                <FaSignOutAlt className="w-6 h-6" />
-              </button>
-            )}
+              {isAuthenticated && (
+                <button onClick={handleLogoutClick} className="text-white hover:text-[#bbbcbc]">
+                  <FaSignOutAlt className="w-6 h-6" />
+                </button>
+              )}
+            </div>
 
             <div>
               <button onClick={toggleSidebar} className="md:hidden">
@@ -220,6 +224,12 @@ const Header = () => {
       </header>
 
       <DialogCustomAnimation open={open} setOpen={setOpen} content={<CartPage setOpen={setOpen} open={open} />} />
+      
+      <LogoutDialog 
+        open={logoutDialogOpen} 
+        setOpen={setLogoutDialogOpen} 
+        onConfirm={handleLogout} 
+      />
 
       {isSidebarOpen && (
         <div className="fixed top-0 left-0 z-40 w-3/4 h-full bg-white p-4 transition-transform duration-300">
