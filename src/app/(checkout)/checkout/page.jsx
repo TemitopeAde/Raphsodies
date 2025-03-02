@@ -41,7 +41,7 @@ const page = () => {
       <section className="bg-custom-bg mt-20">
         <div className="px-10 lg:px-24 flex justify-center items-center py-20">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
-          {/* <p className="font-freize text-lg">Loading...</p> */}
+          
         </div>
       </section>
     );

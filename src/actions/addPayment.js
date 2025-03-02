@@ -44,3 +44,43 @@ export async function createPayment({ userId, amount, reference, products, deliv
     return { success: false, error: error.message };
   }
 }
+
+
+export async function getPayments({ page = 1, limit = 20, search = "", status = "", sort = "desc" }) {
+  try {
+    const skip = (page - 1) * limit; // Calculate offset for pagination
+
+    const where = {
+      AND: [
+        search ? { reference: { contains: search, mode: "insensitive" } } : {},
+        status ? { status } : {},
+      ],
+    };
+
+    // Fetch payments with filters and pagination
+    const payments = await prisma.payment.findMany({
+      where,
+      include: { products: true, user: true },
+      skip,
+      take: Number(limit),
+      orderBy: { createdAt: sort.toLowerCase() === "asc" ? "asc" : "desc" },
+    });
+
+    // Get total count for pagination
+    const totalCount = await prisma.payment.count({ where });
+
+    return {
+      success: true,
+      data: payments,
+      pagination: {
+        total: totalCount,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(totalCount / limit),
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching payments:", error.message);
+    return { success: false, error: error.message };
+  }
+}
