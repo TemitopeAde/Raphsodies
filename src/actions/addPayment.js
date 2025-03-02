@@ -10,8 +10,12 @@ export async function createPayment({ userId, amount, reference, products, deliv
     const user = await prisma.user.findUnique({ where: { id: Number(userId) } });
     if (!user) throw new Error("User not found");
 
+    const productIds = products.map((product) => product.id); 
+    console.log(productIds);
+    
+
     const existingProducts = await prisma.product.findMany({
-      where: { id: { in: products } },
+      where: { id: { in: productIds } },
     });
 
     if (existingProducts.length !== products.length) {
@@ -28,7 +32,7 @@ export async function createPayment({ userId, amount, reference, products, deliv
         amount,
         status: "success",
         products: {
-          connect: products.map((productId) => ({ id: productId })),
+          connect: productIds.map((id) => ({ id })),
         },
       },
       include: { products: true },
