@@ -68,7 +68,7 @@ const Page = () => {
       { src: "/images/face/41.png" },
     ],
     price: "57,500",
-    priceDollar: "39",
+    priceDollar: "39"
   };
 
   return (
