@@ -80,7 +80,37 @@ const page = () => {
         "M0 16.8C0 22 1.2 25.8 3.6 28.2C5.6 30.2 8 31.6 10.8 32.4C13.6 33.2 16.2 34 18.6 34.8C20.6 35.6 21.6 37.2 21.6 39.6C21.6 42.4 21 45 19.8 47.4C18.6 49.8 17.2 52 15.6 54L18.6 57C23.4 52.6 27.4 47 30.6 40.2C33.8 33.4 35.4 26.6 35.4 19.8C35.4 14.2 33.8 9.6 30.6 5.99999C27.4 2 22.8 0 16.8 0C12.4 0 8.59999 1.8 5.39999 5.4C1.8 8.6 0 12.4 0 16.8ZM47.4 16.8C47.4 22 48.6 25.8 51 28.2C53 30.2 55.4 31.8 58.2 33C61 33.8 63.6 34.6 66 35.4C68 35.8 69 37.2 69 39.6C69 42.4 68.4 45 67.2 47.4C66 49.8 64.6 52 63 54L66 57C70.8 52.6 74.8 47 78 40.2C81.2 33.4 82.8 26.6 82.8 19.8C82.8 14.2 81.2 9.6 78 5.99999C74.8 2 70.2 0 64.2 0C59.8 0 56 1.8 52.8 5.4C49.2 8.6 47.4 12.4 47.4 16.8Z",
       svgColor: "#C78700",
       name: "Mrs Ayodele"
-    }
+    },
+    {
+      id: 3,
+      imageSrc: "/images/image-5.png",
+      altText: "Product 2",
+      description: "I’m thrilled to share my honest review of this incredible natural herbal product! After trying numerous products that only damaged my skin, I was blown away by the real-time results I experienced with this product. The team’s expertise in curating products with the best of nature is truly impressive. Their personalized recommendations were spot on! Even though I’ve always been a lover of natural stuff, I never really knew how to go about it for my skin. Although my skin wasn’t damaged, it was dull with a few discolorations, but since I started using your products for the last four months, I haven’t touched my makeup. My face, which was riddled with micro-needling, acne scars, and patches of hyperpigmentation, has been completely restored. I even had the boldness to go for a wedding without wearing makeup one particular day. I’ve regained my facial glow, and almost all discoloration has disappeared. The natural glow of the skin tone is being preserved, and I’ve gotten lots of compliments. I’m struggling to find words to express just how ecstatic I am about my results! Nature has truly worked its magic in healing my skin, and I’m eager to see the continued progress. Thank you for taking the time today to create this body of work centering on rejuvenating the skin through natural products and for creating such an amazing solution. I’m so grateful to have found a product that truly works.",
+      svgPath:
+        "M0 16.8C0 22 1.2 25.8 3.6 28.2C5.6 30.2 8 31.6 10.8 32.4C13.6 33.2 16.2 34 18.6 34.8C20.6 35.6 21.6 37.2 21.6 39.6C21.6 42.4 21 45 19.8 47.4C18.6 49.8 17.2 52 15.6 54L18.6 57C23.4 52.6 27.4 47 30.6 40.2C33.8 33.4 35.4 26.6 35.4 19.8C35.4 14.2 33.8 9.6 30.6 5.99999C27.4 2 22.8 0 16.8 0C12.4 0 8.59999 1.8 5.39999 5.4C1.8 8.6 0 12.4 0 16.8ZM47.4 16.8C47.4 22 48.6 25.8 51 28.2C53 30.2 55.4 31.8 58.2 33C61 33.8 63.6 34.6 66 35.4C68 35.8 69 37.2 69 39.6C69 42.4 68.4 45 67.2 47.4C66 49.8 64.6 52 63 54L66 57C70.8 52.6 74.8 47 78 40.2C81.2 33.4 82.8 26.6 82.8 19.8C82.8 14.2 81.2 9.6 78 5.99999C74.8 2 70.2 0 64.2 0C59.8 0 56 1.8 52.8 5.4C49.2 8.6 47.4 12.4 47.4 16.8Z",
+      svgColor: "#C78700",
+      name: "@stephfads"
+    },
+    {
+      id: 4,
+      imageSrc: "/images/image-5.png",
+      altText: "Product 2",
+      description: "Thank you for taking the time today to create this body of work centered on rejuvenating the skin through natural products. Even though I’ve always loved natural products, I never really knew how to incorporate them into my skincare routine. My skin wasn’t damaged, but it was dull with a few discolorations. However, since I started using your products four months ago, I haven’t touched my makeup. I even had the confidence to attend a wedding without wearing any makeup one day. My skin’s natural glow is being preserved, and I’ve received lots of compliments!",
+      svgPath:
+        "M0 16.8C0 22 1.2 25.8 3.6 28.2C5.6 30.2 8 31.6 10.8 32.4C13.6 33.2 16.2 34 18.6 34.8C20.6 35.6 21.6 37.2 21.6 39.6C21.6 42.4 21 45 19.8 47.4C18.6 49.8 17.2 52 15.6 54L18.6 57C23.4 52.6 27.4 47 30.6 40.2C33.8 33.4 35.4 26.6 35.4 19.8C35.4 14.2 33.8 9.6 30.6 5.99999C27.4 2 22.8 0 16.8 0C12.4 0 8.59999 1.8 5.39999 5.4C1.8 8.6 0 12.4 0 16.8ZM47.4 16.8C47.4 22 48.6 25.8 51 28.2C53 30.2 55.4 31.8 58.2 33C61 33.8 63.6 34.6 66 35.4C68 35.8 69 37.2 69 39.6C69 42.4 68.4 45 67.2 47.4C66 49.8 64.6 52 63 54L66 57C70.8 52.6 74.8 47 78 40.2C81.2 33.4 82.8 26.6 82.8 19.8C82.8 14.2 81.2 9.6 78 5.99999C74.8 2 70.2 0 64.2 0C59.8 0 56 1.8 52.8 5.4C49.2 8.6 47.4 12.4 47.4 16.8Z",
+      svgColor: "#C78700",
+      name: "@stephfads"
+    },
+    {
+      id: 5,
+      imageSrc: "/images/image-5.png",
+      altText: "Product 2",
+      description: "Good afternoon ma I just wanted to thank you for giving me confidence back I'm not there yet but I know with your continuation and religious usage melasma would be forgotten issue in my life My almost 4 years melasma is clearing up in less than 4 months using so many things from organic to four sessions of chemical peels but nothing worked it would clear up but return darker and even worse than before I bless the day I found you Each time I look at both sides of my face in the mirror now I always feel happy and pray for you Ah you will never fail nor fall I pray you keep getting better and God will bless you more in all you do If I search files and I see my before and after photos I will send it to you alongside the after Thank you so much",
+      svgPath:
+        "M0 16.8C0 22 1.2 25.8 3.6 28.2C5.6 30.2 8 31.6 10.8 32.4C13.6 33.2 16.2 34 18.6 34.8C20.6 35.6 21.6 37.2 21.6 39.6C21.6 42.4 21 45 19.8 47.4C18.6 49.8 17.2 52 15.6 54L18.6 57C23.4 52.6 27.4 47 30.6 40.2C33.8 33.4 35.4 26.6 35.4 19.8C35.4 14.2 33.8 9.6 30.6 5.99999C27.4 2 22.8 0 16.8 0C12.4 0 8.59999 1.8 5.39999 5.4C1.8 8.6 0 12.4 0 16.8ZM47.4 16.8C47.4 22 48.6 25.8 51 28.2C53 30.2 55.4 31.8 58.2 33C61 33.8 63.6 34.6 66 35.4C68 35.8 69 37.2 69 39.6C69 42.4 68.4 45 67.2 47.4C66 49.8 64.6 52 63 54L66 57C70.8 52.6 74.8 47 78 40.2C81.2 33.4 82.8 26.6 82.8 19.8C82.8 14.2 81.2 9.6 78 5.99999C74.8 2 70.2 0 64.2 0C59.8 0 56 1.8 52.8 5.4C49.2 8.6 47.4 12.4 47.4 16.8Z",
+      svgColor: "#C78700",
+      name: "@mobola78"
+    },
   ];
   const router = useRouter();
 
@@ -123,8 +153,8 @@ const page = () => {
                           </svg>
                         </div>
                       </div>
-                      <div>
-                        <p className="text-primary font-freize leading-[28px] text-[15px]">
+                      <div className="max-h-[100px] overflow-y-auto">
+                        <p className="text-primary  font-freize leading-[28px] text-[15px]">
                           {description}
                         </p>
                       </div>

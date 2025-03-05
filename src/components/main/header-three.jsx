@@ -22,24 +22,8 @@ const HeaderThree = () => {
   const { user, isAuthenticated, firstChar, logout } = useAuth();
   const router = useRouter();
   const { cart } = useCartStore();
-  const dropdownRef = useRef(null); 
-
-   // Effect to handle clicks outside the dropdown
-   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsShopDropdownOpen(false);
-      }
-    };
-
-    if (isShopDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isShopDropdownOpen]);
+  const dropdownRef = useRef(null); // Ref for desktop navbar dropdown
+  const sidebarDropdownRef = useRef(null); // Ref for sidebar dropdown
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +37,26 @@ const HeaderThree = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Add outside click detection for dropdown (matching HeaderTwo's functionality)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsShopDropdownOpen(false);
+      }
+      if (sidebarDropdownRef.current && !sidebarDropdownRef.current.contains(event.target)) {
+        setIsShopDropdownOpen(false);
+      }
+    };
+
+    if (isShopDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isShopDropdownOpen]);
 
   const navLinks = [
     { href: '/', text: 'Home' },
@@ -70,17 +74,20 @@ const HeaderThree = () => {
 
   function Navbar() {
     return (
-      <nav className="flex gap-8 relative">
+      <nav className="flex gap-8 relative"> {/* Keep original nav styling */}
         {navLinks.map((link, index) => (
           <div key={index} className="relative">
             <div className="flex items-center gap-2">
               {link.hasDropdown ? (
                 <div
-                ref={dropdownRef}
+                  ref={dropdownRef}
                   className={`text-base font-normal py-3 flex items-center gap-2 cursor-pointer ${
-                    pathname.startsWith(link.href) ? 'text-[#00EEAE]' : 'text-white'
+                    pathname.startsWith(link.href) ? 'text-[#00EEAE]' : 'text-white' // Keep original colors
                   }`}
-                  onClick={() => setIsShopDropdownOpen(!isShopDropdownOpen)}
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default navigation
+                    setIsShopDropdownOpen(!isShopDropdownOpen);
+                  }}
                 >
                   <span className="font-freize font-normal text-base leading-4">
                     {link.text}
@@ -97,7 +104,7 @@ const HeaderThree = () => {
                   >
                     <path
                       d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.885L7.40499 8.28799L5.98999 9.70299L12 15.713Z"
-                      fill={pathname.startsWith(link.href) ? '#00EEAE' : 'white'}
+                      fill={pathname.startsWith(link.href) ? '#00EEAE' : 'white'} // Keep original colors
                     />
                   </svg>
                 </div>
@@ -105,7 +112,7 @@ const HeaderThree = () => {
                 <Link
                   href={link.href}
                   className={`text-base font-normal py-2 ${
-                    pathname === link.href ? 'text-[#00EEAE]' : 'text-white'
+                    pathname === link.href ? 'text-[#00EEAE]' : 'text-white' // Keep original colors
                   }`}
                 >
                   <span className="font-freize font-normal text-base leading-4">
@@ -120,7 +127,7 @@ const HeaderThree = () => {
                   <Link
                     key={idx}
                     href={option.href}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-freize"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-freize" // Keep original hover effect
                     onClick={() => setIsShopDropdownOpen(false)}
                   >
                     {option.text}
@@ -150,7 +157,7 @@ const HeaderThree = () => {
     <>
       <header
         className={`fixed top-0 left-0 z-30 w-full lg:px-24 px-8 transition-all duration-300 ${
-          isScrolled ? 'bg-black/70 backdrop-blur-md' : 'bg-black/70 backdrop-blur-md'
+          isScrolled ? 'bg-black/70 backdrop-blur-md' : 'bg-black/70 backdrop-blur-md' // Keep original header background
         }`}
       >
         <div className="flex justify-between items-center py-4">
@@ -174,6 +181,9 @@ const HeaderThree = () => {
                       fill="#292F4A"
                     />
                   </svg>
+                  <span className='bg-[#C78700] text-[9px] left-[48px] bottom-[0px] flex justify-center items-center w-[13px] h-[13px] rounded-full text-white absolute'>
+                    <p>{cart.length}</p>
+                  </span>
                 </span>
                 <span className='hidden lg:block'>
                   <svg width="24" height="24" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -208,7 +218,7 @@ const HeaderThree = () => {
               </button>
 
               {isAuthenticated && (
-                <button onClick={handleLogoutClick} className="text-white hover:text-[#bbbcbc]">
+                <button onClick={handleLogoutClick} className="text-white hover:text-[#bbbcbc]"> {/* Keep original logout button color */}
                   <FaSignOutAlt className="w-6 h-6" />
                 </button>
               )}
@@ -216,7 +226,7 @@ const HeaderThree = () => {
 
             <div>
               <button onClick={toggleSidebar} className="md:hidden">
-                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"> {/* Keep original hamburger icon color */}
                   <g clipPath="url(#clip0_703_1869)">
                     <path
                       d="M7.79541 9.25H23.5454C24.1642 9.25 24.6704 8.74375 24.6704 8.125C24.6704 7.50625 24.1642 7 23.5454 7H7.79541C7.17666 7 6.67041 7.50625 6.67041 8.125C6.67041 8.74375 7.17666 9.25 7.79541 9.25Z"
@@ -263,13 +273,62 @@ const HeaderThree = () => {
           </div>
           <nav className="mt-8 space-y-4">
             {navLinks.map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize"
-              >
-                {link.text}
-              </Link>
+              <div key={index} className="relative">
+                <div className="flex items-center gap-2">
+                  {link.hasDropdown ? (
+                    <div
+                      ref={sidebarDropdownRef}
+                      className={`text-base text-primary font-bold border-b py-2 flex items-center gap-2 cursor-pointer border-primary font-freize ${
+                        pathname.startsWith(link.href) ? 'text-[#00EEAE]' : ''
+                      }`}
+                      onClick={() => setIsShopDropdownOpen(!isShopDropdownOpen)}
+                    >
+                      <span>{link.text}</span>
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`transition-transform duration-200 ${
+                          isShopDropdownOpen ? 'rotate-180' : ''
+                        }`}
+                      >
+                        <path
+                          d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.885L7.40499 8.28799L5.98999 9.70299L12 15.713Z"
+                          fill={pathname.startsWith(link.href) ? '#00EEAE' : '#292F4A'}
+                        />
+                      </svg>
+                    </div>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className={`text-base text-primary font-bold border-b py-2 flex border-primary font-freize ${
+                        pathname === link.href ? 'text-[#00EEAE]' : ''
+                      }`}
+                    >
+                      {link.text}
+                    </Link>
+                  )}
+                </div>
+                {link.hasDropdown && isShopDropdownOpen && (
+                  <div
+                    ref={sidebarDropdownRef} // Ensure ref is attached here too
+                    className="mt-2 w-full bg-white rounded-md shadow-lg z-50"
+                  >
+                    {shopDropdownOptions.map((option, idx) => (
+                      <Link
+                        key={idx}
+                        href={option.href}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#00EEAE] font-freize"
+                        onClick={() => setIsShopDropdownOpen(false)}
+                      >
+                        {option.text}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
         </div>

@@ -89,7 +89,7 @@ const Kids = () => {
           <h2 className="font-freize font-normal lg:text-base text-xs text-primary">With Kigella & Citrus Hystrix</h2>
           
           {/* Display price properly */}
-          <h2 className="lg:text-[20px] font-unbounded text-primary font-bold lg:leading-[26px]">
+          {/* <h2 className="lg:text-[20px] font-unbounded text-primary font-bold lg:leading-[26px]">
             {products.length > 0 ? (
               countryCode === "NG"
                 ? products[0]?.price
@@ -99,7 +99,7 @@ const Kids = () => {
                   ? `$ ${parseFloat(products[0]?.priceDollar).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
                   : "Unavailable"
             ) : "Unavailable"}
-          </h2>
+          </h2> */}
         </div>
 
         <div className="flex justify-center items-center lg:justify-start lg:block">

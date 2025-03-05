@@ -22,7 +22,8 @@ const HeaderTwo = () => {
   const { cart } = useCartStore();
   const { user, isAuthenticated, firstChar, logout } = useAuth();
   const router = useRouter();
-  const dropdownRef = useRef(null); 
+  const dropdownRef = useRef(null); // Ref for desktop navbar dropdown
+  const sidebarDropdownRef = useRef(null); // Ref for sidebar dropdown
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,23 +33,6 @@ const HeaderTwo = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Effect to handle clicks outside the dropdown
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsShopDropdownOpen(false);
-      }
-    };
-
-    if (isShopDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isShopDropdownOpen]);
 
   const navLinks = [
     { href: "/", text: "Home" },
@@ -86,11 +70,14 @@ const HeaderTwo = () => {
             <div className="flex items-center gap-2">
               {link.hasDropdown ? (
                 <div
-                ref={dropdownRef}
+                  ref={dropdownRef}
                   className={`text-base font-normal py-3 flex items-center gap-2 cursor-pointer ${
                     pathname.startsWith(link.href) ? "text-[#00EEAE]" : "text-primary"
                   }`}
-                  onClick={() => setIsShopDropdownOpen(!isShopDropdownOpen)}
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default navigation
+                    setIsShopDropdownOpen(!isShopDropdownOpen);
+                  }}
                 >
                   <span className="font-freize font-normal text-base leading-4">
                     {link.text}
@@ -130,7 +117,7 @@ const HeaderTwo = () => {
                   <Link
                     key={idx}
                     href={option.href}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-freize"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#00EEAE] font-freize"
                     onClick={() => setIsShopDropdownOpen(false)}
                   >
                     {option.text}
@@ -264,13 +251,65 @@ const HeaderTwo = () => {
           </div>
           <nav className="mt-8 space-y-4">
             {navLinks.map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                className="text-base text-primary font-bold border-b py-2 flex border-primary font-freize"
-              >
-                {link.text}
-              </Link>
+              <div key={index} className="relative">
+                <div className="flex items-center gap-2">
+                  {link.hasDropdown ? (
+                    <div
+                      ref={sidebarDropdownRef}
+                      className={`text-base text-primary font-bold border-b py-2 flex items-center gap-2 cursor-pointer border-primary font-freize ${
+                        pathname.startsWith(link.href) ? "text-[#00EEAE]" : ""
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault(); // Prevent default navigation
+                        setIsShopDropdownOpen(!isShopDropdownOpen);
+                      }}
+                    >
+                      <span>{link.text}</span>
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`transition-transform duration-200 ${
+                          isShopDropdownOpen ? 'rotate-180' : ''
+                        }`}
+                      >
+                        <path
+                          d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.885L7.40499 8.28799L5.98999 9.70299L12 15.713Z"
+                          fill={pathname.startsWith(link.href) ? '#00EEAE' : '#292F4A'}
+                        />
+                      </svg>
+                    </div>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className={`text-base text-primary font-bold border-b py-2 flex border-primary font-freize ${
+                        pathname === link.href ? "text-[#00EEAE]" : ""
+                      }`}
+                    >
+                      {link.text}
+                    </Link>
+                  )}
+                </div>
+                {link.hasDropdown && isShopDropdownOpen && (
+                  <div
+                    ref={sidebarDropdownRef} // Ensure ref is attached here too
+                    className="mt-2 w-full bg-white rounded-md shadow-lg z-50"
+                  >
+                    {shopDropdownOptions.map((option, idx) => (
+                      <Link
+                        key={idx}
+                        href={option.href}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-freize"
+                        onClick={() => setIsShopDropdownOpen(false)}
+                      >
+                        {option.text}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
         </div>

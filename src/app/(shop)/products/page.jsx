@@ -131,7 +131,7 @@ const Page = () => {
             </p>
           </div>
 
-          <div className="flex flex-col gap-48 pb-20">
+          <div className="flex flex-col gap-20 pb-20">
             {products.length > 0 ? (
               <Product data={products} countryCode={countryCode}/>
             ) : (
