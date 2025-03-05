@@ -101,11 +101,7 @@ const ProductHome = ({ type }) => {
                   <h1 className="text-[#C78700] font-bold lg:text-base lg:leading-5 font-unbounded text-[15px]">
                     <Link href={`/products/${item.id}`}>{item.name}</Link>
                   </h1>
-                  <div>
-                    {item.attributes.map((attr, index) => (
-                      <h3 key={index} className="font-freize text-xs mt-1 lg:text-sm lg:leading-4">{attr}</h3>
-                    ))}
-                  </div>
+                  
                 </div>
                 <button className="mt-3 cursor-pointer font-unbounded w-full py-2 rounded-[20px] bg-[#292F4A] text-white lg:text-[18px] font-bold">
                   {countryCode === "NG"

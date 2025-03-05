@@ -5,7 +5,7 @@ import ProductKit from "@/components/main/ProductKit";
 import ProtectedRoute from "@/components/main/ProtectedRoute";
 import { useProducts } from "@/hooks/admin/useProducts";
 import { useAuth } from "@/hooks/store/useAuth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 const Page = () => {
@@ -16,23 +16,24 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [location, setLocation] = useState(null); 
   const [countryCode, setCountryCode] = useState("")
+  const searchParams = useSearchParams();
   const limit = 100;
   const router = useRouter();
+  const [productCategory, setProductCategory] = useState("")
 
-  const { user, loading, isAuthenticated } = useAuth();
-  console.log(products);
+  const category = searchParams.get("category")
+  useEffect(()=> {
+    setProductCategory(category)
+  }, [category])
+
+
   
+
   
-
-  // useEffect(() => {
-  //   if (!loading && !isAuthenticated) {
-  //     router.push("/sign-in"); 
-  //   }
-  // }, [loading, isAuthenticated, router]);
-
   const { data, isLoading, isError } = useProducts({
     page,
     limit,
+    category: productCategory,
     search: searchTerm,
     minPrice: minPrice || null,
     maxPrice: maxPrice || null,

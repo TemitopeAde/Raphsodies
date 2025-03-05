@@ -433,7 +433,7 @@ const page = ({params}) => {
                 </div>
 
                 
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <div className="flex items-center gap-2">
                     <button className="">
                       <svg
@@ -487,7 +487,7 @@ const page = ({params}) => {
                       </svg>
                     </button>
                   </div>
-                </div> 
+                </div>  */}
               </div>
             </div>
 

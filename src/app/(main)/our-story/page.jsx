@@ -1,9 +1,29 @@
 "use client";
 
+import VideoModal from "@/components/main/VideoModal";
 import Link from "next/link";
 import React from "react";
 
 const Page = () => {
+  const videoId = "oOZxMdzNsz8"
+  const videoButton = (
+    <button className="flex items-center gap-2">
+      <span className="font-freize underline font-normal text-[22px]">
+        Watch Video
+      </span>
+      <span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 100 100"
+          width="36"
+          height="36"
+        >
+          <circle cx="50" cy="50" r="45" stroke="white" strokeWidth="5" fill="none" />
+          <polygon points="40,30 70,50 40,70" fill="white" />
+        </svg>
+      </span>
+    </button>
+  );
   return (
     <section>
       <section className="relative h-screen w-screen">
@@ -30,30 +50,10 @@ const Page = () => {
             </div>
 
             <div className="flex justify-center items-center lg:justify-start">
-              <button className="flex items-center gap-2">
-                <span className="font-freize underline font-normal text-[22px]">
-                  Watch Video
-                </span>
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 100 100"
-                    width="36"
-                    height="36"
-                  >
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      stroke="white"
-                      strokeWidth="5"
-                      fill="none"
-                    />
-                    <polygon points="40,30 70,50 40,70" fill="white" />
-                  </svg>
-                </span>
-              </button>
+              <VideoModal videoId={videoId} triggerButton={videoButton} />
             </div>
+
+            
           </div>
         </div>
       </section>
