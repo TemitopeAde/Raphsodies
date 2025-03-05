@@ -67,7 +67,7 @@ const Page = () => {
       <div className="flex items-center justify-center h-screen text-red-500">
         Failed to load products. Please try again later.
       </div>
-    );
+    )
   }
 
   const Kits = {
