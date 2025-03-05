@@ -6,7 +6,7 @@ import ProtectedRoute from "@/components/main/ProtectedRoute";
 import { useProducts } from "@/hooks/admin/useProducts";
 import { useAuth } from "@/hooks/store/useAuth";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, Suspense } from "react";
 
 const Page = () => {
   const [products, setProducts] = useState([]); 
@@ -15,21 +15,15 @@ const Page = () => {
   const [maxPrice, setMaxPrice] = useState("");
   const [page, setPage] = useState(1);
   const [location, setLocation] = useState(null); 
-  const [countryCode, setCountryCode] = useState("")
+  const [countryCode, setCountryCode] = useState("");
+  
   const searchParams = useSearchParams();
-  const limit = 100;
   const router = useRouter();
-  const [productCategory, setProductCategory] = useState("")
-
-  const category = searchParams.get("category")
-  useEffect(()=> {
-    setProductCategory(category)
-  }, [category])
-
-
+  const limit = 100;
   
+  // Ensure category is set correctly and avoids hydration mismatch
+  const productCategory = useMemo(() => searchParams.get("category") || "", [searchParams]);
 
-  
   const { data, isLoading, isError } = useProducts({
     page,
     limit,
@@ -39,20 +33,14 @@ const Page = () => {
     maxPrice: maxPrice || null,
   });
 
-  console.log({data});
-  
-  
   useEffect(() => {
-    setLocation(data?.location)
-    console.log(data?.location);
-    
-    setCountryCode(data?.location?.countryCode)
+    setLocation(data?.location);
+    setCountryCode(data?.location?.countryCode);
     if (data?.products) {
       setProducts(data.products.products);
     }
   }, [data]);
 
-  // Loading state
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -61,44 +49,30 @@ const Page = () => {
     );
   }
 
-  // Error state
   if (isError) {
     return (
       <div className="flex items-center justify-center h-screen text-red-500">
         Failed to load products. Please try again later.
       </div>
-    )
+    );
   }
 
   const Kits = {
     id: 1,
     label: "Face & Body Rejuvenation Kit",
     images: [
-      {
-        id: "cm7h850fj000jl503f54p8u1b",
-        src: "/images/face/37.png",
-      },
-      {
-        id: "cm7klov5y000jjv03dmm376a4",
-        src: "/images/face/38.png",
-      },
-      {
-        id: "cm7h83h2z000hl503z6wk6ngi",
-        src: "/images/face/39.png",
-      },
-      {
-        src: "/images/face/40.png",
-      },
-      {
-        src: "/images/face/41.png",
-      },
+      { id: "cm7h850fj000jl503f54p8u1b", src: "/images/face/37.png" },
+      { id: "cm7klov5y000jjv03dmm376a4", src: "/images/face/38.png" },
+      { id: "cm7h83h2z000hl503z6wk6ngi", src: "/images/face/39.png" },
+      { src: "/images/face/40.png" },
+      { src: "/images/face/41.png" },
     ],
     price: "57,500",
-    priceDollar: "39"
+    priceDollar: "39",
   };
 
   return (
-    // <ProtectedRoute>
+    <Suspense fallback={<div>Loading...</div>}>
       <section>
         <section className="relative h-screen w-screen">
           <div className="absolute inset-0">
@@ -133,16 +107,18 @@ const Page = () => {
 
           <div className="flex flex-col gap-20 pb-20">
             {products.length > 0 ? (
-              <Product data={products} countryCode={countryCode}/>
+              <Product data={products} countryCode={countryCode} />
             ) : (
-              <p className='font-freize font-semibold text-base text-center'>No products found.</p>
+              <p className="font-freize font-semibold text-base text-center">
+                No products found.
+              </p>
             )}
 
             <ProductKit data={Kits} />
           </div>
         </section>
       </section>
-    // </ProtectedRoute>
+    </Suspense>
   );
 };
 
