@@ -2,13 +2,11 @@
 
 import Product from "@/components/main/Product";
 import ProductKit from "@/components/main/ProductKit";
-import ProtectedRoute from "@/components/main/ProtectedRoute";
 import { useProducts } from "@/hooks/admin/useProducts";
-import { useAuth } from "@/hooks/store/useAuth";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect, useMemo, Suspense } from "react";
 
-const Page = () => {
+const ProductPageContent = () => {
   const [products, setProducts] = useState([]); 
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
@@ -16,12 +14,12 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [location, setLocation] = useState(null); 
   const [countryCode, setCountryCode] = useState("");
-  
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const limit = 100;
-  
-  // Ensure category is set correctly and avoids hydration mismatch
+
+  // Ensure category is read safely without hydration mismatch
   const productCategory = useMemo(() => searchParams.get("category") || "", [searchParams]);
 
   const { data, isLoading, isError } = useProducts({
@@ -57,67 +55,71 @@ const Page = () => {
     );
   }
 
-  const Kits = {
-    id: 1,
-    label: "Face & Body Rejuvenation Kit",
-    images: [
-      { id: "cm7h850fj000jl503f54p8u1b", src: "/images/face/37.png" },
-      { id: "cm7klov5y000jjv03dmm376a4", src: "/images/face/38.png" },
-      { id: "cm7h83h2z000hl503z6wk6ngi", src: "/images/face/39.png" },
-      { src: "/images/face/40.png" },
-      { src: "/images/face/41.png" },
-    ],
-    price: "57,500",
-    priceDollar: "39"
-  };
-
   return (
-    <Suspense fallback={<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>}>
-      <section>
-        <section className="relative h-screen w-screen">
-          <div className="absolute inset-0">
-            <img className="w-full h-full object-cover" src="/images/lp.png" />
-          </div>
+    <section>
+      <section className="relative h-screen w-screen">
+        <div className="absolute inset-0">
+          <img className="w-full h-full object-cover" src="/images/lp.png" />
+        </div>
 
-          <div className="absolute inset-0 z-10 flex items-center justify-center px-8 lg:px-24 lg:justify-start">
-            <div className="text-white flex flex-col gap-10 text-center">
-              <div className="flex flex-col gap-6 lg:px-16">
-                <h1 className="text-[28px] lg:px-6 font-unbounded font-bold text-center lg:text-[52px] lg:leading-[68px]">
-                  Research Based African Inspired Beauty Brand for the Clearest,
-                  Stunning Skin
-                </h1>
-                <h3 className="font-freize font-normal text-[15px] lg:px-32 leading-[28px] lg:text-[18px] lg:leading-[35px]">
-                  Our products include a luxurious collection of soaps, oils, body
-                  milk, salves, scrubs, serums and body butters.
-                </h3>
-              </div>
+        <div className="absolute inset-0 z-10 flex items-center justify-center px-8 lg:px-24 lg:justify-start">
+          <div className="text-white flex flex-col gap-10 text-center">
+            <div className="flex flex-col gap-6 lg:px-16">
+              <h1 className="text-[28px] lg:px-6 font-unbounded font-bold text-center lg:text-[52px] lg:leading-[68px]">
+                Research Based African Inspired Beauty Brand for the Clearest,
+                Stunning Skin
+              </h1>
+              <h3 className="font-freize font-normal text-[15px] lg:px-32 leading-[28px] lg:text-[18px] lg:leading-[35px]">
+                Our products include a luxurious collection of soaps, oils, body
+                milk, salves, scrubs, serums and body butters.
+              </h3>
             </div>
           </div>
-        </section>
-
-        <section className="bg-custom-bg">
-          <div className="flex flex-col gap-6 items-center py-20">
-            <h1 className="font-unbounded font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
-              Our Products
-            </h1>
-            <p className="lg:text-2xl font-freize lg:leading-[35px] text-[15px]">
-              African Rhapsody Products
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-20 pb-20">
-            {products.length > 0 ? (
-              <Product data={products} countryCode={countryCode} />
-            ) : (
-              <p className="font-freize font-semibold text-base text-center">
-                No products found.
-              </p>
-            )}
-
-            <ProductKit data={Kits} />
-          </div>
-        </section>
+        </div>
       </section>
+
+      <section className="bg-custom-bg">
+        <div className="flex flex-col gap-6 items-center py-20">
+          <h1 className="font-unbounded font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
+            Our Products
+          </h1>
+          <p className="lg:text-2xl font-freize lg:leading-[35px] text-[15px]">
+            African Rhapsody Products
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-20 pb-20">
+          {products.length > 0 ? (
+            <Product data={products} countryCode={countryCode} />
+          ) : (
+            <p className="font-freize font-semibold text-base text-center">
+              No products found.
+            </p>
+          )}
+
+          <ProductKit data={{ 
+            id: 1, 
+            label: "Face & Body Rejuvenation Kit", 
+            images: [
+              { id: "cm7h850fj000jl503f54p8u1b", src: "/images/face/37.png" },
+              { id: "cm7klov5y000jjv03dmm376a4", src: "/images/face/38.png" },
+              { id: "cm7h83h2z000hl503z6wk6ngi", src: "/images/face/39.png" },
+              { src: "/images/face/40.png" },
+              { src: "/images/face/41.png" }
+            ],
+            price: "57,500",
+            priceDollar: "39"
+          }} />
+        </div>
+      </section>
+    </section>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductPageContent />
     </Suspense>
   );
 };
