@@ -68,7 +68,7 @@ async function handleSuccessfulCharge(chargeData) {
       await prisma.product.update({
         where: { id: item.id }, 
         data: {
-          quantity: {
+          stock: {
             decrement: Number(item.stock), 
           },
         },
