@@ -21,7 +21,12 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Invalid JSON format' }, { status: 400 });
     }
 
-    console.error(error);
+    // Handle specific errors from createUser
+    if (error.message === 'Email already in use') {
+      return NextResponse.json({ message: 'Email already in use' }, { status: 409 }); // 409 Conflict
+    }
+
+    console.error('Error in POST /register:', error);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 }
