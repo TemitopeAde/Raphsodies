@@ -69,7 +69,7 @@ async function handleSuccessfulCharge(chargeData) {
         where: { id: item.id }, 
         data: {
           quantity: {
-            decrement: item.quantity, 
+            decrement: Number(item.stock), 
           },
         },
       });
