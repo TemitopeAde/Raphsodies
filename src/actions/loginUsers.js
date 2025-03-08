@@ -17,11 +17,12 @@ export async function loginUser(email, password) {
     if (!user.isVerified) {
       await resendVerificationEmail(email);
       // throw new Error("Account not verified. A new verification email has been sent.");
+      return
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new Error('Invalid password');
+      // throw new Error('Invalid password');
       return 
     }
 
