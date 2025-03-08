@@ -28,6 +28,7 @@ const HeaderThree = () => {
   const { cart } = useCartStore();
   const dropdownRef = useRef(null);
   const sidebarDropdownRef = useRef(null);
+  const submenuRef = useRef(null); // Add ref for submenu
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,10 +40,11 @@ const HeaderThree = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsShopDropdownOpen(false);
-      }
-      if (sidebarDropdownRef.current && !sidebarDropdownRef.current.contains(event.target)) {
+      if (
+        (dropdownRef.current && !dropdownRef.current.contains(event.target)) &&
+        (sidebarDropdownRef.current && !sidebarDropdownRef.current.contains(event.target)) &&
+        (submenuRef.current && !submenuRef.current.contains(event.target))
+      ) {
         setIsShopDropdownOpen(false);
       }
     };
@@ -139,7 +141,7 @@ const HeaderThree = () => {
               )}
             </div>
             {link.hasDropdown && isShopDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-md shadow-lg z-50">
+              <div ref={submenuRef} className="absolute top-full left-0 mt-2 w-80 bg-white rounded-md shadow-lg z-50">
                 {shopDropdownOptions.map((option, idx) => (
                   <Link
                     key={idx}
@@ -148,7 +150,7 @@ const HeaderThree = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsShopDropdownOpen(false);
-                      router.push(option.href, { scroll: false });
+                      router.push(option.href);
                     }}
                   >
                     {option.text}
@@ -360,16 +362,17 @@ const HeaderThree = () => {
                   )}
                 </div>
                 {link.hasDropdown && isShopDropdownOpen && (
-                  <div
-                    ref={sidebarDropdownRef}
-                    className="mt-2 w-full bg-white rounded-md shadow-lg z-50"
-                  >
+                  <div ref={submenuRef} className="mt-2 w-full bg-white rounded-md shadow-lg z-50">
                     {shopDropdownOptions.map((option, idx) => (
                       <Link
                         key={idx}
                         href={option.href}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-freize"
-                        onClick={() => setIsShopDropdownOpen(false)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsShopDropdownOpen(false);
+                          router.push(option.href);
+                        }}
                       >
                         {option.text}
                       </Link>

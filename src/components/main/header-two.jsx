@@ -28,6 +28,7 @@ const HeaderTwo = () => {
   const router = useRouter();
   const dropdownRef = useRef(null);
   const sidebarDropdownRef = useRef(null);
+  const submenuRef = useRef(null); // Add ref for submenu
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,25 +38,25 @@ const HeaderTwo = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-
   useEffect(() => {
-      const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-          setIsShopDropdownOpen(false);
-        }
-        if (sidebarDropdownRef.current && !sidebarDropdownRef.current.contains(event.target)) {
-          setIsShopDropdownOpen(false);
-        }
-      };
-  
-      if (isShopDropdownOpen) {
-        document.addEventListener('mousedown', handleClickOutside);
+    const handleClickOutside = (event) => {
+      if (
+        (dropdownRef.current && !dropdownRef.current.contains(event.target)) &&
+        (sidebarDropdownRef.current && !sidebarDropdownRef.current.contains(event.target)) &&
+        (submenuRef.current && !submenuRef.current.contains(event.target))
+      ) {
+        setIsShopDropdownOpen(false);
       }
-  
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, [isShopDropdownOpen]);
+    };
+
+    if (isShopDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isShopDropdownOpen]);
 
   const fetchOrders = async () => {
     if (!user?.id) return;
@@ -137,13 +138,17 @@ const HeaderTwo = () => {
               )}
             </div>
             {link.hasDropdown && isShopDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-md shadow-lg z-50">
+              <div ref={submenuRef} className="absolute top-full left-0 mt-2 w-80 bg-white rounded-md shadow-lg z-50">
                 {shopDropdownOptions.map((option, idx) => (
                   <Link
                     key={idx}
                     href={option.href}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#00EEAE] font-freize"
-                    onClick={() => setIsShopDropdownOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent default to handle navigation manually
+                      setIsShopDropdownOpen(false); // Close dropdown
+                      router.push(option.href); // Navigate to the URL
+                    }}
                   >
                     {option.text}
                   </Link>
@@ -354,16 +359,17 @@ const HeaderTwo = () => {
                   )}
                 </div>
                 {link.hasDropdown && isShopDropdownOpen && (
-                  <div
-                    ref={sidebarDropdownRef}
-                    className="mt-2 w-full bg-white rounded-md shadow-lg z-50"
-                  >
+                  <div ref={submenuRef} className="mt-2 w-full bg-white rounded-md shadow-lg z-50">
                     {shopDropdownOptions.map((option, idx) => (
                       <Link
                         key={idx}
                         href={option.href}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#00EEAE] font-freize"
-                        onClick={() => setIsShopDropdownOpen(false)}
+                        onClick={(e) => {
+                          e.preventDefault(); // Prevent default to handle navigation manually
+                          setIsShopDropdownOpen(false); // Close dropdown
+                          router.push(option.href); // Navigate to the URL
+                        }}
                       >
                         {option.text}
                       </Link>
