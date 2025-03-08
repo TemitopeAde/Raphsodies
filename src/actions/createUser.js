@@ -17,8 +17,11 @@ export async function createUser(email, name, password) {
         role: "user",
       },
     });
-    await sendVerificationEmail(email, verificationToken);
+    const res = await sendVerificationEmail(email, verificationToken);
+    console.log({res});
 
+    console.log({email, verificationToken});
+    
     return newUser;
   } catch (error) {
     // Handle Prisma-specific errors
