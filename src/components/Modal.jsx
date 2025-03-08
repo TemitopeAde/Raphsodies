@@ -22,9 +22,9 @@ export function DialogCustomAnimation({ open, setOpen, content }) {
         
       >
         <DialogHeader className="flex justify-center">
-          <h2 className="font-unbounded text-primary lg:text-[36px] text-xl text-center lg:text-left">
+          {/* <h2 className="font-unbounded text-primary lg:text-[36px] text-xl text-center lg:text-left">
             Cart Summary
-          </h2>
+          </h2> */}
         </DialogHeader>
         
         <DialogBody className="max-h-[100vh] overflow-y-auto">

@@ -19,15 +19,16 @@ export async function POST(req) {
 
 export async function GET(req) {
   try {
-    // Parse query parameters
+    
     const { searchParams } = new URL(req.url);
     const page = Number(searchParams.get("page")) || 1;
     const limit = Number(searchParams.get("limit")) || 10;
     const search = searchParams.get("search") || "";
     const status = searchParams.get("status") || "";
     const sort = searchParams.get("sort") || "desc";
+    const userId = searchParams.get("userId");
 
-    const response = await getPayments({ page, limit, search, status, sort });
+    const response = await getPayments({ page, limit, search, status, sort, userId });
 
     if (!response.success) {
       return NextResponse.json({ error: response.error }, { status: 400 });

@@ -46,14 +46,24 @@ export async function createPayment({ userId, amount, reference, products, deliv
 }
 
 
-export async function getPayments({ page = 1, limit = 20, search = "", status = "", sort = "desc" }) {
+
+
+export async function getPayments({ 
+  page = 1, 
+  limit = 20, 
+  search = "", 
+  status = "", 
+  sort = "desc",
+  userId // Add userId to parameters
+}) {
   try {
-    const skip = (page - 1) * limit; // Calculate offset for pagination
+    const skip = (page - 1) * limit;
 
     const where = {
       AND: [
         search ? { reference: { contains: search, mode: "insensitive" } } : {},
         status ? { status } : {},
+        userId ? { userId: Number(userId) } : {}, // Add userId filter
       ],
     };
 

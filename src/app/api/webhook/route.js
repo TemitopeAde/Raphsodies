@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { createPayment } from '@/actions/addPayment';
 
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
+
 export async function POST(request) {
   const paystackWebhookSecret = process.env.TEST_SECRET_KEY;
 
@@ -13,9 +17,7 @@ export async function POST(request) {
     }
 
     const rawBody = await request.text();
-    console.log({rawBody});
     
-
     const computedSignature = crypto
       .createHmac('sha512', paystackWebhookSecret)
       .update(rawBody)
@@ -26,9 +28,7 @@ export async function POST(request) {
     }
 
     const event = JSON.parse(rawBody);
-    console.log({event});
     
-
     switch (event.event) {
       case 'charge.success':
         await handleSuccessfulCharge(event.data);
@@ -59,6 +59,21 @@ async function handleSuccessfulCharge(chargeData) {
     const totalItems = chargeData.metadata.totalItems
 
     const res = await createPayment({ userId, amount, reference, products, delivery, totalItems })
+
+
+
+    for (const item of products) {
+      console.log({item});
+      
+      await prisma.product.update({
+        where: { id: item.id }, 
+        data: {
+          quantity: {
+            decrement: item.quantity, 
+          },
+        },
+      });
+    }
     console.log(res);
   } catch (error) {
     console.warn(error);

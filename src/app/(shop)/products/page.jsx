@@ -7,12 +7,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect, useMemo, Suspense } from "react";
 
 const ProductPageContent = () => {
-  const [products, setProducts] = useState([]); 
+  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [page, setPage] = useState(1);
-  const [location, setLocation] = useState(null); 
+  const [location, setLocation] = useState(null);
   const [countryCode, setCountryCode] = useState("");
 
   const searchParams = useSearchParams();
@@ -22,7 +22,8 @@ const ProductPageContent = () => {
   // Ensure category is read safely without hydration mismatch
   const productCategory = useMemo(() => searchParams.get("category") || "", [searchParams]);
 
-  const { data, isLoading, isError } = useProducts({
+  // Fetch products using the useProducts hook with the category and other filters
+  const { data, isLoading, isError, refetch } = useProducts({
     page,
     limit,
     category: productCategory,
@@ -31,13 +32,19 @@ const ProductPageContent = () => {
     maxPrice: maxPrice || null,
   });
 
+  // Update products and location when data changes
   useEffect(() => {
-    setLocation(data?.location);
-    setCountryCode(data?.location?.countryCode);
-    if (data?.products) {
-      setProducts(data.products.products);
+    if (data) {
+      setLocation(data?.location);
+      setCountryCode(data?.location?.countryCode || "");
+      setProducts(data?.products?.products || []);
     }
   }, [data]);
+
+  // Re-fetch data when productCategory changes
+  useEffect(() => {
+    refetch(); // Trigger re-fetch when category changes
+  }, [productCategory, refetch]);
 
   if (isLoading) {
     return (
@@ -84,7 +91,7 @@ const ProductPageContent = () => {
             Our Products
           </h1>
           <p className="lg:text-2xl font-freize lg:leading-[35px] text-[15px]">
-            African Rhapsody Products
+            {productCategory ? `African Rhapsody ${productCategory.charAt(0).toUpperCase() + productCategory.slice(1)} Products` : "African Rhapsody Products"}
           </p>
         </div>
 

@@ -1,45 +1,87 @@
 'use client';
 
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState, useEffect, useRef } from "react";
-import { DialogCustomAnimation } from "../Modal";
-import CartPage from "../Cart";
+import { useState, useEffect, useRef } from 'react';
+import { DialogCustomAnimation } from '../Modal';
+import CartPage from '../Cart';
 import useCartStore from '@/hooks/store/cartStore';
-import { useAuth } from "@/hooks/store/useAuth";
-import LogoutDialog from "./LogoutDialog";
-import { FaSignOutAlt } from "react-icons/fa";
-import { toast } from "react-toastify";
+import { useAuth } from '@/hooks/store/useAuth';
+import { FaSignOutAlt, FaShoppingBag } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import LogoutDialog from './LogoutDialog';
 
 const HeaderTwo = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
-  const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false); // State for Shop dropdown
+  const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
+  const [ordersDialogOpen, setOrdersDialogOpen] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [isLoadingOrders, setIsLoadingOrders] = useState(false);
+
   const pathname = usePathname();
-  const { cart } = useCartStore();
   const { user, isAuthenticated, firstChar, logout } = useAuth();
+  const { cart } = useCartStore();
   const router = useRouter();
-  const dropdownRef = useRef(null); // Ref for desktop navbar dropdown
-  const sidebarDropdownRef = useRef(null); // Ref for sidebar dropdown
+  const dropdownRef = useRef(null);
+  const sidebarDropdownRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 10); // Adjusted to match HeaderTwo's original scroll threshold
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+
+  useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+          setIsShopDropdownOpen(false);
+        }
+        if (sidebarDropdownRef.current && !sidebarDropdownRef.current.contains(event.target)) {
+          setIsShopDropdownOpen(false);
+        }
+      };
+  
+      if (isShopDropdownOpen) {
+        document.addEventListener('mousedown', handleClickOutside);
+      }
+  
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [isShopDropdownOpen]);
+
+  const fetchOrders = async () => {
+    if (!user?.id) return;
+    setIsLoadingOrders(true);
+    try {
+      const response = await fetch(`/api/payment/payments?userId=${user.id}`);
+      const data = await response.json();
+      if (data.success) {
+        setOrders(data.data);
+      } else {
+        toast.error('Failed to fetch orders');
+      }
+    } catch (error) {
+      toast.error('Error fetching orders');
+      console.error(error);
+    } finally {
+      setIsLoadingOrders(false);
+    }
+  };
+
   const navLinks = [
-    { href: "/", text: "Home" },
-    { href: "/our-story", text: "Our Story" },
-    { href: "/products", text: "Shop", hasDropdown: true },
-    { href: "/contact-us", text: "Contact Us" },
-    { href: "/blog", text: "Blog" },
+    { href: '/', text: 'Home' },
+    { href: '/our-story', text: 'Our Story' },
+    { href: '/products', text: 'Shop', hasDropdown: true },
+    { href: '/contact-us', text: 'Contact Us' },
+    { href: '/blog', text: 'Blog' },
   ];
 
   const shopDropdownOptions = [
@@ -47,20 +89,6 @@ const HeaderTwo = () => {
     { href: '/products?category=grandma', text: 'Grandma’s Secret Collection' },
     { href: '/products?category=african', text: 'African Rhapsody Products' },
   ];
-
-  const handleModalClick = () => setOpen(prev => !prev);
-
-  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
-
-  const handleLogoutClick = () => setLogoutDialogOpen(true);
-
-  const handleLogout = () => {
-    logout();
-    toast.success('Logged out successfully!', { theme: 'colored' });
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 3000);
-  };
 
   function Navbar() {
     return (
@@ -72,12 +100,9 @@ const HeaderTwo = () => {
                 <div
                   ref={dropdownRef}
                   className={`text-base font-normal py-3 flex items-center gap-2 cursor-pointer ${
-                    pathname.startsWith(link.href) ? "text-[#00EEAE]" : "text-primary"
+                    pathname.startsWith(link.href) ? 'text-[#00EEAE]' : 'text-primary'
                   }`}
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent default navigation
-                    setIsShopDropdownOpen(!isShopDropdownOpen);
-                  }}
+                  onClick={() => setIsShopDropdownOpen(!isShopDropdownOpen)}
                 >
                   <span className="font-freize font-normal text-base leading-4">
                     {link.text}
@@ -102,7 +127,7 @@ const HeaderTwo = () => {
                 <Link
                   href={link.href}
                   className={`text-base font-normal py-2 ${
-                    pathname === link.href ? "text-[#00EEAE]" : "text-primary"
+                    pathname === link.href ? 'text-[#00EEAE]' : 'text-primary'
                   }`}
                 >
                   <span className="font-freize font-normal text-base leading-4">
@@ -131,11 +156,24 @@ const HeaderTwo = () => {
     );
   }
 
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+  const handleModalClick = () => setOpen((prev) => !prev);
+  const handleLogoutClick = () => setLogoutDialogOpen(true);
+  const handleOrdersClick = () => {
+    setOrdersDialogOpen(true);
+    fetchOrders();
+  };
+  const handleLogout = () => {
+    logout();
+    toast.success('Logged out successfully!', { theme: 'colored' });
+    router.push('/');
+  };
+
   return (
     <>
       <header
         className={`fixed top-0 left-0 z-30 w-full lg:px-24 px-8 transition-all duration-300 ${
-          isScrolled ? "bg-white/50 backdrop-blur-3xl shadow-2xl" : "bg-transparent"
+          isScrolled ? 'bg-white/50 backdrop-blur-3xl shadow-2xl' : 'bg-transparent'
         }`}
       >
         <div className="flex justify-between items-center py-4">
@@ -151,33 +189,14 @@ const HeaderTwo = () => {
 
           <div className="flex gap-4 items-center">
             <div className="flex bg-background rounded-full px-6 py-2 gap-6">
-              <button className='relative'>
-                <span className='lg:hidden'>
-                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M6.56803 12.0213C7.87909 12.021 9.15237 11.5821 10.1851 10.7745L13.4322 14.0215L14.4766 12.9771L11.2296 9.73006C12.0376 8.6972 12.4768 7.42362 12.4771 6.11222C12.4771 2.85409 9.82615 0.203125 6.56803 0.203125C3.3099 0.203125 0.658936 2.85409 0.658936 6.11222C0.658936 9.37034 3.3099 12.0213 6.56803 12.0213ZM6.56803 1.6804C9.01217 1.6804 10.9998 3.66807 10.9998 6.11222C10.9998 8.55636 9.01217 10.544 6.56803 10.544C4.12388 10.544 2.13621 8.55636 2.13621 6.11222C2.13621 3.66807 4.12388 1.6804 6.56803 1.6804Z"
-                      fill="#292F4A"
-                    />
-                  </svg>
-                  <span className='bg-[#C78700] text-[9px] left-[48px] bottom-[0px] flex justify-center items-center w-[13px] h-[13px] rounded-full text-white absolute'>
-                    <p>{cart?.length}</p>
-                  </span>
-                </span>
-                <span className='hidden lg:block'>
-                  <svg width="24" height="24" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M6.56803 12.0213C7.87909 12.021 9.15237 11.5821 10.1851 10.7745L13.4322 14.0215L14.4766 12.9771L11.2296 9.73006C12.0376 8.6972 12.4768 7.42362 12.4771 6.11222C12.4771 2.85409 9.82615 0.203125 6.56803 0.203125C3.3099 0.203125 0.658936 2.85409 0.658936 6.11222C0.658936 9.37034 3.3099 12.0213 6.56803 12.0213ZM6.56803 1.6804C9.01217 1.6804 10.9998 3.66807 10.9998 6.11222C10.9998 8.55636 9.01217 10.544 6.56803 10.544C4.12388 10.544 2.13621 8.55636 2.13621 6.11222C2.13621 3.66807 4.12388 1.6804 6.56803 1.6804Z"
-                      fill="#292F4A"
-                    />
-                  </svg>
-                  <span className='bg-[#C78700] left-[67px] bottom-[3px] flex justify-center items-center w-[18px] h-[18px] rounded-full text-white absolute'>
-                    <p>{cart?.length}</p>
-                  </span>
-                </span>
-              </button>
+              {isAuthenticated && (
+                <button onClick={handleOrdersClick} className="text-[#292F4A] hover:text-[#1a1e2f]">
+                  <FaShoppingBag className="lg:w-6 lg:h-6 w-[15px] h-[15px]" />
+                </button>
+              )}
 
               <button onClick={handleModalClick}>
-                <span className='lg:hidden'>
+                <span className="lg:hidden">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M4.37222 11.8113C3.58868 11.8113 2.96113 12.472 2.96113 13.2877C2.96113 14.1034 3.58868 14.7641 4.37222 14.7641C5.15577 14.7641 5.7904 14.1034 5.7904 13.2877C5.7904 12.472 5.15577 11.8113 4.37222 11.8113ZM0.117676 0V1.47641H1.53586L4.08504 7.07569L3.12777 8.88429C3.01786 9.09837 2.95404 9.33828 2.95404 9.59665C2.95404 10.4124 3.58868 11.0731 4.37222 11.0731H12.8813V9.59665H4.67358C4.57431 9.59665 4.49631 9.51545 4.49631 9.4121C4.49631 9.37888 4.5034 9.34936 4.51758 9.32352L5.15222 8.12024H10.4349C10.9668 8.12024 11.4312 7.81389 11.6759 7.3599L14.2109 2.56895C14.2676 2.4656 14.2995 2.3438 14.2995 2.21461C14.2995 2.01883 14.2248 1.83106 14.0918 1.69262C13.9588 1.55418 13.7785 1.47641 13.5904 1.47641H3.10649L2.43286 0H0.117676ZM11.4631 11.8113C10.6796 11.8113 10.052 12.472 10.052 13.2877C10.052 14.1034 10.6796 14.7641 11.4631 14.7641C12.2467 14.7641 12.8813 14.1034 12.8813 13.2877C12.8813 12.472 12.2467 11.8113 11.4631 11.8113Z"
@@ -185,7 +204,7 @@ const HeaderTwo = () => {
                     />
                   </svg>
                 </span>
-                <span className='hidden lg:block'>
+                <span className="hidden lg:block">
                   <svg width="24" height="24" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M4.37222 11.8113C3.58868 11.8113 2.96113 12.472 2.96113 13.2877C2.96113 14.1034 3.58868 14.7641 4.37222 14.7641C5.15577 14.7641 5.7904 14.1034 5.7904 13.2877C5.7904 12.472 5.15577 11.8113 4.37222 11.8113ZM0.117676 0V1.47641H1.53586L4.08504 7.07569L3.12777 8.88429C3.01786 9.09837 2.95404 9.33828 2.95404 9.59665C2.95404 10.4124 3.58868 11.0731 4.37222 11.0731H12.8813V9.59665H4.67358C4.57431 9.59665 4.49631 9.51545 4.49631 9.4121C4.49631 9.37888 4.5034 9.34936 4.51758 9.32352L5.15222 8.12024H10.4349C10.9668 8.12024 11.4312 7.81389 11.6759 7.3599L14.2109 2.56895C14.2676 2.4656 14.2995 2.3438 14.2995 2.21461C14.2995 2.01883 14.2248 1.83106 14.0918 1.69262C13.9588 1.55418 13.7785 1.47641 13.5904 1.47641H3.10649L2.43286 0H0.117676ZM11.4631 11.8113C10.6796 11.8113 10.052 12.472 10.052 13.2877C10.052 14.1034 10.6796 14.7641 11.4631 14.7641C12.2467 14.7641 12.8813 14.1034 12.8813 13.2877C12.8813 12.472 12.2467 11.8113 11.4631 11.8113Z"
@@ -196,8 +215,8 @@ const HeaderTwo = () => {
               </button>
 
               {isAuthenticated && (
-                <button onClick={handleLogoutClick} className="text-primary hover:text-[#bbbcbc]">
-                  <FaSignOutAlt className="w-6 h-6" />
+                <button onClick={handleLogoutClick} className="text-[#292F4A] hover:text-[#1a1e2f]">
+                  <FaSignOutAlt className="lg:w-6 lg:h-6 w-[15px] h-[15px]" />
                 </button>
               )}
             </div>
@@ -234,6 +253,51 @@ const HeaderTwo = () => {
       <DialogCustomAnimation open={open} setOpen={setOpen} content={<CartPage setOpen={setOpen} open={open} />} />
       <LogoutDialog open={logoutDialogOpen} setOpen={setLogoutDialogOpen} onConfirm={handleLogout} />
 
+      <DialogCustomAnimation
+        open={ordersDialogOpen}
+        setOpen={setOrdersDialogOpen}
+        content={
+          <div className="bg-white p-6 rounded-lg shadow-xl mx-auto max-w-2xl w-full font-unbounded">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Your Orders</h2>
+            {isLoadingOrders ? (
+              <div className="flex justify-center items-center h-32">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#00EEAE]"></div>
+              </div>
+            ) : orders.length === 0 ? (
+              <p className="text-gray-600">No orders found.</p>
+            ) : (
+              <div className="max-h-96 overflow-y-auto">
+                {orders.map((order) => (
+                  <div key={order.id} className="border-b py-4">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-sm text-gray-600">Order #{order.reference}</p>
+                        <p className="text-lg font-semibold text-gray-800">
+                          {order.products.map(p => p.name).join(', ')}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-600">
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </p>
+                        <p className="text-lg font-semibold text-[#00EEAE]">${order.amount?.toFixed(2)}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1">Status: {order.status}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            <button
+              onClick={() => setOrdersDialogOpen(false)}
+              className="mt-6 w-full bg-[#00EEAE] text-white py-2 rounded-md hover:bg-[#00cc99] transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        }
+      />
+
       {isSidebarOpen && (
         <div className="fixed top-0 left-0 z-40 w-3/4 h-full bg-white p-4 transition-transform duration-300">
           <div className="flex items-center justify-between">
@@ -257,12 +321,9 @@ const HeaderTwo = () => {
                     <div
                       ref={sidebarDropdownRef}
                       className={`text-base text-primary font-bold border-b py-2 flex items-center gap-2 cursor-pointer border-primary font-freize ${
-                        pathname.startsWith(link.href) ? "text-[#00EEAE]" : ""
+                        pathname.startsWith(link.href) ? 'text-[#00EEAE]' : ''
                       }`}
-                      onClick={(e) => {
-                        e.preventDefault(); // Prevent default navigation
-                        setIsShopDropdownOpen(!isShopDropdownOpen);
-                      }}
+                      onClick={() => setIsShopDropdownOpen(!isShopDropdownOpen)}
                     >
                       <span>{link.text}</span>
                       <svg
@@ -285,7 +346,7 @@ const HeaderTwo = () => {
                     <Link
                       href={link.href}
                       className={`text-base text-primary font-bold border-b py-2 flex border-primary font-freize ${
-                        pathname === link.href ? "text-[#00EEAE]" : ""
+                        pathname === link.href ? 'text-[#00EEAE]' : ''
                       }`}
                     >
                       {link.text}
@@ -294,14 +355,14 @@ const HeaderTwo = () => {
                 </div>
                 {link.hasDropdown && isShopDropdownOpen && (
                   <div
-                    ref={sidebarDropdownRef} // Ensure ref is attached here too
+                    ref={sidebarDropdownRef}
                     className="mt-2 w-full bg-white rounded-md shadow-lg z-50"
                   >
                     {shopDropdownOptions.map((option, idx) => (
                       <Link
                         key={idx}
                         href={option.href}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-freize"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#00EEAE] font-freize"
                         onClick={() => setIsShopDropdownOpen(false)}
                       >
                         {option.text}
