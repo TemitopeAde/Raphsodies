@@ -101,27 +101,27 @@ const Page = () => {
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Sub Total</h2>
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
-                    {cart?.some(item => item.currency === "USD") ? `$${totalCost}` : `NGN ${totalCost}`}
+                    {cart?.some(item => item.currency === "USD") ? `$${totalCost.toLocaleString("en-US")}` : `NGN ${totalCost.toLocaleString("en-NG")}`}
                   </h2>
                 </div>
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Delivery</h2>
                   <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
-                    {cart?.some(item => item.currency === "USD") ? `$${deliveryFee}` : `NGN ${deliveryFee}`}
+                    {cart?.some(item => item.currency === "USD") ? `$${deliveryFee.toLocaleString("en-US")}` : `NGN ${deliveryFee.toLocaleString("en-NG")}`}
                   </h2>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between items-center">
                     <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Discount</h2>
                     <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
-                      {cart?.some(item => item.currency === "USD") ? `-$${discount}` : `-NGN ${discount}`}
+                      {cart?.some(item => item.currency === "USD") ? `-$${discount.toLocaleString("en-US")}` : `-NGN ${discount.toLocaleString("en-NG")}`}
                     </h2>
                   </div>
                 )}
                 <div className="flex justify-between items-center">
                   <h2 className="text-primary font-bold font-freize lg:text-[25px] lg:leading-[34px]">Total</h2>
                   <h2 className="text-primary font-bold font-freize lg:text-[25px] lg:leading-[34px]">
-                    {cart?.some(item => item.currency === "USD") ? `$${netTotal}` : `NGN ${netTotal}`}
+                    {cart?.some(item => item.currency === "USD") ? `$${netTotal.toLocaleString("en-US")}` : `NGN ${netTotal.toLocaleString("en-NG")}`}
                   </h2>
                 </div>
               </div>
