@@ -12,35 +12,34 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "@/hooks/store/useAuth";
 
-export default function ContactForm({
-  netTotal,
+export default function CheckOutForm({
+  netTotal: initialNetTotal, // Renamed to avoid shadowing
   countryList,
   loadingCountries,
   countryError,
+  hasCountryError,
+  setDiscount,
+  couponCode,
+  setCouponCode,
 }) {
   const router = useRouter();
   const { cart } = useCartStore();
-  const { user, loading: authLoading, isAuthenticated } = useAuth(); // Get user and auth state
-  const [isSubmitting, setIsSubmitting] = useState(false); // Loading state for form submission
-
+  const { user, loading: authLoading, isAuthenticated } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false); // New state for coupon loading
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [locationError, setLocationError] = useState("");
+  const [couponError, setCouponError] = useState("");
 
   const countryCode = selectedCountry?.iso2 || "";
+  const { data: states, isLoading: loadingStates, isError: hasStateError } = useStatesByCountry(countryCode);
+  const { data: cities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
 
-  const {
-    data: states,
-    isLoading: loadingStates,
-    isError: hasStateError,
-  } = useStatesByCountry(countryCode);
-
-  const {
-    data: cities,
-    isLoading: loadingCities,
-    isError: hasCityError,
-  } = useCitiesByState(countryCode, selectedState?.iso2);
+  // Calculate updated total with discount
+  const discount = useState(0)[0]; // Assuming discount is managed via prop/state
+  const updatedNetTotal = initialNetTotal - (discount || 0);
 
   useEffect(() => {
     if (countryList) {
@@ -67,7 +66,6 @@ export default function ContactForm({
     },
   });
 
-  // Reset dependent fields when country changes
   const handleCountryChange = (selected) => {
     setSelectedCountry(selected);
     setValue("country", selected.name);
@@ -76,14 +74,12 @@ export default function ContactForm({
     setSelectedState(null);
   };
 
-  // Reset city when state changes
   const handleStateChange = (selected) => {
     setSelectedState(selected);
     setValue("state", selected.name);
     setValue("city", "");
   };
 
-  // Handle API errors
   useEffect(() => {
     if (countryError) {
       setLocationError("Failed to load countries. Please try again later.");
@@ -104,6 +100,42 @@ export default function ContactForm({
     currency: item?.currency,
   }));
 
+  const applyCoupon = async () => {
+    if (!couponCode) {
+      setCouponError("Please enter a coupon code.");
+      return;
+    }
+
+    setIsApplyingCoupon(true); // Disable button and show loader
+    setCouponError(""); // Clear previous errors
+
+    try {
+      const response = await fetch("/api/coupons", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code: couponCode,
+          totalCost: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Invalid coupon code");
+      }
+
+      setDiscount(data.discountAmount); // Update discount
+      toast.success("Coupon applied successfully!");
+    } catch (err) {
+      setCouponError(err.message);
+      setDiscount(0); // Reset discount on error
+      toast.error(err.message);
+    } finally {
+      setIsApplyingCoupon(false); // Re-enable button
+    }
+  };
+
   const handlePayment = async (paymentData) => {
     try {
       const response = await fetch("/api/paystack/initialize", {
@@ -120,23 +152,24 @@ export default function ContactForm({
       console.error("Payment initiation failed:", err);
       setLocationError("Payment initialization failed. Please try again.");
     } finally {
-      setIsSubmitting(false); // Reset loading state
+      setIsSubmitting(false);
     }
   };
 
   const onSubmit = async (data) => {
     if (!user?.id) {
-      toast.error("Please login to continue."); // Show toast if no userId
+      toast.error("Please login to continue.");
       return;
     }
 
-    setIsSubmitting(true); // Set loading state
+    setIsSubmitting(true);
 
     const paymentData = {
       email: data.email,
-      amount: netTotal,
+      amount: updatedNetTotal, // Use updated total with discount
       cartItems,
       userId: user.id,
+      couponCode: couponCode || null,
       deliveryInfo: {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -165,7 +198,73 @@ export default function ContactForm({
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div>
+        {/* Coupon Code Input */}
+        <div className="space-y-2">
+          <label htmlFor="couponCode" className="font-freize text-primary">Coupon Code</label>
+          <div className="flex gap-2">
+            <input
+              id="couponCode"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              placeholder="e.g. SUMMER2025"
+              className="w-full p-3 font-freize text-primary border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
+            />
+            <button
+              type="button"
+              onClick={applyCoupon}
+              disabled={isApplyingCoupon}
+              className="p-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 font-freize disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            >
+              {isApplyingCoupon ? (
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  ></path>
+                </svg>
+              ) : (
+                "Apply"
+              )}
+            </button>
+          </div>
+          {couponError && (
+            <p className="text-red-500 text-sm mt-1 font-freize">{couponError}</p>
+          )}
+        </div>
+
+        {/* Display Total Amount */}
+        <div className="space-y-2">
+          <div className="flex justify-between font-freize text-primary">
+            <span>Subtotal:</span>
+            <span>₦{initialNetTotal.toLocaleString()}</span>
+          </div>
+          {discount > 0 && (
+            <div className="flex justify-between font-freize text-green-600">
+              <span>Discount:</span>
+              <span>-₦{discount.toLocaleString()}</span>
+            </div>
+          )}
+          <div className="flex justify-between font-freize text-primary font-semibold">
+            <span>Total:</span>
+            <span>₦{updatedNetTotal.toLocaleString()}</span>
+          </div>
+        </div>
+
+        <div>
           <input
             {...register("firstName", { required: "First Name is required" })}
             placeholder="First Name"
@@ -271,9 +370,7 @@ export default function ContactForm({
               )}
             />
             {errors.country && (
-              <p className="text-red-500 text-sm mt-1 font-freize">
-                {errors.country.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1 font-freize">{errors.country.message}</p>
             )}
           </div>
         </div>
@@ -311,9 +408,7 @@ export default function ContactForm({
               )}
             />
             {errors.state && (
-              <p className="text-red-500 text-sm mt-1 font-freize text-primary">
-                {errors.state.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1 font-freize text-primary">{errors.state.message}</p>
             )}
           </div>
 
@@ -335,8 +430,7 @@ export default function ContactForm({
                       </span>
                       <ChevronDownIcon className="w-5 h-5 text-gray-500" />
                     </Listbox.Button>
-                    <Listbox.Options className="absolute z-50 w-full bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto border border
--gray-200">
+                    <Listbox.Options className="absolute z-50 w-full bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto border border-gray-200">
                       {cities?.map((city) => (
                         <Listbox.Option
                           key={city.id}
@@ -352,43 +446,25 @@ export default function ContactForm({
               )}
             />
             {errors.city && (
-              <p className="text-red-500 text-sm mt-1 font-freize text-primary">
-                {errors.city.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1 font-freize text-primary">{errors.city.message}</p>
             )}
           </div>
         </div>
 
         <button
           type="submit"
-          disabled={isSubmitting || authLoading} // Disable button when loading
+          disabled={isSubmitting || authLoading}
           className="transition flex text-center justify-center items-center lg:text-[22px] gap-2 py-2 px-4 lg:h-[60px] rounded-[20px] text-base font-normal duration-300 bg-background text-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
-            <span className="flex items-center text-primary font-freize">
-              Processing...
-            </span>
+            <span className="flex items-center text-primary font-freize">Processing...</span>
           ) : (
             <>
-              <span className="flex items-center text-primary font-freize">
-                Pay now
-              </span>
+              <span className="flex items-center text-primary font-freize">Pay now</span>
               <span className="lg:block hidden">
-                <svg
-                  width="17"
-                  height="15"
-                  viewBox="0 0 17 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
-                    fill="#292F4A"
-                  />
-                  <path
-                    d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
-                    fill="#292F4A"
-                  />
+                <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z" fill="#292F4A" />
+                  <path d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z" fill="#292F4A" />
                 </svg>
               </span>
             </>
