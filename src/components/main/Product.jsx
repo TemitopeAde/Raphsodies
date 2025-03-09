@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
+import AnimateOnScroll from "@/components/main/AnimateOnScroll"; // Import AnimateOnScroll
 
 const Product = ({ data, type, countryCode }) => {
   return (
@@ -13,30 +14,38 @@ const Product = ({ data, type, countryCode }) => {
 
             <div className='flex flex-col flex-grow justify-between gap-3 h-full'>
               <div className='mt-3'>
-                <h1 className="text-[#C78700] font-bold lg:text-base lg:leading-5 font-unbounded text-[15px]">
-                  <Link href={`/products/${item.id}`}>
-                    {item?.name}
-                  </Link>
-                </h1>
-                <h3 className='font-freize text-xs mt-1 lg:text-sm lg:leading-4'>{item?.label}</h3>
+                <AnimateOnScroll animation="fade-up">
+                  <h1 className="text-[#C78700] font-bold lg:text-base lg:leading-5 font-unbounded text-[15px]">
+                    <Link href={`/products/${item.id}`}>
+                      {item?.name}
+                    </Link>
+                  </h1>
+                </AnimateOnScroll>
+                <AnimateOnScroll animation="fade-up">
+                  <h3 className='font-freize text-xs mt-1 lg:text-sm lg:leading-4'>{item?.label}</h3>
+                </AnimateOnScroll>
               </div>
-              <button className="mt-3 cursor-none font-unbounded w-full py-2 rounded-[20px] bg-[#292F4A] text-white lg:text-[18px] font-bold">
-                {countryCode === "NG"
-                  ? item?.price !== undefined && item?.price !== null
-                    ? `NGN ${parseFloat(item?.price).toLocaleString("en-NG", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
-                    : "Unavailable"
-                  : item?.priceDollar !== undefined && item?.priceDollar !== null
-                    ? `$ ${parseFloat(item?.priceDollar).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
-                    : "Unavailable"}
-              </button>
+              <AnimateOnScroll animation="fade-up">
+                <button className="mt-3 cursor-none font-unbounded w-full py-2 rounded-[20px] bg-[#292F4A] text-white lg:text-[18px] font-bold">
+                  {countryCode === "NG"
+                    ? item?.price !== undefined && item?.price !== null
+                      ? `NGN ${parseFloat(item?.price).toLocaleString("en-NG", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
+                      : "Unavailable"
+                    : item?.priceDollar !== undefined && item?.priceDollar !== null
+                      ? `$ ${parseFloat(item?.priceDollar).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
+                      : "Unavailable"}
+                </button>
+              </AnimateOnScroll>
             </div>
           </div>
         ))}
       </div>
     ) : (
-      <h1 className='font-freize font-semibold text-base'>No products</h1>
+      <AnimateOnScroll animation="fade-up">
+        <h1 className='font-freize font-semibold text-base'>No products</h1>
+      </AnimateOnScroll>
     )
   );
-}
+};
 
 export default Product;

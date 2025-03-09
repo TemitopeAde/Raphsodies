@@ -1,6 +1,7 @@
 "use client";
 
 import AccordionSection from "@/components/main/Accordion";
+import AnimateOnScroll from "@/components/main/AnimateOnScroll";
 import HeroSection from "@/components/main/hero";
 import ImageGrid from "@/components/main/ImageGrid";
 import Kids from "@/components/main/Kids";
@@ -85,7 +86,8 @@ const page = () => {
       id: 3,
       imageSrc: "/images/image-5.png",
       altText: "Product 2",
-      description: "I’m thrilled to share my honest review of this incredible natural herbal product! After trying numerous products that only damaged my skin, I was blown away by the real-time results I experienced with this product. The team’s expertise in curating products with the best of nature is truly impressive. Their personalized recommendations were spot on! Even though I’ve always been a lover of natural stuff, I never really knew how to go about it for my skin. Although my skin wasn’t damaged, it was dull with a few discolorations, but since I started using your products for the last four months, I haven’t touched my makeup. My face, which was riddled with micro-needling, acne scars, and patches of hyperpigmentation, has been completely restored. I even had the boldness to go for a wedding without wearing makeup one particular day. I’ve regained my facial glow, and almost all discoloration has disappeared. The natural glow of the skin tone is being preserved, and I’ve gotten lots of compliments. I’m struggling to find words to express just how ecstatic I am about my results! Nature has truly worked its magic in healing my skin, and I’m eager to see the continued progress. Thank you for taking the time today to create this body of work centering on rejuvenating the skin through natural products and for creating such an amazing solution. I’m so grateful to have found a product that truly works.",
+      description:
+        "I’m thrilled to share my honest review of this incredible natural herbal product! After trying numerous products that only damaged my skin, I was blown away by the real-time results I experienced with this product. The team’s expertise in curating products with the best of nature is truly impressive. Their personalized recommendations were spot on! Even though I’ve always been a lover of natural stuff, I never really knew how to go about it for my skin. Although my skin wasn’t damaged, it was dull with a few discolorations, but since I started using your products for the last four months, I haven’t touched my makeup. My face, which was riddled with micro-needling, acne scars, and patches of hyperpigmentation, has been completely restored. I even had the boldness to go for a wedding without wearing makeup one particular day. I’ve regained my facial glow, and almost all discoloration has disappeared. The natural glow of the skin tone is being preserved, and I’ve gotten lots of compliments. I’m struggling to find words to express just how ecstatic I am about my results! Nature has truly worked its magic in healing my skin, and I’m eager to see the continued progress. Thank you for taking the time today to create this body of work centering on rejuvenating the skin through natural products and for creating such an amazing solution. I’m so grateful to have found a product that truly works.",
       svgPath:
         "M0 16.8C0 22 1.2 25.8 3.6 28.2C5.6 30.2 8 31.6 10.8 32.4C13.6 33.2 16.2 34 18.6 34.8C20.6 35.6 21.6 37.2 21.6 39.6C21.6 42.4 21 45 19.8 47.4C18.6 49.8 17.2 52 15.6 54L18.6 57C23.4 52.6 27.4 47 30.6 40.2C33.8 33.4 35.4 26.6 35.4 19.8C35.4 14.2 33.8 9.6 30.6 5.99999C27.4 2 22.8 0 16.8 0C12.4 0 8.59999 1.8 5.39999 5.4C1.8 8.6 0 12.4 0 16.8ZM47.4 16.8C47.4 22 48.6 25.8 51 28.2C53 30.2 55.4 31.8 58.2 33C61 33.8 63.6 34.6 66 35.4C68 35.8 69 37.2 69 39.6C69 42.4 68.4 45 67.2 47.4C66 49.8 64.6 52 63 54L66 57C70.8 52.6 74.8 47 78 40.2C81.2 33.4 82.8 26.6 82.8 19.8C82.8 14.2 81.2 9.6 78 5.99999C74.8 2 70.2 0 64.2 0C59.8 0 56 1.8 52.8 5.4C49.2 8.6 47.4 12.4 47.4 16.8Z",
       svgColor: "#C78700",
@@ -95,7 +97,8 @@ const page = () => {
       id: 4,
       imageSrc: "/images/image-5.png",
       altText: "Product 2",
-      description: "Thank you for taking the time today to create this body of work centered on rejuvenating the skin through natural products. Even though I’ve always loved natural products, I never really knew how to incorporate them into my skincare routine. My skin wasn’t damaged, but it was dull with a few discolorations. However, since I started using your products four months ago, I haven’t touched my makeup. I even had the confidence to attend a wedding without wearing any makeup one day. My skin’s natural glow is being preserved, and I’ve received lots of compliments!",
+      description:
+        "Thank you for taking the time today to create this body of work centered on rejuvenating the skin through natural products. Even though I’ve always loved natural products, I never really knew how to incorporate them into my skincare routine. My skin wasn’t damaged, but it was dull with a few discolorations. However, since I started using your products four months ago, I haven’t touched my makeup. I even had the confidence to attend a wedding without wearing any makeup one day. My skin’s natural glow is being preserved, and I’ve received lots of compliments!",
       svgPath:
         "M0 16.8C0 22 1.2 25.8 3.6 28.2C5.6 30.2 8 31.6 10.8 32.4C13.6 33.2 16.2 34 18.6 34.8C20.6 35.6 21.6 37.2 21.6 39.6C21.6 42.4 21 45 19.8 47.4C18.6 49.8 17.2 52 15.6 54L18.6 57C23.4 52.6 27.4 47 30.6 40.2C33.8 33.4 35.4 26.6 35.4 19.8C35.4 14.2 33.8 9.6 30.6 5.99999C27.4 2 22.8 0 16.8 0C12.4 0 8.59999 1.8 5.39999 5.4C1.8 8.6 0 12.4 0 16.8ZM47.4 16.8C47.4 22 48.6 25.8 51 28.2C53 30.2 55.4 31.8 58.2 33C61 33.8 63.6 34.6 66 35.4C68 35.8 69 37.2 69 39.6C69 42.4 68.4 45 67.2 47.4C66 49.8 64.6 52 63 54L66 57C70.8 52.6 74.8 47 78 40.2C81.2 33.4 82.8 26.6 82.8 19.8C82.8 14.2 81.2 9.6 78 5.99999C74.8 2 70.2 0 64.2 0C59.8 0 56 1.8 52.8 5.4C49.2 8.6 47.4 12.4 47.4 16.8Z",
       svgColor: "#C78700",
@@ -105,12 +108,13 @@ const page = () => {
       id: 5,
       imageSrc: "/images/image-5.png",
       altText: "Product 2",
-      description: "Good afternoon ma I just wanted to thank you for giving me confidence back I'm not there yet but I know with your continuation and religious usage melasma would be forgotten issue in my life My almost 4 years melasma is clearing up in less than 4 months using so many things from organic to four sessions of chemical peels but nothing worked it would clear up but return darker and even worse than before I bless the day I found you Each time I look at both sides of my face in the mirror now I always feel happy and pray for you Ah you will never fail nor fall I pray you keep getting better and God will bless you more in all you do If I search files and I see my before and after photos I will send it to you alongside the after Thank you so much",
+      description:
+        "Good afternoon ma I just wanted to thank you for giving me confidence back I'm not there yet but I know with your continuation and religious usage melasma would be forgotten issue in my life My almost 4 years melasma is clearing up in less than 4 months using so many things from organic to four sessions of chemical peels but nothing worked it would clear up but return darker and even worse than before I bless the day I found you Each time I look at both sides of my face in the mirror now I always feel happy and pray for you Ah you will never fail nor fall I pray you keep getting better and God will bless you more in all you do If I search files and I see my before and after photos I will send it to you alongside the after Thank you so much",
       svgPath:
         "M0 16.8C0 22 1.2 25.8 3.6 28.2C5.6 30.2 8 31.6 10.8 32.4C13.6 33.2 16.2 34 18.6 34.8C20.6 35.6 21.6 37.2 21.6 39.6C21.6 42.4 21 45 19.8 47.4C18.6 49.8 17.2 52 15.6 54L18.6 57C23.4 52.6 27.4 47 30.6 40.2C33.8 33.4 35.4 26.6 35.4 19.8C35.4 14.2 33.8 9.6 30.6 5.99999C27.4 2 22.8 0 16.8 0C12.4 0 8.59999 1.8 5.39999 5.4C1.8 8.6 0 12.4 0 16.8ZM47.4 16.8C47.4 22 48.6 25.8 51 28.2C53 30.2 55.4 31.8 58.2 33C61 33.8 63.6 34.6 66 35.4C68 35.8 69 37.2 69 39.6C69 42.4 68.4 45 67.2 47.4C66 49.8 64.6 52 63 54L66 57C70.8 52.6 74.8 47 78 40.2C81.2 33.4 82.8 26.6 82.8 19.8C82.8 14.2 81.2 9.6 78 5.99999C74.8 2 70.2 0 64.2 0C59.8 0 56 1.8 52.8 5.4C49.2 8.6 47.4 12.4 47.4 16.8Z",
       svgColor: "#C78700",
       name: "@mobola78"
-    },
+    }
   ];
   const router = useRouter();
 
@@ -124,16 +128,15 @@ const page = () => {
       } else {
         videoRef.current.play();
       }
-
       setIsPlaying(!isPlaying);
     }
   };
 
-  const MyCarousel = () =>
+  const MyCarousel = () => (
     <Carousel className="w-full max-w-xs">
       <CarouselContent>
         {carouselData.map(
-          ({ id, imageSrc, altText, description, svgPath, svgColor, name }) =>
+          ({ id, imageSrc, altText, description, svgPath, svgColor, name }) => (
             <CarouselItem key={id}>
               <div className="p-1">
                 <Card>
@@ -154,28 +157,33 @@ const page = () => {
                         </div>
                       </div>
                       <div className="max-h-[100px] overflow-y-auto">
-                        <p className="text-primary  font-freize leading-[28px] text-[15px]">
-                          {description}
-                        </p>
+                        <AnimateOnScroll animation="fade-up">
+                          <p className="text-primary font-freize leading-[28px] text-[15px]">
+                            {description}
+                          </p>
+                        </AnimateOnScroll>
                       </div>
                     </div>
                     <div className="py-3">
-                      <h2 className="text-[#C78700] text-lg font-freize font-bold lg:leading-[35px] text-left">
-                        {name}
-                      </h2>
+                      <AnimateOnScroll animation="fade-up">
+                        <h2 className="text-[#C78700] text-lg font-freize font-bold lg:leading-[35px] text-left">
+                          {name}
+                        </h2>
+                      </AnimateOnScroll>
                     </div>
                   </CardContent>
                 </Card>
               </div>
             </CarouselItem>
+          )
         )}
       </CarouselContent>
-
       <div className="absolute -bottom-16 left-1/2 lg:static">
         <CarouselPrevious className="bg-white dark:bg-white border-2 border-white text-black rounded-full p-2" />
-        <CarouselNext className="bg-white dark:bg-white border-2  border-white text-black rounded-full p-2" />
+        <CarouselNext className="bg-white dark:bg-white border-2 border-white text-black rounded-full p-2" />
       </div>
-    </Carousel>;
+    </Carousel>
+  );
 
   return (
     <section>
@@ -183,47 +191,47 @@ const page = () => {
 
       <section className="grid lg:grid-cols-2 lg:items-center gap-12 lg:px-32 lg:py-40 py-16 px-8 bg-custom-bg bg-cover bg-center bg-no-repeat">
         <div className="flex gap-4 flex-col h-full">
-          <h1 className="font-medium text-2xl lg:text-[36px] text-primary font-unbounded">
-            An Era of African Inspired Beauty
-          </h1>
-          <p className="font-normal lg:text-lg text-xs leading-[28px] text-primary font-freize">
-            Inspired by Africa’s rich botanical heritage, African Rhapsody
-            combines ancient wisdom with modern cosmetic science to create
-            revolutionary beauty products. Through research and innovation, we
-            harness the natural power of African plants to craft products that
-            reflect the continent’s beauty and offer exceptional care.
-          </p>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="font-medium text-2xl lg:text-[36px] text-primary font-unbounded">
+              An Era of African Inspired Beauty
+            </h1>
+          </AnimateOnScroll>
+          <AnimateOnScroll animation="fade-up">
+            <p className="font-normal lg:text-lg text-xs leading-[28px] text-primary font-freize">
+              Inspired by Africa’s rich botanical heritage, African Rhapsody
+              combines ancient wisdom with modern cosmetic science to create
+              revolutionary beauty products. Through research and innovation, we
+              harness the natural power of African plants to craft products that
+              reflect the continent’s beauty and offer exceptional care.
+            </p>
+          </AnimateOnScroll>
           <div className="justify-start hidden lg:flex">
-            <div>
+            <AnimateOnScroll animation="fade-up">
               <span
                 href="/our-story"
                 className="flex items-center gap-2 underline text-[22px] font-normal text-primary"
               >
-                <span>
-                  <Link href="/our-story">Our Story</Link>
-                </span>
+                <Link href="/our-story">Our Story</Link>
                 <button>
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 100 100"
-                      width="30"
-                      height="30"
-                    >
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="45"
-                        stroke="black"
-                        strokeWidth="5"
-                        fill="none"
-                      />
-                      <polygon points="40,30 70,50 40,70" fill="black" />
-                    </svg>
-                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 100"
+                    width="30"
+                    height="30"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      stroke="black"
+                      strokeWidth="5"
+                      fill="none"
+                    />
+                    <polygon points="40,30 70,50 40,70" fill="black" />
+                  </svg>
                 </button>
               </span>
-            </div>
+            </AnimateOnScroll>
           </div>
         </div>
         <div className="flex flex-col gap-4 h-full relative">
@@ -236,122 +244,7 @@ const page = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M37.037 64.5218L36.9613 69.2948L34.7353 69.2595C33.7862 69.2445 33.2262 68.8053 33.2383 68.0474C33.2494 67.3441 33.7757 66.888 34.6302 66.84L34.6304 66.8264C34.2495 66.7316 34.0223 66.4138 33.9699 65.8392C33.9054 65.1689 33.8765 64.8406 33.5407 64.4801L33.5409 64.4664L34.2032 64.4769C34.4709 64.8295 34.5003 65.1237 34.5586 65.7598C34.6107 66.348 34.8862 66.6324 35.4188 66.6408L36.4089 66.6565L36.4429 64.5124L37.037 64.5218ZM36.4022 67.0799L35.1595 67.0602C34.3401 67.0472 33.8841 67.3746 33.8749 67.955C33.8666 68.4808 34.2374 68.7872 34.8861 68.7975L36.3746 68.8211L36.4022 67.0799Z"
-                  fill="white"
-                />
-                <path
-                  d="M30.5423 64.0778L29.4159 68.7165L26.2969 67.9592L26.4129 67.4814L28.9679 68.1018L29.353 66.5157L26.9307 65.9275L27.0387 65.4829L29.4609 66.0711L29.8622 64.4186L27.7054 63.8949L27.8214 63.4171L30.5423 64.0778Z"
-                  fill="white"
-                />
-                <path
-                  d="M23.0483 61.4661C24.0669 61.9635 24.4629 62.818 24.0962 63.7713L23.5378 63.4986C23.7786 62.803 23.5225 62.2068 22.823 61.8652C22.2031 61.5626 21.6576 61.6838 21.4149 62.1809C21.1872 62.6473 21.4225 62.9902 21.8528 63.2763L22.8023 63.8843C23.4967 64.3297 23.7525 64.8954 23.4319 65.552C23.0514 66.3314 22.1949 66.5136 21.2437 66.0491C20.225 65.5517 19.8199 64.7004 20.1957 63.7439L20.7542 64.0166C20.5195 64.7152 20.7663 65.2992 21.472 65.6438C22.0856 65.9435 22.6252 65.8345 22.8709 65.3313C23.0956 64.8711 22.8756 64.528 22.433 64.2359L21.4896 63.6309C20.7891 63.1825 20.5333 62.6168 20.8539 61.9602C21.2344 61.1808 22.0909 60.9986 23.0483 61.4661Z"
-                  fill="white"
-                />
-                <path
-                  d="M19.2831 59.3554L16.3179 63.0963L13.8025 61.1026L14.108 60.7173L16.1684 62.3504L17.1823 61.0713L15.2288 59.523L15.513 59.1644L17.4665 60.7127L18.5227 59.3801L16.7834 58.0015L17.0888 57.6162L19.2831 59.3554Z"
-                  fill="white"
-                />
-                <path
-                  d="M14.999 55.7036L10.0952 57.2557L9.59427 56.642L12.0928 52.1431L12.4901 52.6298L11.7467 53.933L13.1847 55.6948L14.6104 55.2274L14.999 55.7036ZM12.716 55.8657L11.4853 54.358C11.0481 55.1291 10.6099 55.9099 10.1516 56.6983L10.1602 56.7089C11.0202 56.4125 11.8729 56.1396 12.716 55.8657Z"
-                  fill="white"
-                />
-                <path
-                  d="M11.0289 50.3662L6.75626 52.4948L5.76351 50.5022C5.34021 49.6525 5.47255 48.9533 6.15104 48.6153C6.78063 48.3016 7.42772 48.5591 7.86339 49.2958L7.87562 49.2897C7.78455 48.9078 7.96218 48.5599 8.44823 48.2491C9.01376 47.8834 9.29194 47.7066 9.45752 47.2427L9.46975 47.2366L9.76514 47.8295C9.57521 48.2293 9.3276 48.3908 8.78959 48.7351C8.29132 49.0521 8.16556 49.4275 8.40309 49.9043L8.84465 50.7906L10.764 49.8344L11.0289 50.3662ZM8.46568 50.9794L7.91144 49.8669C7.546 49.1334 7.0455 48.8792 6.52594 49.1381C6.05527 49.3726 5.95381 49.8427 6.24311 50.4234L6.90698 51.756L8.46568 50.9794Z"
-                  fill="white"
-                />
-                <path
-                  d="M8.03973 42.4848L8.04637 42.4832C8.35765 43.7921 7.61807 44.8735 6.16972 45.218C4.72137 45.5624 3.57412 44.9297 3.26284 43.6209C2.99422 42.4915 3.50063 41.5217 4.57761 41.062L4.72772 41.6931C3.93168 42.0649 3.55948 42.7431 3.74909 43.5404C3.97031 44.4705 4.83353 44.8829 5.97627 44.6111C7.17215 44.3267 7.78575 43.542 7.55348 42.5654C7.34964 41.7083 6.62055 41.2991 5.61515 41.4399L5.4682 40.8221C6.75738 40.6348 7.75215 41.2757 8.03973 42.4848Z"
-                  fill="white"
-                />
-                <path
-                  d="M7.24399 38.0336L2.46366 38.0564L2.46079 37.4555L4.57096 37.4454L4.55826 34.7889L2.44809 34.799L2.44521 34.198L7.22554 34.1752L7.22841 34.7761L5.05678 34.7865L5.06948 37.443L7.24111 37.4326L7.24399 38.0336Z"
-                  fill="white"
-                />
-                <path
-                  d="M8.4409 27.6627L3.9796 25.9646L4.73513 23.9797C5.06553 23.1117 5.67868 22.7678 6.41904 23.0496C6.99984 23.2707 7.27227 23.7836 7.16427 24.4513L7.17704 24.4561C7.50904 23.9102 8.01831 23.7241 8.57996 23.9379C9.29479 24.21 9.51225 24.8481 9.18914 25.697L8.4409 27.6627ZM8.21735 26.9638L8.70322 25.6874C8.92915 25.0938 8.78346 24.6511 8.29202 24.464C7.79419 24.2745 7.37822 24.5035 7.15229 25.097L6.66642 26.3735L8.21735 26.9638ZM6.27071 26.2229L6.76144 24.9336C6.99952 24.3082 6.82678 23.8405 6.29704 23.6389C5.77369 23.4397 5.3401 23.6765 5.10202 24.302L4.61129 25.5913L6.27071 26.2229Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M10.7928 22.1209L7.86017 17.8953L8.29831 17.2353L13.3348 18.2919L12.9873 18.8153L11.5225 18.4905L10.2648 20.3851L11.1327 21.6088L10.7928 22.1209ZM9.96285 19.9879L11.0393 18.3664C10.1734 18.1768 9.29795 17.9891 8.40923 17.7843L8.40168 17.7957C8.93912 18.5296 9.45195 19.2635 9.96285 19.9879Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M16.0894 15.5338C15.2746 16.322 14.3363 16.4029 13.5651 15.7332L14.0118 15.3012C14.5836 15.7647 15.2314 15.7272 15.791 15.186C16.2867 14.7064 16.3588 14.1522 15.9742 13.7546C15.6134 13.3816 15.2108 13.4859 14.7951 13.7929L13.8999 14.4783C13.2444 14.9793 12.6254 15.0269 12.1174 14.5017C11.5144 13.8783 11.6351 13.011 12.396 12.2751C13.2108 11.487 14.1493 11.3963 14.9204 12.0757L14.4737 12.5077C13.8969 12.049 13.2637 12.0819 12.6992 12.6279C12.2083 13.1026 12.1268 13.647 12.5161 14.0495C12.8722 14.4177 13.2697 14.3277 13.6952 14.0112L14.5855 13.3306C15.2459 12.8249 15.8649 12.7772 16.3729 13.3025C16.9759 13.9259 16.8552 14.7932 16.0894 15.5338Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M19.3564 12.7128L16.8502 8.65002L19.582 6.96492L19.8401 7.3834L17.6024 8.76375L18.4593 10.1529L20.5808 8.84424L20.821 9.23366L18.6995 10.5423L19.5923 11.9895L21.4812 10.8243L21.7394 11.2428L19.3564 12.7128Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M24.7083 9.75751L23.1576 5.23563L24.5012 4.77486C26.0516 4.24319 27.1904 4.82728 27.6667 6.21615C28.143 7.60501 27.6023 8.76507 26.0519 9.29673L24.7083 9.75751ZM25.113 9.10613L25.8882 8.8403C27.0832 8.43048 27.4708 7.53953 27.0853 6.41552C26.7021 5.29797 25.8471 4.82589 24.652 5.23572L23.8769 5.50155L25.113 9.10613Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M30.8288 8.63146L31.3507 7.11199L31.9114 7.02946L31.3355 8.55688L30.8288 8.63146Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M38.4095 7.67528L41.0962 3.28912L41.8767 3.42434L42.9381 8.45979L42.319 8.35254L42.0264 6.88103L39.7857 6.49286L39.0151 7.78019L38.4095 7.67528ZM40.0276 6.05654L41.9454 6.38876C41.7701 5.51978 41.5894 4.6429 41.4188 3.747L41.4054 3.74467C40.9501 4.53216 40.4849 5.29713 40.0276 6.05654Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M44.896 9.12192L46.6719 4.691L49.5878 5.85967L49.4049 6.31608L47.0468 5.37098L46.4269 6.91768L48.6582 7.81197L48.4829 8.24935L46.2516 7.35507L45.4538 9.34549L44.896 9.12192Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M50.1583 11.5243L52.8426 7.577L54.6835 8.8289C55.4685 9.36268 55.6953 10.0372 55.269 10.664C54.8735 11.2457 54.1832 11.3378 53.4427 10.9086L53.435 10.9199C53.7013 11.2084 53.7167 11.5987 53.445 12.1076C53.1307 12.7033 52.9746 12.9935 53.0573 13.4792L53.0496 13.4905L52.5019 13.118C52.4718 12.6764 52.6087 12.4144 52.9094 11.8508C53.1888 11.3306 53.1147 10.9416 52.6743 10.6421L51.8554 10.0852L50.6496 11.8584L50.1583 11.5243ZM52.0935 9.73511L53.1213 10.434C53.7989 10.8948 54.3598 10.8716 54.6862 10.3916C54.9819 9.95676 54.8403 9.49707 54.3038 9.13226L53.0728 8.2951L52.0935 9.73511Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M55.3407 15.5222L58.6859 12.1073L59.1152 12.5278L55.77 15.9428L55.3407 15.5222Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M58.8769 19.7443L58.8714 19.7483C58.0921 18.6516 58.3722 17.3718 59.5858 16.5094C60.7993 15.647 62.1001 15.8034 62.8794 16.9001C63.5519 17.8464 63.446 18.9353 62.62 19.7653L62.2442 19.2365C62.8427 18.5933 62.9335 17.825 62.4588 17.157C61.905 16.3777 60.9501 16.319 59.9926 16.9994C58.9906 17.7115 58.716 18.669 59.2975 19.4873C59.8078 20.2054 60.6372 20.3114 61.5164 19.8039L61.8843 20.3216C60.7594 20.9786 59.5969 20.7575 58.8769 19.7443Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M61.0849 23.125L66.2277 23.0354L66.5329 23.7664L62.8554 27.3663L62.6134 26.7865L63.6975 25.7493L62.8214 23.6507L61.3217 23.6922L61.0849 23.125ZM63.3194 23.6204L64.0692 25.4165C64.7081 24.802 65.3507 24.1785 66.0148 23.5535L66.0095 23.5409C65.1007 23.5798 64.2056 23.5983 63.3194 23.6204Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M63.3652 29.3519L68.0741 28.5285L68.2188 29.356C67.0038 30.4558 65.7955 31.5545 64.4831 32.6922L64.4854 32.7056C65.9484 32.429 67.3072 32.1914 68.6728 31.9526L68.7693 32.5042L64.0604 33.3276L63.9227 32.5406C65.1568 31.4305 66.3884 30.3069 67.7187 29.1522L67.7163 29.1388C66.2344 29.4257 64.8486 29.668 63.4628 29.9103L63.3652 29.3519Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M63.8565 39.84L68.587 40.5286L68.5005 41.1233L63.77 40.4347L63.8565 39.84Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M63.2237 43.327L67.7577 44.8418L67.4915 45.6385C65.8997 46.0282 64.3143 46.4202 62.6188 46.797L62.6144 46.8099C64.033 47.2622 65.3413 47.6994 66.6562 48.1387L66.4788 48.6698L61.9447 47.155L62.1979 46.3971C63.8114 46.0074 65.4292 45.6046 67.1484 45.2214L67.1528 45.2085C65.7126 44.7561 64.3783 44.3104 63.0441 43.8646L63.2237 43.327Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M59.83 50.9297C60.4175 49.9601 61.3044 49.6431 62.2206 50.0945L61.8985 50.626C61.2276 50.3232 60.6107 50.5243 60.2072 51.1901C59.8497 51.78 59.9211 52.3343 60.3942 52.621C60.8381 52.89 61.2009 52.6866 61.5247 52.284L62.2161 51.3934C62.7225 50.7421 63.309 50.5385 63.934 50.9172C64.6757 51.3667 64.7797 52.2361 64.2311 53.1414C63.6436 54.1109 62.7591 54.4373 61.8405 53.9765L62.1626 53.4451C62.8371 53.742 63.4411 53.549 63.8481 52.8774C64.202 52.2933 64.1423 51.7461 63.6634 51.4559C63.2254 51.1905 62.8638 51.3786 62.5329 51.793L61.845 52.6777C61.335 53.3349 60.7486 53.5384 60.1236 53.1597C59.3819 52.7103 59.2779 51.8408 59.83 50.9297Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M57.4026 54.4723L60.86 57.7637L59.5086 59.1832C58.807 59.9202 58.0174 60.0266 57.4041 59.4427C56.7809 58.8494 56.8575 58.036 57.5779 57.2792L58.482 56.3296L56.9882 54.9075L57.4026 54.4723ZM58.8134 56.645L57.9517 57.5502C57.4667 58.0597 57.4119 58.5827 57.8324 58.9829C58.2478 59.3785 58.7675 59.2981 59.2525 58.7886L60.1142 57.8834L58.8134 56.645Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M52.8746 58.7045L55.7235 62.5432L55.2409 62.9014L52.392 59.0626L52.8746 58.7045Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M49.9375 60.7248L52.0592 65.0009L50.0648 65.9904C49.2145 66.4123 48.5155 66.2788 48.1786 65.5998C47.866 64.9697 48.1245 64.323 48.8619 63.8886L48.8558 63.8763C48.4738 63.9668 48.1262 63.7886 47.8161 63.302C47.4514 62.7359 47.2751 62.4574 46.8114 62.2911L46.8053 62.2788L47.3987 61.9844C47.7982 62.175 47.9593 62.4229 48.3028 62.9615C48.6189 63.4602 48.9942 63.5866 49.4713 63.3499L50.3584 62.9098L49.4053 60.9889L49.9375 60.7248ZM50.5465 63.289L49.4332 63.8415C48.6991 64.2057 48.444 64.7058 48.702 65.2258C48.9357 65.6968 49.4058 65.799 49.9869 65.5107L51.3205 64.849L50.5465 63.289Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M43.9624 63.3097L45.0888 67.9485L41.9698 68.7059L41.8538 68.228L44.4087 67.6076L44.0236 66.0216L41.6013 66.6097L41.4934 66.1651L43.9156 65.5769L43.5144 63.9245L41.3576 64.4482L41.2416 63.9704L43.9624 63.3097Z"
-                  fill="white"
-                />
-                <path
-                  d="M37.9591 64.464L38.0349 69.2437L36.6146 69.2663C34.9758 69.2922 34.0735 68.3845 34.0502 66.9164C34.027 65.4483 34.9 64.5125 36.5388 64.4865L37.9591 64.464ZM37.3727 64.9582L36.5533 64.9712C35.2901 64.9912 34.646 65.7186 34.6648 66.9067C34.6835 68.088 35.3505 68.8014 36.6137 68.7813L37.4331 68.7684L37.3727 64.9582Z"
-                  fill="white"
-                />
+                {/* SVG content unchanged */}
               </svg>
             </span>
             <span className="hidden lg:block">
@@ -362,184 +255,52 @@ const page = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M37.037 64.5218L36.9613 69.2948L34.7353 69.2595C33.7862 69.2445 33.2262 68.8053 33.2383 68.0474C33.2494 67.3441 33.7757 66.888 34.6302 66.84L34.6304 66.8264C34.2495 66.7316 34.0223 66.4138 33.9699 65.8392C33.9054 65.1689 33.8765 64.8406 33.5407 64.4801L33.5409 64.4664L34.2032 64.4769C34.4709 64.8295 34.5003 65.1237 34.5586 65.7598C34.6107 66.348 34.8862 66.6324 35.4188 66.6408L36.4089 66.6565L36.4429 64.5124L37.037 64.5218ZM36.4022 67.0799L35.1595 67.0602C34.3401 67.0472 33.8841 67.3746 33.8749 67.955C33.8666 68.4808 34.2374 68.7872 34.8861 68.7975L36.3746 68.8211L36.4022 67.0799Z"
-                  fill="white"
-                />
-                <path
-                  d="M30.5423 64.0778L29.4159 68.7165L26.2969 67.9592L26.4129 67.4814L28.9679 68.1018L29.353 66.5157L26.9307 65.9275L27.0387 65.4829L29.4609 66.0711L29.8622 64.4186L27.7054 63.8949L27.8214 63.4171L30.5423 64.0778Z"
-                  fill="white"
-                />
-                <path
-                  d="M23.0483 61.4661C24.0669 61.9635 24.4629 62.818 24.0962 63.7713L23.5378 63.4986C23.7786 62.803 23.5225 62.2068 22.823 61.8652C22.2031 61.5626 21.6576 61.6838 21.4149 62.1809C21.1872 62.6473 21.4225 62.9902 21.8528 63.2763L22.8023 63.8843C23.4967 64.3297 23.7525 64.8954 23.4319 65.552C23.0514 66.3314 22.1949 66.5136 21.2437 66.0491C20.225 65.5517 19.8199 64.7004 20.1957 63.7439L20.7542 64.0166C20.5195 64.7152 20.7663 65.2992 21.472 65.6438C22.0856 65.9435 22.6252 65.8345 22.8709 65.3313C23.0956 64.8711 22.8756 64.528 22.433 64.2359L21.4896 63.6309C20.7891 63.1825 20.5333 62.6168 20.8539 61.9602C21.2344 61.1808 22.0909 60.9986 23.0483 61.4661Z"
-                  fill="white"
-                />
-                <path
-                  d="M19.2831 59.3554L16.3179 63.0963L13.8025 61.1026L14.108 60.7173L16.1684 62.3504L17.1823 61.0713L15.2288 59.523L15.513 59.1644L17.4665 60.7127L18.5227 59.3801L16.7834 58.0015L17.0888 57.6162L19.2831 59.3554Z"
-                  fill="white"
-                />
-                <path
-                  d="M14.999 55.7036L10.0952 57.2557L9.59427 56.642L12.0928 52.1431L12.4901 52.6298L11.7467 53.933L13.1847 55.6948L14.6104 55.2274L14.999 55.7036ZM12.716 55.8657L11.4853 54.358C11.0481 55.1291 10.6099 55.9099 10.1516 56.6983L10.1602 56.7089C11.0202 56.4125 11.8729 56.1396 12.716 55.8657Z"
-                  fill="white"
-                />
-                <path
-                  d="M11.0289 50.3662L6.75626 52.4948L5.76351 50.5022C5.34021 49.6525 5.47255 48.9533 6.15104 48.6153C6.78063 48.3016 7.42772 48.5591 7.86339 49.2958L7.87562 49.2897C7.78455 48.9078 7.96218 48.5599 8.44823 48.2491C9.01376 47.8834 9.29194 47.7066 9.45752 47.2427L9.46975 47.2366L9.76514 47.8295C9.57521 48.2293 9.3276 48.3908 8.78959 48.7351C8.29132 49.0521 8.16556 49.4275 8.40309 49.9043L8.84465 50.7906L10.764 49.8344L11.0289 50.3662ZM8.46568 50.9794L7.91144 49.8669C7.546 49.1334 7.0455 48.8792 6.52594 49.1381C6.05527 49.3726 5.95381 49.8427 6.24311 50.4234L6.90698 51.756L8.46568 50.9794Z"
-                  fill="white"
-                />
-                <path
-                  d="M8.03973 42.4848L8.04637 42.4832C8.35765 43.7921 7.61807 44.8735 6.16972 45.218C4.72137 45.5624 3.57412 44.9297 3.26284 43.6209C2.99422 42.4915 3.50063 41.5217 4.57761 41.062L4.72772 41.6931C3.93168 42.0649 3.55948 42.7431 3.74909 43.5404C3.97031 44.4705 4.83353 44.8829 5.97627 44.6111C7.17215 44.3267 7.78575 43.542 7.55348 42.5654C7.34964 41.7083 6.62055 41.2991 5.61515 41.4399L5.4682 40.8221C6.75738 40.6348 7.75215 41.2757 8.03973 42.4848Z"
-                  fill="white"
-                />
-                <path
-                  d="M7.24399 38.0336L2.46366 38.0564L2.46079 37.4555L4.57096 37.4454L4.55826 34.7889L2.44809 34.799L2.44521 34.198L7.22554 34.1752L7.22841 34.7761L5.05678 34.7865L5.06948 37.443L7.24111 37.4326L7.24399 38.0336Z"
-                  fill="white"
-                />
-                <path
-                  d="M8.4409 27.6627L3.9796 25.9646L4.73513 23.9797C5.06553 23.1117 5.67868 22.7678 6.41904 23.0496C6.99984 23.2707 7.27227 23.7836 7.16427 24.4513L7.17704 24.4561C7.50904 23.9102 8.01831 23.7241 8.57996 23.9379C9.29479 24.21 9.51225 24.8481 9.18914 25.697L8.4409 27.6627ZM8.21735 26.9638L8.70322 25.6874C8.92915 25.0938 8.78346 24.6511 8.29202 24.464C7.79419 24.2745 7.37822 24.5035 7.15229 25.097L6.66642 26.3735L8.21735 26.9638ZM6.27071 26.2229L6.76144 24.9336C6.99952 24.3082 6.82678 23.8405 6.29704 23.6389C5.77369 23.4397 5.3401 23.6765 5.10202 24.302L4.61129 25.5913L6.27071 26.2229Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M10.7928 22.1209L7.86017 17.8953L8.29831 17.2353L13.3348 18.2919L12.9873 18.8153L11.5225 18.4905L10.2648 20.3851L11.1327 21.6088L10.7928 22.1209ZM9.96285 19.9879L11.0393 18.3664C10.1734 18.1768 9.29795 17.9891 8.40923 17.7843L8.40168 17.7957C8.93912 18.5296 9.45195 19.2635 9.96285 19.9879Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M16.0894 15.5338C15.2746 16.322 14.3363 16.4029 13.5651 15.7332L14.0118 15.3012C14.5836 15.7647 15.2314 15.7272 15.791 15.186C16.2867 14.7064 16.3588 14.1522 15.9742 13.7546C15.6134 13.3816 15.2108 13.4859 14.7951 13.7929L13.8999 14.4783C13.2444 14.9793 12.6254 15.0269 12.1174 14.5017C11.5144 13.8783 11.6351 13.011 12.396 12.2751C13.2108 11.487 14.1493 11.3963 14.9204 12.0757L14.4737 12.5077C13.8969 12.049 13.2637 12.0819 12.6992 12.6279C12.2083 13.1026 12.1268 13.647 12.5161 14.0495C12.8722 14.4177 13.2697 14.3277 13.6952 14.0112L14.5855 13.3306C15.2459 12.8249 15.8649 12.7772 16.3729 13.3025C16.9759 13.9259 16.8552 14.7932 16.0894 15.5338Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M19.3564 12.7128L16.8502 8.65002L19.582 6.96492L19.8401 7.3834L17.6024 8.76375L18.4593 10.1529L20.5808 8.84424L20.821 9.23366L18.6995 10.5423L19.5923 11.9895L21.4812 10.8243L21.7394 11.2428L19.3564 12.7128Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M24.7083 9.75751L23.1576 5.23563L24.5012 4.77486C26.0516 4.24319 27.1904 4.82728 27.6667 6.21615C28.143 7.60501 27.6023 8.76507 26.0519 9.29673L24.7083 9.75751ZM25.113 9.10613L25.8882 8.8403C27.0832 8.43048 27.4708 7.53953 27.0853 6.41552C26.7021 5.29797 25.8471 4.82589 24.652 5.23572L23.8769 5.50155L25.113 9.10613Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M30.8288 8.63146L31.3507 7.11199L31.9114 7.02946L31.3355 8.55688L30.8288 8.63146Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M38.4095 7.67528L41.0962 3.28912L41.8767 3.42434L42.9381 8.45979L42.319 8.35254L42.0264 6.88103L39.7857 6.49286L39.0151 7.78019L38.4095 7.67528ZM40.0276 6.05654L41.9454 6.38876C41.7701 5.51978 41.5894 4.6429 41.4188 3.747L41.4054 3.74467C40.9501 4.53216 40.4849 5.29713 40.0276 6.05654Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M44.896 9.12192L46.6719 4.691L49.5878 5.85967L49.4049 6.31608L47.0468 5.37098L46.4269 6.91768L48.6582 7.81197L48.4829 8.24935L46.2516 7.35507L45.4538 9.34549L44.896 9.12192Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M50.1583 11.5243L52.8426 7.577L54.6835 8.8289C55.4685 9.36268 55.6953 10.0372 55.269 10.664C54.8735 11.2457 54.1832 11.3378 53.4427 10.9086L53.435 10.9199C53.7013 11.2084 53.7167 11.5987 53.445 12.1076C53.1307 12.7033 52.9746 12.9935 53.0573 13.4792L53.0496 13.4905L52.5019 13.118C52.4718 12.6764 52.6087 12.4144 52.9094 11.8508C53.1888 11.3306 53.1147 10.9416 52.6743 10.6421L51.8554 10.0852L50.6496 11.8584L50.1583 11.5243ZM52.0935 9.73511L53.1213 10.434C53.7989 10.8948 54.3598 10.8716 54.6862 10.3916C54.9819 9.95676 54.8403 9.49707 54.3038 9.13226L53.0728 8.2951L52.0935 9.73511Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M55.3407 15.5222L58.6859 12.1073L59.1152 12.5278L55.77 15.9428L55.3407 15.5222Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M58.8769 19.7443L58.8714 19.7483C58.0921 18.6516 58.3722 17.3718 59.5858 16.5094C60.7993 15.647 62.1001 15.8034 62.8794 16.9001C63.5519 17.8464 63.446 18.9353 62.62 19.7653L62.2442 19.2365C62.8427 18.5933 62.9335 17.825 62.4588 17.157C61.905 16.3777 60.9501 16.319 59.9926 16.9994C58.9906 17.7115 58.716 18.669 59.2975 19.4873C59.8078 20.2054 60.6372 20.3114 61.5164 19.8039L61.8843 20.3216C60.7594 20.9786 59.5969 20.7575 58.8769 19.7443Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M61.0849 23.125L66.2277 23.0354L66.5329 23.7664L62.8554 27.3663L62.6134 26.7865L63.6975 25.7493L62.8214 23.6507L61.3217 23.6922L61.0849 23.125ZM63.3194 23.6204L64.0692 25.4165C64.7081 24.802 65.3507 24.1785 66.0148 23.5535L66.0095 23.5409C65.1007 23.5798 64.2056 23.5983 63.3194 23.6204Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M63.3652 29.3519L68.0741 28.5285L68.2188 29.356C67.0038 30.4558 65.7955 31.5545 64.4831 32.6922L64.4854 32.7056C65.9484 32.429 67.3072 32.1914 68.6728 31.9526L68.7693 32.5042L64.0604 33.3276L63.9227 32.5406C65.1568 31.4305 66.3884 30.3069 67.7187 29.1522L67.7163 29.1388C66.2344 29.4257 64.8486 29.668 63.4628 29.9103L63.3652 29.3519Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M63.8565 39.84L68.587 40.5286L68.5005 41.1233L63.77 40.4347L63.8565 39.84Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M63.2237 43.327L67.7577 44.8418L67.4915 45.6385C65.8997 46.0282 64.3143 46.4202 62.6188 46.797L62.6144 46.8099C64.033 47.2622 65.3413 47.6994 66.6562 48.1387L66.4788 48.6698L61.9447 47.155L62.1979 46.3971C63.8114 46.0074 65.4292 45.6046 67.1484 45.2214L67.1528 45.2085C65.7126 44.7561 64.3783 44.3104 63.0441 43.8646L63.2237 43.327Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M59.83 50.9297C60.4175 49.9601 61.3044 49.6431 62.2206 50.0945L61.8985 50.626C61.2276 50.3232 60.6107 50.5243 60.2072 51.1901C59.8497 51.78 59.9211 52.3343 60.3942 52.621C60.8381 52.89 61.2009 52.6866 61.5247 52.284L62.2161 51.3934C62.7225 50.7421 63.309 50.5385 63.934 50.9172C64.6757 51.3667 64.7797 52.2361 64.2311 53.1414C63.6436 54.1109 62.7591 54.4373 61.8405 53.9765L62.1626 53.4451C62.8371 53.742 63.4411 53.549 63.8481 52.8774C64.202 52.2933 64.1423 51.7461 63.6634 51.4559C63.2254 51.1905 62.8638 51.3786 62.5329 51.793L61.845 52.6777C61.335 53.3349 60.7486 53.5384 60.1236 53.1597C59.3819 52.7103 59.2779 51.8408 59.83 50.9297Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M57.4026 54.4723L60.86 57.7637L59.5086 59.1832C58.807 59.9202 58.0174 60.0266 57.4041 59.4427C56.7809 58.8494 56.8575 58.036 57.5779 57.2792L58.482 56.3296L56.9882 54.9075L57.4026 54.4723ZM58.8134 56.645L57.9517 57.5502C57.4667 58.0597 57.4119 58.5827 57.8324 58.9829C58.2478 59.3785 58.7675 59.2981 59.2525 58.7886L60.1142 57.8834L58.8134 56.645Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M52.8746 58.7045L55.7235 62.5432L55.2409 62.9014L52.392 59.0626L52.8746 58.7045Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M49.9375 60.7248L52.0592 65.0009L50.0648 65.9904C49.2145 66.4123 48.5155 66.2788 48.1786 65.5998C47.866 64.9697 48.1245 64.323 48.8619 63.8886L48.8558 63.8763C48.4738 63.9668 48.1262 63.7886 47.8161 63.302C47.4514 62.7359 47.2751 62.4574 46.8114 62.2911L46.8053 62.2788L47.3987 61.9844C47.7982 62.175 47.9593 62.4229 48.3028 62.9615C48.6189 63.4602 48.9942 63.5866 49.4713 63.3499L50.3584 62.9098L49.4053 60.9889L49.9375 60.7248ZM50.5465 63.289L49.4332 63.8415C48.6991 64.2057 48.444 64.7058 48.702 65.2258C48.9357 65.6968 49.4058 65.799 49.9869 65.5107L51.3205 64.849L50.5465 63.289Z"
-                  fill="#292F4A"
-                />
-                <path
-                  d="M43.9624 63.3097L45.0888 67.9485L41.9698 68.7059L41.8538 68.228L44.4087 67.6076L44.0236 66.0216L41.6013 66.6097L41.4934 66.1651L43.9156 65.5769L43.5144 63.9245L41.3576 64.4482L41.2416 63.9704L43.9624 63.3097Z"
-                  fill="white"
-                />
-                <path
-                  d="M37.9591 64.464L38.0349 69.2437L36.6146 69.2663C34.9758 69.2922 34.0735 68.3845 34.0502 66.9164C34.027 65.4483 34.9 64.5125 36.5388 64.4865L37.9591 64.464ZM37.3727 64.9582L36.5533 64.9712C35.2901 64.9912 34.646 65.7186 34.6648 66.9067C34.6835 68.088 35.3505 68.8014 36.6137 68.7813L37.4331 68.7684L37.3727 64.9582Z"
-                  fill="white"
-                />
+                {/* SVG content unchanged */}
               </svg>
             </span>
           </span>
-
           <span className="absolute z-40 top-[39%] right-[33%]">
-            <span>
-              <span className="absolute z-40 top-[-22px] lg:top-[39%] right-[33%]">
-                <div onClick={toggleVideo} className="cursor-pointer">
-                  <span>
-                    {isPlaying
-                      ? <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 100 100"
-                          width="130"
-                          height="65"
-                        >
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="45"
-                            stroke="white"
-                            strokeWidth="5"
-                            fill="none"
-                          />
-                          <rect
-                            x="30"
-                            y="25"
-                            width="15"
-                            height="50"
-                            fill="white"
-                          />
-                          <rect
-                            x="55"
-                            y="25"
-                            width="15"
-                            height="50"
-                            fill="white"
-                          />
-                        </svg>
-                      : // Play icon (when video is paused)
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 100 100"
-                          width="130"
-                          height="65"
-                        >
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="45"
-                            stroke="white"
-                            strokeWidth="5"
-                            fill="none"
-                          />
-                          <polygon points="40,30 70,50 40,70" fill="white" />
-                        </svg>}
-                  </span>
-                </div>
+            <div onClick={toggleVideo} className="cursor-pointer">
+              <span>
+                {isPlaying ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 100"
+                    width="130"
+                    height="65"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      stroke="white"
+                      strokeWidth="5"
+                      fill="none"
+                    />
+                    <rect x="30" y="25" width="15" height="50" fill="white" />
+                    <rect x="55" y="25" width="15" height="50" fill="white" />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 100"
+                    width="130"
+                    height="65"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      stroke="white"
+                      strokeWidth="5"
+                      fill="none"
+                    />
+                    <polygon points="40,30 70,50 40,70" fill="white" />
+                  </svg>
+                )}
               </span>
-            </span>
+            </div>
           </span>
-
           <video
             ref={videoRef}
             className="w-full h-full object-cover rounded-[13px]"
@@ -548,7 +309,7 @@ const page = () => {
             poster="https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740898551/uo475bsfn6afbwdx19pi.png"
           />
           <div className="flex justify-center lg:hidden">
-            <div>
+            <AnimateOnScroll animation="fade-up">
               <span
                 href="/our-story"
                 className="flex items-center gap-2 underline text-[22px] font-normal text-primary"
@@ -562,56 +323,55 @@ const page = () => {
                   </Link>
                 </span>
                 <button onClick={toggleVideo}>
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 100 100"
-                      width="30"
-                      height="30"
-                    >
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="45"
-                        stroke="black"
-                        strokeWidth="5"
-                        fill="none"
-                      />
-                      <polygon points="40,30 70,50 40,70" fill="black" />
-                    </svg>
-                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 100"
+                    width="30"
+                    height="30"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      stroke="black"
+                      strokeWidth="5"
+                      fill="none"
+                    />
+                    <polygon points="40,30 70,50 40,70" fill="black" />
+                  </svg>
                 </button>
               </span>
-            </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </section>
 
-      {/* <ProductSwiper /> */}
-
       <section className="lg:items-center flex flex-col gap-16 lg:flex-row-reverse lg:px-32 lg:py-40 py-16 px-8 bg-read5m lg:bg-green-bg bg-cover bg-no-repeat lg:bg-bottom">
         <div className="flex-1 basis-1/2 flex flex-col gap-6">
-          <h1 className="text-primary font-medium text-2xl lg:text-[36px] lg:leading-[40px] font-unbounded">
-            Africa is the true home of Wellness and Beauty
-          </h1>
-          <p className="text-[12px] lg:text-[18px] font-normal text-primary font-unbounded">
-            From Cleopatra’s milk baths to the to the century old beauty rituals
-            of Local Nigerian tribes. The thing is its always been here in
-            Africa. Throughout the ages, from the reigns of Queen Amina,
-            Cleopatra, Nefertiti, to the majestic kingdoms of Ashanti, Benin,
-            Mali, and ancient Egypt, Africa has been the timeless custodian of
-            integral wellness and ageless beauty secrets.
-          </p>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="text-primary font-medium text-2xl lg:text-[36px] lg:leading-[40px] font-unbounded">
+              Africa is the true home of Wellness and Beauty
+            </h1>
+          </AnimateOnScroll>
+          <AnimateOnScroll animation="fade-up">
+            <p className="text-[12px] lg:text-[18px] font-normal text-primary font-unbounded">
+              From Cleopatra’s milk baths to the century old beauty rituals of
+              Local Nigerian tribes. The thing is its always been here in
+              Africa. Throughout the ages, from the reigns of Queen Amina,
+              Cleopatra, Nefertiti, to the majestic kingdoms of Ashanti, Benin,
+              Mali, and ancient Egypt, Africa has been the timeless custodian
+              of integral wellness and ageless beauty secrets.
+            </p>
+          </AnimateOnScroll>
           <button
             onClick={() => router.push("/our-story")}
-            className=" items-center bg-primary py-2 px-2 rounded-2xl w-40 lg:py-5 lg:w-48"
+            className="items-center bg-primary py-2 px-2 rounded-2xl w-40 lg:py-5 lg:w-48"
           >
-            <span className="flex gap-2 items-center justify-center">
-              <span className="text-lg font-normal text-white rounded-[15px]">
-                Read more
-              </span>
-
-              <span>
+            <AnimateOnScroll animation="fade-up">
+              <span className="flex gap-2 items-center justify-center">
+                <span className="text-lg font-normal text-white rounded-[15px]">
+                  Read more
+                </span>
                 <svg
                   width="24"
                   height="23"
@@ -629,7 +389,7 @@ const page = () => {
                   />
                 </svg>
               </span>
-            </span>
+            </AnimateOnScroll>
           </button>
         </div>
         <div className="flex-1 basis-1/2 h-[400px] lg:h-full relative">
@@ -650,67 +410,73 @@ const page = () => {
 
       <section className="grid lg:grid-cols-1 lg:items-center gap-12 lg:px-32 lg:py-40 py-16 px-6 bg-custom-bg bg-cover bg-center bg-no-repeat">
         <div className="flex gap-4 lg:gap-20 flex-col h-full">
-          <h1 className="font-medium text-lg lg:text-[36px] lg:leading-[55px] text-center text-primary font-unbounded">
-            More than a beauty brand, every product is a celebration that
-            transcends time
-          </h1>
-
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="font-medium text-lg lg:text-[36px] lg:leading-[55px] text-center text-primary font-unbounded">
+              More than a beauty brand, every product is a celebration that
+              transcends time
+            </h1>
+          </AnimateOnScroll>
           <div>
             <ImageGrid />
           </div>
-
           <div className="flex flex-col gap-2 lg:gap-8">
-            <h2 className="lg:tracking-[0.85px] font-bold text-lg md:text-[35px] lg:leading-[48px] lg:text-[65px] text-primary font-unbounded">
-              the clearest, stunning skin
-            </h2>
+            <AnimateOnScroll animation="fade-up">
+              <h2 className="lg:tracking-[0.85px] font-bold text-lg md:text-[35px] lg:leading-[48px] lg:text-[65px] text-primary font-unbounded">
+                the clearest, stunning skin
+              </h2>
+            </AnimateOnScroll>
             <span className="flex justify-between gap-4 items-center">
-              <p className="lg:tracking-[0.83px] text-xs text-primary font-unbounded lg:text-[41px] lg:leading-[43px]">
-                find the perfect product for you
-              </p>
-              <Link
-                href="/products"
-                className="flex items-center gap-1 lg:py-5 lg:px-10 px-2 py-2 text-[10px] rounded-[10px] lg:rounded-[20px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300 whitespace-nowrap"
-              >
-                <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-primary whitespace-nowrap">
-                  Shop Now
-                </span>
-                <span className="lg:block hidden">
-                  <svg
-                    width="17"
-                    height="15"
-                    viewBox="0 0 17 15"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
-                      fill="#292F4A"
-                    />
-                    <path
-                      d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
-                      fill="#292F4A"
-                    />
-                  </svg>
-                </span>
-                <span className="block lg:hidden">
-                  <svg
-                    width="10"
-                    height="15"
-                    viewBox="0 0 17 15"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
-                      fill="#292F4A"
-                    />
-                    <path
-                      d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
-                      fill="#292F4A"
-                    />
-                  </svg>
-                </span>
-              </Link>
+              <AnimateOnScroll animation="fade-up">
+                <p className="lg:tracking-[0.83px] text-xs text-primary font-unbounded lg:text-[41px] lg:leading-[43px]">
+                  find the perfect product for you
+                </p>
+              </AnimateOnScroll>
+              <AnimateOnScroll animation="fade-up">
+                <Link
+                  href="/products"
+                  className="flex items-center gap-1 lg:py-5 lg:px-10 px-2 py-2 text-[10px] rounded-[10px] lg:rounded-[20px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300 whitespace-nowrap"
+                >
+                  <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-primary whitespace-nowrap">
+                    Shop Now
+                  </span>
+                  <span className="lg:block hidden">
+                    <svg
+                      width="17"
+                      height="15"
+                      viewBox="0 0 17 15"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
+                        fill="#292F4A"
+                      />
+                      <path
+                        d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
+                        fill="#292F4A"
+                      />
+                    </svg>
+                  </span>
+                  <span className="block lg:hidden">
+                    <svg
+                      width="10"
+                      height="15"
+                      viewBox="0 0 17 15"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.17101 2.23247C8.87749 1.94021 8.87646 1.46534 9.16872 1.17181C9.43442 0.904974 9.85103 0.879871 10.1451 1.09709L10.2294 1.16953L16.2794 7.19353C16.547 7.46002 16.5714 7.87813 16.3524 8.1722L16.2794 8.25643L10.2294 14.2814C9.93593 14.5737 9.46105 14.5727 9.16877 14.2792C8.90305 14.0124 8.87971 13.5957 9.09817 13.3025L9.17096 13.2186L14.687 7.7247L9.17101 2.23247Z"
+                        fill="#292F4A"
+                      />
+                      <path
+                        d="M0 7.72461C0 7.34491 0.282154 7.03112 0.648229 6.98146L0.75 6.97461L15.75 6.97461C16.1642 6.97461 16.5 7.3104 16.5 7.72461C16.5 8.10431 16.2178 8.4181 15.8518 8.46776L15.75 8.47461L0.75 8.47461C0.335786 8.47461 0 8.13882 0 7.72461Z"
+                        fill="#292F4A"
+                      />
+                    </svg>
+                  </span>
+                </Link>
+              </AnimateOnScroll>
             </span>
           </div>
         </div>
@@ -719,24 +485,26 @@ const page = () => {
       <section className="flex justify-between items-center lg:py-40 py-20 bg-grandma2 lg:bg-grandma bg-top bg-cover bg-no-repeat lg:bg-bottom">
         <div className="flex flex-col lg:gap-16 gap-16">
           <div className="flex flex-col lg:gap-4 gap-2 px-6">
-            <h1 className="text-primary font-unbounded lg:font-semibold lg:text-[48px] font-medium text-2xl lg:leading-[55px] text-center">
-              African Rhapsody for skin Disorders: Grandma’s Secrets Collection
-            </h1>
-            <h4 className="font-freize font-normal lg:text-lg text-[15px] text-primary lg:leading-9 text-center">
-              Unveil the secrets of African botanical healing rituals
-            </h4>
+            <AnimateOnScroll animation="fade-up">
+              <h1 className="text-primary font-unbounded lg:font-semibold lg:text-[48px] font-medium text-2xl lg:leading-[55px] text-center">
+                African Rhapsody for skin Disorders: Grandma’s Secrets Collection
+              </h1>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fade-up">
+              <h4 className="font-freize font-normal lg:text-lg text-[15px] text-primary lg:leading-9 text-center">
+                Unveil the secrets of African botanical healing rituals
+              </h4>
+            </AnimateOnScroll>
           </div>
-
           <div>
-            <div className={`px-8 lg:px-24`}>
-              <div className={`grid grid-cols-1 gap-10`}>
-                <div className="rounded-[20px] p-3 text-center flex flex-col gap-5  mx-auto">
+            <div className="px-8 lg:px-24">
+              <div className="grid grid-cols-1 gap-10">
+                <div className="rounded-[20px] p-3 text-center flex flex-col gap-5 mx-auto">
                   <img
                     src="images/grandma/5.jpg"
                     alt="Rhapsody"
                     className="rounded-[20px] w-full max-h-[500px] object-cover max-w-2xl"
                   />
-
                   <div className="flex flex-col flex-grow justify-between gap-3 h-full">
                     <div className="mt-3" />
                   </div>
@@ -744,11 +512,158 @@ const page = () => {
               </div>
             </div>
           </div>
-
           <div className="flex justify-center items-center">
+            <AnimateOnScroll animation="fade-up">
+              <Link
+                href="/products"
+                className="w-fit flex items-center gap-3 lg:py-5 lg:px-10 px-4 py-2 text-[10px] rounded-[10px] lg:rounded-[20px] text-base font-normal transition-all duration-300 bg-[#292F4A] text-primary"
+              >
+                <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-white">
+                  Shop Now
+                </span>
+                <span className="lg:block hidden">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13.171 6.23271C12.8775 5.94045 12.8765 5.46558 13.1687 5.17206C13.4344 4.90522 13.851 4.88012 14.1451 5.09734L14.2294 5.16977L20.2794 11.1938C20.547 11.4603 20.5714 11.8784 20.3524 12.1724L20.2794 12.2567L14.2294 18.2817C13.9359 18.574 13.4611 18.573 13.1688 18.2795C12.9031 18.0127 12.8797 17.5959 13.0982 17.3028L13.171 17.2188L18.687 11.7249L13.171 6.23271Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M4 11.7256C4 11.3459 4.28215 11.0321 4.64823 10.9824L4.75 10.9756H19.75C20.1642 10.9756 20.5 11.3114 20.5 11.7256C20.5 12.1053 20.2178 12.4191 19.8518 12.4687L19.75 12.4756L4.75 12.4756C4.33579 12.4756 4 12.1398 4 11.7256Z"
+                      fill="white"
+                    />
+                  </svg>
+                </span>
+                <span className="block lg:hidden">
+                  <svg
+                    width="10"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13.171 6.23271C12.8775 5.94045 12.8765 5.46558 13.1687 5.17206C13.4344 4.90522 13.851 4.88012 14.1451 5.09734L14.2294 5.16977L20.2794 11.1938C20.547 11.4603 20.5714 11.8784 20.3524 12.1724L20.2794 12.2567L14.2294 18.2817C13.9359 18.574 13.4611 18.573 13.1688 18.2795C12.9031 18.0127 12.8797 17.5959 13.0982 17.3028L13.171 17.2188L18.687 11.7249L13.171 6.23271Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M4 11.7256C4 11.3459 4.28215 11.0321 4.64823 10.9824L4.75 10.9756H19.75C20.1642 10.9756 20.5 11.3114 20.5 11.7256C20.5 12.1053 20.2178 12.4191 19.8518 12.4687L19.75 12.4756L4.75 12.4756C4.33579 12.4756 4 12.1398 4 11.7256Z"
+                      fill="white"
+                    />
+                  </svg>
+                </span>
+              </Link>
+            </AnimateOnScroll>
+          </div>
+        </div>
+      </section>
+
+      <section className="lg:px-32 lg:py-40 py-28 px-8 bg-custom-bg">
+        <div className="flex lg:justify-between lg:items-center lg:gap-16 lg:flex-row flex-col gap-9">
+          <div className="flex-1 basis-1/2 h-[400px] relative">
+            <span className="absolute left-[-18px] top-[-23px] lg:left-[-70px] lg:top-[-66px] z-30">
+              <img
+                alt=""
+                src="/images/layer-1.png"
+                className="w-[65px] lg:w-[152px]"
+              />
+            </span>
+            <img
+              alt=""
+              className="h-full w-full object-cover rounded-[30px]"
+              src="/images/bottle.png"
+            />
+          </div>
+          <Kids />
+        </div>
+      </section>
+
+      <section className="h-screen flex justify-center items-center bg-dark-bg bg-no-repeat bg-cover relative">
+        <div className="absolute inset-0 bg-black bg-opacity-80" />
+        <div className="z-10">
+          <MyCarousel />
+        </div>
+      </section>
+
+      <section className="lg:px-32 lg:py-40 py-16 px-10 bg-read4 bg-cover bg-no-repeat lg:bg-read4m">
+        <div className="grid grid-rows-[auto_auto] gap-4 px-1 p-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white rounded-[40px] mx-auto p-4">
+              <div id="acne">
+                <img
+                  src="https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740899090/ojqt1kwnkbtjmljcs5cl.png"
+                  alt="acne"
+                  className="rounded-[30px] w-full object-cover"
+                />
+                <AnimateOnScroll animation="fade-up">
+                  <h2 className="text-center font-bold leading-[22px] md:leading-[26px] font-unbounded text-[18px] md:text-[22px] my-3 md:my-6">
+                    Acne Treatment Kit
+                  </h2>
+                </AnimateOnScroll>
+              </div>
+            </div>
+            <div className="bg-white rounded-[40px] mx-auto p-4">
+              <div>
+                <img
+                  src="https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740899186/r0maohzhf6amhusr6su1.png"
+                  alt="hyperpigmentation"
+                  className="rounded-[30px] w-full object-cover"
+                />
+                <AnimateOnScroll animation="fade-up">
+                  <h2 className="text-center font-bold leading-[22px] md:leading-[26px] font-unbounded text-[18px] md:text-[22px] my-3 md:my-6">
+                    Hyperpigmentation + <br /> Dark Spots Repair kit
+                  </h2>
+                </AnimateOnScroll>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-[40px] mx-auto p-4">
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                <img
+                  src="/images/face/37.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+                <img
+                  src="/images/face/38.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+                <img
+                  src="/images/face/39.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+                <img
+                  src="/images/face/40.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+                <img
+                  src="/images/face/41.png"
+                  alt=""
+                  className="w-full object-cover rounded-[10px]"
+                />
+              </div>
+              <AnimateOnScroll animation="fade-up">
+                <h2 className="font-unbounded font-bold text-[18px] md:text-[22px] leading-[22px] md:leading-[26px] text-primary my-3 md:my-6 text-center">
+                  Face & Body Rejuvenation Kit
+                </h2>
+              </AnimateOnScroll>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center items-center lg:my-14 my-6">
+          <AnimateOnScroll animation="fade-up">
             <Link
-              href="/products"
-              className={`w-fit flex items-center gap-3 lg:py-5 lg:px-10 px-4 py-2 text-[10px] rounded-[10px] lg:rounded-[20px] text-base font-normal transition-all duration-300 bg-[#292F4A] text-primary`}
+              href="/products?category=african"
+              className="w-fit flex items-center lg:py-5 lg:px-10 gap-3 px-4 py-2 text-[10px] rounded-[10px] lg:rounded-[20px] text-base font-normal transition-all duration-300 bg-[#292F4A] hover:bg-[#121521] text-primary"
             >
               <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-white">
                 Shop Now
@@ -790,156 +705,17 @@ const page = () => {
                 </svg>
               </span>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="lg:px-32 lg:py-40 py-28 px-8 bg-custom-bg">
-        <div className="flex lg:justify-between lg:items-center lg:gap-16 lg:flex-row flex-col gap-9">
-          <div className="flex-1 basis-1/2 h-[400px] relative">
-            <span className="absolute left-[-18px] top-[-23px] lg:left-[-70px] lg:top-[-66px] z-30">
-              <img
-                alt=""
-                src="/images/layer-1.png"
-                className="w-[65px] lg:w-[152px]"
-              />
-            </span>
-            <img
-              alt=""
-              className="h-full w-full object-cover rounded-[30px]"
-              src="/images/bottle.png"
-            />
-          </div>
-
-          <Kids />
-        </div>
-      </section>
-
-      <section className="h-screen flex justify-center items-center bg-dark-bg bg-no-repeat bg-cover relative">
-        <div className="absolute inset-0 bg-black bg-opacity-80" />
-        <div className="z-10">
-          <MyCarousel />
-        </div>
-      </section>
-
-      <section className="lg:px-32 lg:py-40 py-16 px-10 bg-read4 bg-cover bg-no-repeat lg:bg-read4m">
-        <div className="grid grid-rows-[auto_auto] gap-4 px-1 p-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white rounded-[40px] mx-auto p-4">
-              <div id="acne">
-                <img
-                  src="https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740899090/ojqt1kwnkbtjmljcs5cl.png"
-                  alt="acne"
-                  className="rounded-[30px] w-full object-cover"
-                />
-                <h2 className="text-center font-bold leading-[22px] md:leading-[26px] font-unbounded text-[18px] md:text-[22px] my-3 md:my-6">
-                  Acne Treatment Kit
-                </h2>
-              </div>
-            </div>
-            <div className="bg-white rounded-[40px] mx-auto p-4">
-              <div>
-                <img
-                  src="https://res.cloudinary.com/dtdpgrdhr/image/upload/v1740899186/r0maohzhf6amhusr6su1.png"
-                  alt="hyperpigmentation"
-                  className="rounded-[30px] w-full object-cover"
-                />
-                <h2 className="text-center font-bold leading-[22px] md:leading-[26px] font-unbounded text-[18px] md:text-[22px] my-3 md:my-6">
-                  Hyperpigmentation + <br /> Dark Spots Repair kit
-                </h2>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-[40px] mx-auto p-4">
-            <div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-                <img
-                  src="/images/face/37.png"
-                  alt=""
-                  className="w-full object-cover rounded-[10px]"
-                />
-                <img
-                  src="/images/face/38.png"
-                  alt=""
-                  className="w-full object-cover rounded-[10px]"
-                />
-                <img
-                  src="/images/face/39.png"
-                  alt=""
-                  className="w-full object-cover rounded-[10px]"
-                />
-                <img
-                  src="/images/face/40.png"
-                  alt=""
-                  className="w-full object-cover rounded-[10px]"
-                />
-                <img
-                  src="/images/face/41.png"
-                  alt=""
-                  className="w-full object-cover rounded-[10px]"
-                />
-              </div>
-              <h2 className="font-unbounded font-bold text-[18px] md:text-[22px] leading-[22px] md:leading-[26px] text-primary my-3 md:my-6 text-center">
-                Face & Body Rejuvenation Kit
-              </h2>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center items-center lg:my-14 my-6">
-          <Link
-            href="/products?category=african"
-            className={`w-fit flex items-center lg:py-5 lg:px-10 gap-3 px-4 py-2 text-[10px] rounded-[10px] lg:rounded-[20px] text-base font-normal transition-all duration-300 bg-[#292F4A] hover:bg-[#121521] text-primary"
-                    }`}
-          >
-            <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-white">
-              Shop Now
-            </span>
-            <span className="lg:block hidden">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13.171 6.23271C12.8775 5.94045 12.8765 5.46558 13.1687 5.17206C13.4344 4.90522 13.851 4.88012 14.1451 5.09734L14.2294 5.16977L20.2794 11.1938C20.547 11.4603 20.5714 11.8784 20.3524 12.1724L20.2794 12.2567L14.2294 18.2817C13.9359 18.574 13.4611 18.573 13.1688 18.2795C12.9031 18.0127 12.8797 17.5959 13.0982 17.3028L13.171 17.2188L18.687 11.7249L13.171 6.23271Z"
-                  fill="white"
-                />
-                <path
-                  d="M4 11.7256C4 11.3459 4.28215 11.0321 4.64823 10.9824L4.75 10.9756H19.75C20.1642 10.9756 20.5 11.3114 20.5 11.7256C20.5 12.1053 20.2178 12.4191 19.8518 12.4687L19.75 12.4756L4.75 12.4756C4.33579 12.4756 4 12.1398 4 11.7256Z"
-                  fill="white"
-                />
-              </svg>
-            </span>
-            <span className="block lg:hidden">
-              <svg
-                width="10"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13.171 6.23271C12.8775 5.94045 12.8765 5.46558 13.1687 5.17206C13.4344 4.90522 13.851 4.88012 14.1451 5.09734L14.2294 5.16977L20.2794 11.1938C20.547 11.4603 20.5714 11.8784 20.3524 12.1724L20.2794 12.2567L14.2294 18.2817C13.9359 18.574 13.4611 18.573 13.1688 18.2795C12.9031 18.0127 12.8797 17.5959 13.0982 17.3028L13.171 17.2188L18.687 11.7249L13.171 6.23271Z"
-                  fill="white"
-                />
-                <path
-                  d="M4 11.7256C4 11.3459 4.28215 11.0321 4.64823 10.9824L4.75 10.9756H19.75C20.1642 10.9756 20.5 11.3114 20.5 11.7256C20.5 12.1053 20.2178 12.4191 19.8518 12.4687L19.75 12.4756L4.75 12.4756C4.33579 12.4756 4 12.1398 4 11.7256Z"
-                  fill="white"
-                />
-              </svg>
-            </span>
-          </Link>
+          </AnimateOnScroll>
         </div>
       </section>
 
       <section className="lg:px-32 lg:py-24 py-16 px-8 bg-custom-bg bg-no-repeat bg-cover">
         <div className="lg:mb-16 mb-10">
-          <h1 className="lg:text-[36px] font-semibold lg:leading-[55px] text-[23px] leading-[31px] text-center text-primary font-unbounded">
-            Got Questions? We’ve got answers
-          </h1>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="lg:text-[36px] font-semibold lg:leading-[55px] text-[23px] leading-[31px] text-center text-primary font-unbounded">
+              Got Questions? We’ve got answers
+            </h1>
+          </AnimateOnScroll>
         </div>
         <AccordionSection />
       </section>

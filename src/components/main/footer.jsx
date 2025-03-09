@@ -1,109 +1,86 @@
 import Link from "next/link";
 import React from "react";
+import AnimateOnScroll from "@/components/main/AnimateOnScroll"; // Import AnimateOnScroll
 
 const Footer = () => {
   const Links = [
-    {
-      id: "1",
-      href: "/",
-      label: "Home"
-    },
-    {
-      id: "2",
-      href: "/our-story",
-      label: "Our story"
-    },
-    {
-      id: "3",
-      href: "/products",
-      label: "Shop"
-    },
-    {
-      id: "4",
-      href: "/contact-us",
-      label: "Contact Us"
-    },
-    {
-      id: "5",
-      href: "/blog",
-      label: "Blog"
-    }
+    { id: "1", href: "/", label: "Home" },
+    { id: "2", href: "/our-story", label: "Our story" },
+    { id: "3", href: "/products", label: "Shop" },
+    { id: "4", href: "/contact-us", label: "Contact Us" },
+    { id: "5", href: "/blog", label: "Blog" },
   ];
 
   const Shops = [
-    {
-      id: "1",
-      href: "/products",
-      label: "African Rhapsody Products"
-    },
-    {
-      id: "2",
-      href: "/products",
-      label: "African Rhapsody For Kids"
-    },
-    {
-      id: "3",
-      href: "/products",
-      label: "Grandma’s Secrets Collection"
-    },
-    {
-      id: "4",
-      href: "/products",
-      label: "Skin Care Combo Collection"
-    }
+    { id: "1", href: "/products", label: "African Rhapsody Products" },
+    { id: "2", href: "/products", label: "African Rhapsody For Kids" },
+    { id: "3", href: "/products", label: "Grandma’s Secrets Collection" },
+    { id: "4", href: "/products", label: "Skin Care Combo Collection" },
   ];
+
   const currentYear = new Date().getFullYear();
+
   return (
     <section>
       <div className="bg-[#292F4A] text-white flex justify-center items-center h-[63px] lg:h-[167px]">
-        <h1 className="text-xs font-medium leading-3 text-center font-unbounded lg:text-[32px] lg:leading-[35px]">
-          Close your eyes, feel the{" "}
-          <span className="text-[#C78700] font-gistesy lg:text-[96px] lg:leading-[35px] text-[36px]">
-            rhapsody
-          </span>
-        </h1>
+        <AnimateOnScroll animation="fade-up">
+          <h1 className="text-xs font-medium leading-3 text-center font-unbounded lg:text-[32px] lg:leading-[35px]">
+            Close your eyes, feel the{" "}
+            <span className="text-[#C78700] font-gistesy lg:text-[96px] lg:leading-[35px] text-[36px]">
+              rhapsody
+            </span>
+          </h1>
+        </AnimateOnScroll>
       </div>
 
       <div className="bg-custom-bg py-16">
-        <div className=" lg:flex-row bg-white w-[90%] rounded-[30px] mx-auto px-8 py-8 ">
+        <div className="lg:flex-row bg-white w-[90%] rounded-[30px] mx-auto px-8 py-8">
           <div className="flex flex-col gap-16 lg:flex-row mb-4">
             <div className="flex flex-col gap-4 text-center lg:text-left">
               <ul>
-                <li className="text-[20px] text-[#C78700] font-bold font-freize">
-                  Navigation
-                </li>
+                <AnimateOnScroll animation="fade-up">
+                  <li className="text-[20px] text-[#C78700] font-bold font-freize">
+                    Navigation
+                  </li>
+                </AnimateOnScroll>
               </ul>
               <ul>
-                {Links.map((item, index) =>
-                  <li key={index}>
-                    <Link
-                      href={item.href}
-                      className="text-primary text-base leading-[32px] font-freize"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                )}
+                {Links.map((item, index) => (
+                  <AnimateOnScroll key={index} animation="fade-up">
+                    <li>
+                      <Link
+                        href={item.href}
+                        className="text-primary text-base leading-[32px] font-freize"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  </AnimateOnScroll>
+                ))}
               </ul>
             </div>
 
             <div className="flex flex-col gap-4 text-center lg:text-left">
               <ul>
-                <li className="text-[20px] text-[#C78700] font-bold font-freize">
-                  Shop
-                </li>
+                <AnimateOnScroll animation="fade-up">
+                  <li className="text-[20px] text-[#C78700] font-bold font-freize">
+                    Shop
+                  </li>
+                </AnimateOnScroll>
               </ul>
               <ul>
-                {Shops.map((item, index) =>
-                  <li key={index}>
-                    <Link
-                      href={item.href}
-                      className="text-primary text-base leading-[32px] font-freize"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                )}
+                {Shops.map((item, index) => (
+                  <AnimateOnScroll key={index} animation="fade-up">
+                    <li>
+                      <Link
+                        href={item.href}
+                        className="text-primary text-base leading-[32px] font-freize"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  </AnimateOnScroll>
+                ))}
               </ul>
             </div>
 
@@ -125,9 +102,11 @@ const Footer = () => {
                     />
                   </svg>
                 </span>
-                <span className="text-primary text-center text-base leading-[32px] lg:leading-6 font-freize lg:text-left">
-                  5 Olakunle Ajibade Street, Off Ogudu Road, Ojota
-                </span>
+                <AnimateOnScroll animation="fade-up">
+                  <span className="text-primary text-center text-base leading-[32px] lg:leading-6 font-freize lg:text-left">
+                    5 Olakunle Ajibade Street, Off Ogudu Road, Ojota
+                  </span>
+                </AnimateOnScroll>
               </div>
             </div>
 
@@ -234,11 +213,11 @@ const Footer = () => {
                 </Link>
               </div>
             </div>
-            <div>
+            <AnimateOnScroll animation="fade-up">
               <h6 className="text-center font-freize text-primary text-base leading-[24px]">
                 © {currentYear} African Rhapsody
               </h6>
-            </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </div>

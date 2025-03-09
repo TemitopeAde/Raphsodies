@@ -39,6 +39,7 @@
     "embla-carousel-react": "^8.5.2",
     "flowbite-react": "^0.10.2",
     "formidable": "^3.5.2",
+    "framer-motion": "^12.4.10",
     "fs": "^0.0.1-security",
     "joi": "^17.13.3",
     "js-cookie": "^3.0.5",

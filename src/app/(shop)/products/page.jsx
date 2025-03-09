@@ -5,6 +5,7 @@ import ProductKit from "@/components/main/ProductKit";
 import { useProducts } from "@/hooks/admin/useProducts";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect, useMemo, Suspense } from "react";
+import AnimateOnScroll from "@/components/main/AnimateOnScroll"; // Import AnimateOnScroll
 
 const ProductPageContent = () => {
   const [products, setProducts] = useState([]);
@@ -57,7 +58,9 @@ const ProductPageContent = () => {
   if (isError) {
     return (
       <div className="flex items-center justify-center h-screen text-red-500">
-        Failed to load products. Please try again later.
+        <AnimateOnScroll animation="fade-up">
+          Failed to load products. Please try again later.
+        </AnimateOnScroll>
       </div>
     );
   }
@@ -72,14 +75,18 @@ const ProductPageContent = () => {
         <div className="absolute inset-0 z-10 flex items-center justify-center px-8 lg:px-24 lg:justify-start">
           <div className="text-white flex flex-col gap-10 text-center">
             <div className="flex flex-col gap-6 lg:px-16">
-              <h1 className="text-[28px] lg:px-6 font-unbounded font-bold text-center lg:text-[52px] lg:leading-[68px]">
-                Research Based African Inspired Beauty Brand for the Clearest,
-                Stunning Skin
-              </h1>
-              <h3 className="font-freize font-normal text-[15px] lg:px-32 leading-[28px] lg:text-[18px] lg:leading-[35px]">
-                Our products include a luxurious collection of soaps, oils, body
-                milk, salves, scrubs, serums and body butters.
-              </h3>
+              <AnimateOnScroll animation="fade-up">
+                <h1 className="text-[28px] lg:px-6 font-unbounded font-bold text-center lg:text-[52px] lg:leading-[68px]">
+                  Research Based African Inspired Beauty Brand for the Clearest,
+                  Stunning Skin
+                </h1>
+              </AnimateOnScroll>
+              <AnimateOnScroll animation="fade-up">
+                <h3 className="font-freize font-normal text-[15px] lg:px-32 leading-[28px] lg:text-[18px] lg:leading-[35px]">
+                  Our products include a luxurious collection of soaps, oils, body
+                  milk, salves, scrubs, serums and body butters.
+                </h3>
+              </AnimateOnScroll>
             </div>
           </div>
         </div>
@@ -87,21 +94,27 @@ const ProductPageContent = () => {
 
       <section className="bg-custom-bg">
         <div className="flex flex-col gap-6 items-center py-20">
-          <h1 className="font-unbounded font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
-            Our Products
-          </h1>
-          <p className="lg:text-2xl font-freize lg:leading-[35px] text-[15px]">
-            {productCategory ? `African Rhapsody ${productCategory.charAt(0).toUpperCase() + productCategory.slice(1)} Products` : "African Rhapsody Products"}
-          </p>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="font-unbounded font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
+              Our Products
+            </h1>
+          </AnimateOnScroll>
+          <AnimateOnScroll animation="fade-up">
+            <p className="lg:text-2xl font-freize lg:leading-[35px] text-[15px]">
+              {productCategory ? `African Rhapsody ${productCategory.charAt(0).toUpperCase() + productCategory.slice(1)} Products` : "African Rhapsody Products"}
+            </p>
+          </AnimateOnScroll>
         </div>
 
         <div className="flex flex-col gap-20 pb-20">
           {products.length > 0 ? (
             <Product data={products} countryCode={countryCode} />
           ) : (
-            <p className="font-freize font-semibold text-base text-center">
-              No products found.
-            </p>
+            <AnimateOnScroll animation="fade-up">
+              <p className="font-freize font-semibold text-base text-center">
+                No products found.
+              </p>
+            </AnimateOnScroll>
           )}
 
           <ProductKit data={{ 
@@ -125,7 +138,7 @@ const ProductPageContent = () => {
 
 const Page = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>}>
       <ProductPageContent />
     </Suspense>
   );

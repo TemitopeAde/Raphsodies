@@ -1,4 +1,5 @@
 import ContactForm from "@/components/main/ContactForm";
+import AnimateOnScroll from "@/components/main/AnimateOnScroll"; // Import AnimateOnScroll
 import React from "react";
 
 const page = () => {
@@ -6,13 +7,17 @@ const page = () => {
     <section className="gap-16 pt-36 pb-8 px-4 bg-custom-bg flex flex-col justify-center text-center">
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
-          <h1 className="font-unbounded font-bold text-[28px]">
-            We’d love to hear from you!
-          </h1>
-          <p className="font-freize text-[15px] font-normal">
-            Reach out to us anytime, and we'll get back to you as soon as
-            possible.
-          </p>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="font-unbounded font-bold text-[28px]">
+              We’d love to hear from you!
+            </h1>
+          </AnimateOnScroll>
+          <AnimateOnScroll animation="fade-up">
+            <p className="font-freize text-[15px] font-normal">
+              Reach out to us anytime, and we'll get back to you as soon as
+              possible.
+            </p>
+          </AnimateOnScroll>
         </div>
 
         <div>
@@ -38,9 +43,11 @@ const page = () => {
                     />
                   </svg>
                 </span>
-                <span className="font-freize font-normal text-base">
-                  +2348063855425
-                </span>
+                <AnimateOnScroll animation="fade-up">
+                  <span className="font-freize font-normal text-base">
+                    +2348063855425
+                  </span>
+                </AnimateOnScroll>
               </a>
             </li>
             <li>
@@ -76,9 +83,11 @@ const page = () => {
                     </defs>
                   </svg>
                 </span>
-                <span className="font-freize font-normal text-base">
-                  +2348063855425
-                </span>
+                <AnimateOnScroll animation="fade-up">
+                  <span className="font-freize font-normal text-base">
+                    +2348063855425
+                  </span>
+                </AnimateOnScroll>
               </a>
             </li>
             <li>
@@ -102,9 +111,11 @@ const page = () => {
                     />
                   </svg>
                 </span>
-                <span className="font-freize font-normal text-base">
-                  5 Olakunle Ajibade Street, Off Ogudu Road, Ojota
-                </span>
+                <AnimateOnScroll animation="fade-up">
+                  <span className="font-freize font-normal text-base">
+                    5 Olakunle Ajibade Street, Off Ogudu Road, Ojota
+                  </span>
+                </AnimateOnScroll>
               </a>
             </li>
           </ul>

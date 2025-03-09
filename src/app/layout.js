@@ -22,11 +22,12 @@ export default function RootLayout({ children }) {
         <ReactQueryProvider>
           <ToastProvider>
             <AuthProvider>
-            {children}
+              
+                {children}
+             
             </AuthProvider>
           </ToastProvider>
         </ReactQueryProvider>
-        
       </body>
     </html>
   );
