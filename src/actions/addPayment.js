@@ -38,14 +38,15 @@ export async function createPayment({ userId, amount, reference, products, deliv
       include: { products: true },
     });
 
+    const emailResponse = await sendOrderConfirmationEmail(user?.email)
+    console.log({emailResponse});
+    
     return { success: true, payment };
   } catch (error) {
     console.error("Error creating payment:", error.message);
     return { success: false, error: error.message };
   }
 }
-
-
 
 
 export async function getPayments({ 

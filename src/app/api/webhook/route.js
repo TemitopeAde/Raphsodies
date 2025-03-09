@@ -63,7 +63,7 @@ async function handleSuccessfulCharge(chargeData) {
 
 
     for (const item of products) {
-      console.log({item});
+      
       
       await prisma.product.update({
         where: { id: item.id }, 
