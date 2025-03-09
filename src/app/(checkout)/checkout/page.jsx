@@ -92,7 +92,7 @@ const Page = () => {
                   </div>
                   <div className="lg:basis-2/5 text-end">
                     <h1 className="text-primary lg:text-[18px] font-semibold font-unbounded lg:leading-5">
-                      {item?.currency === "USD" ? `$${item?.priceDollar}` : `NGN ${item?.price}`}
+                      {item?.currency === "USD" ? `$${item?.priceDollar.toLocaleString("en-US")}` : `NGN ${item?.price.toLocaleString("en-NG")}`}
                     </h1>
                   </div>
                 </div>
