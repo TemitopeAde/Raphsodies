@@ -14,7 +14,7 @@ import {
   NewspaperIcon,
   Contact2Icon
 } from 'lucide-react';
-import { FaBlog } from 'react-icons/fa';
+import { FaBlog, FaMoneyBill } from 'react-icons/fa';
 
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -26,7 +26,8 @@ const Layout = ({ children }) => {
     { title: 'Orders', icon: <ShoppingCart className="w-5 h-5" />, href: '/admin/orders' },
     { title: 'Users', icon: <Users className="w-5 h-5" />, href: '/admin/users' },
     { title: 'Blog', icon: <NewspaperIcon className="w-5 h-5" />, href: '/admin/blog' },
-    { title: 'Contacts', icon: <Contact2Icon className="w-5 h-5" />, href: '/admin/contact-us' }
+    { title: 'Contacts', icon: <Contact2Icon className="w-5 h-5" />, href: '/admin/contact-us' },
+    { title: 'Coupons', icon: <FaMoneyBill className="w-5 h-5" />, href: '/admin/coupons' }
   ];
 
   return (
