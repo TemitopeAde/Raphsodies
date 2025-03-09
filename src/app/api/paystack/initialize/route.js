@@ -7,7 +7,7 @@ const ORIGIN = "https://raphsodies.vercel.app"
 export async function POST(req) {
   try {
     const body = await req.json();
-    console.log({body});
+    // console.log({body});
     
     const { email, cartItems, deliveryInfo, userId } = body;
 
@@ -31,7 +31,7 @@ export async function POST(req) {
 
     const currency = uniqueCurrencies[0]; 
 
-    console.log({cartItems});
+    // console.log({cartItems});
     
 
     const netAmount = cartItems?.reduce((acc, item) => {

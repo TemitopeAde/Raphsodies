@@ -169,7 +169,7 @@ export default function CheckOutForm({
       amount: updatedNetTotal, // Use updated total with discount
       cartItems,
       userId: user.id,
-      couponCode: couponCode || null,
+      // couponCode: couponCode || null,
       deliveryInfo: {
         firstName: data.firstName,
         lastName: data.lastName,

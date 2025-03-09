@@ -12,7 +12,7 @@ const unbounded = Unbounded({
 
 export const metadata = {
   title: "African Rhapsody",
-  description: "African Rhapsody Store"
+  description: "African Inspired Beauty brand that makes cruelty-free botanical skincare products for the clearest, glowing and stunning skin."
 };
 
 export default function RootLayout({ children }) {
