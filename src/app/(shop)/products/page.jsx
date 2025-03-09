@@ -139,7 +139,7 @@ const ProductPageContent = () => {
               { id: "cm7klov5y000jjv03dmm376a4", src: "/images/face/38.png" },
               { id: "cm7h83h2z000hl503z6wk6ngi", src: "/images/face/39.png" },
               { src: "/images/face/40.png" },
-              { src: "/images/face/41.png" }
+              { src: "/images/face/41.png" },
             ],
             price: `${face?.price}`,
             priceDollar: `${face?.priceDollar}`
