@@ -247,7 +247,7 @@ export default function CheckOutForm({
         </div>
 
         {/* Display Total Amount */}
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <div className="flex justify-between font-freize text-primary">
             <span>Subtotal:</span>
             <span>₦{initialNetTotal.toLocaleString()}</span>
@@ -262,7 +262,7 @@ export default function CheckOutForm({
             <span>Total:</span>
             <span>₦{updatedNetTotal.toLocaleString()}</span>
           </div>
-        </div>
+        </div> */}
 
         <div>
           <input
