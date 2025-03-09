@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const ProductKit = ({data}) => {
+const ProductKit = ({data, countryCode}) => {
     
   return (
     <div className='px-10 lg:px-24'>
@@ -24,7 +24,13 @@ const ProductKit = ({data}) => {
                 </h1>
             
                 <button className='w-fit cursor-none font-unbounded px-8 py-2 rounded-[20px] bg-[#292F4A] text-white text-[18px] font-bold'>
-                    NGN {data?.price?.toLocaleString('en-NG')}
+                    {countryCode === "NG"
+                    ? data?.price !== undefined && data?.price !== null
+                      ? `NGN ${parseFloat(data?.price).toLocaleString("en-NG", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
+                      : "Unavailable"
+                    : data?.priceDollar !== undefined && data?.priceDollar !== null
+                      ? `$ ${parseFloat(data?.priceDollar).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`
+                      : "Unavailable"}
                 </button>
             </div>
         }

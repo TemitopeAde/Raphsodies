@@ -15,6 +15,7 @@ const ProductPageContent = () => {
   const [page, setPage] = useState(1);
   const [location, setLocation] = useState(null);
   const [countryCode, setCountryCode] = useState("");
+  const [face, setFace] = useState()
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -33,14 +34,27 @@ const ProductPageContent = () => {
     maxPrice: maxPrice || null,
   });
 
+  const { data: reData, isLoading: reIsLoading, isError: reIsError, refetch: reRefetch } = useProducts({
+    search: encodeURIComponent("Face & Body Rejuvenation Kit"),
+  });
+  
+
   // Update products and location when data changes
   useEffect(() => {
+
+    setFace(reData?.products?.products[0])
+
+   
+    
+
     if (data) {
       setLocation(data?.location);
       setCountryCode(data?.location?.countryCode || "");
       setProducts(data?.products?.products || []);
     }
-  }, [data]);
+  }, [data, reData]);
+
+  console.log(face);
 
   // Re-fetch data when productCategory changes
   useEffect(() => {
@@ -117,9 +131,9 @@ const ProductPageContent = () => {
             </AnimateOnScroll>
           )}
 
-          <ProductKit data={{ 
-            id: 1, 
-            label: "Face & Body Rejuvenation Kit", 
+          <ProductKit countryCode={countryCode} data={{ 
+            id: `${face?.id}`, 
+            label: `${face?.name}`, 
             images: [
               { id: "cm7h850fj000jl503f54p8u1b", src: "/images/face/37.png" },
               { id: "cm7klov5y000jjv03dmm376a4", src: "/images/face/38.png" },
@@ -127,8 +141,8 @@ const ProductPageContent = () => {
               { src: "/images/face/40.png" },
               { src: "/images/face/41.png" }
             ],
-            price: "57,500",
-            priceDollar: "39"
+            price: `${face?.price}`,
+            priceDollar: `${face?.priceDollar}`
           }} />
         </div>
       </section>
