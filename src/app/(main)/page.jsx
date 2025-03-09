@@ -132,18 +132,40 @@ const page = () => {
     }
   };
 
-  const MyCarousel = () => (
+  const MyCarousel = () =>
     <Carousel className="w-full max-w-xs">
       <CarouselContent>
         {carouselData.map(
-          ({ id, imageSrc, altText, description, svgPath, svgColor, name }) => (
+          ({ id, imageSrc, altText, description, svgPath, svgColor, name }) =>
             <CarouselItem key={id}>
               <div className="p-1">
                 <Card>
                   <CardContent className="bg-white rounded-[30px]">
                     <div className="flex flex-col gap-2">
                       <div className="flex justify-between items-center py-6">
-                        <img src={imageSrc} alt={altText} />
+                        <svg
+                          width="64"
+                          height="64"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="12"
+                            cy="7"
+                            r="5"
+                            stroke="black"
+                            strokeWidth="2"
+                            fill="none"
+                          />
+                          <path
+                            d="M4 21C4 17.134 7.134 14 11 14H13C16.866 14 20 17.134 20 21"
+                            stroke="black"
+                            strokeWidth="2"
+                            fill="none"
+                          />
+                        </svg>
+
                         <div>
                           <svg
                             width="83"
@@ -157,11 +179,9 @@ const page = () => {
                         </div>
                       </div>
                       <div className="max-h-[100px] overflow-y-auto">
-                        <AnimateOnScroll animation="fade-up">
-                          <p className="text-primary font-freize leading-[28px] text-[15px]">
-                            {description}
-                          </p>
-                        </AnimateOnScroll>
+                        <p className="text-primary font-freize leading-[28px] text-[15px]">
+                          {description}
+                        </p>
                       </div>
                     </div>
                     <div className="py-3">
@@ -175,15 +195,13 @@ const page = () => {
                 </Card>
               </div>
             </CarouselItem>
-          )
         )}
       </CarouselContent>
       <div className="absolute -bottom-16 left-1/2 lg:static">
         <CarouselPrevious className="bg-white dark:bg-white border-2 border-white text-black rounded-full p-2" />
         <CarouselNext className="bg-white dark:bg-white border-2 border-white text-black rounded-full p-2" />
       </div>
-    </Carousel>
-  );
+    </Carousel>;
 
   return (
     <section>
@@ -262,42 +280,40 @@ const page = () => {
           <span className="absolute z-40 top-[39%] right-[33%]">
             <div onClick={toggleVideo} className="cursor-pointer">
               <span>
-                {isPlaying ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 100 100"
-                    width="130"
-                    height="65"
-                  >
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      stroke="white"
-                      strokeWidth="5"
-                      fill="none"
-                    />
-                    <rect x="30" y="25" width="15" height="50" fill="white" />
-                    <rect x="55" y="25" width="15" height="50" fill="white" />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 100 100"
-                    width="130"
-                    height="65"
-                  >
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      stroke="white"
-                      strokeWidth="5"
-                      fill="none"
-                    />
-                    <polygon points="40,30 70,50 40,70" fill="white" />
-                  </svg>
-                )}
+                {isPlaying
+                  ? <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 100 100"
+                      width="130"
+                      height="65"
+                    >
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        stroke="white"
+                        strokeWidth="5"
+                        fill="none"
+                      />
+                      <rect x="30" y="25" width="15" height="50" fill="white" />
+                      <rect x="55" y="25" width="15" height="50" fill="white" />
+                    </svg>
+                  : <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 100 100"
+                      width="130"
+                      height="65"
+                    >
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        stroke="white"
+                        strokeWidth="5"
+                        fill="none"
+                      />
+                      <polygon points="40,30 70,50 40,70" fill="white" />
+                    </svg>}
               </span>
             </div>
           </span>
@@ -359,8 +375,8 @@ const page = () => {
               Local Nigerian tribes. The thing is its always been here in
               Africa. Throughout the ages, from the reigns of Queen Amina,
               Cleopatra, Nefertiti, to the majestic kingdoms of Ashanti, Benin,
-              Mali, and ancient Egypt, Africa has been the timeless custodian
-              of integral wellness and ageless beauty secrets.
+              Mali, and ancient Egypt, Africa has been the timeless custodian of
+              integral wellness and ageless beauty secrets.
             </p>
           </AnimateOnScroll>
           <button
@@ -433,7 +449,7 @@ const page = () => {
               </AnimateOnScroll>
               <AnimateOnScroll animation="fade-up">
                 <Link
-                  href="/products"
+                  href="/products?category=african"
                   className="flex items-center gap-1 lg:py-5 lg:px-10 px-2 py-2 text-[10px] rounded-[10px] lg:rounded-[20px] text-base font-normal transition-all duration-300 bg-background text-primary hover:bg-teal-300 whitespace-nowrap"
                 >
                   <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-primary whitespace-nowrap">
@@ -487,7 +503,8 @@ const page = () => {
           <div className="flex flex-col lg:gap-4 gap-2 px-6">
             <AnimateOnScroll animation="fade-up">
               <h1 className="text-primary font-unbounded lg:font-semibold lg:text-[48px] font-medium text-2xl lg:leading-[55px] text-center">
-                African Rhapsody for skin Disorders: Grandma’s Secrets Collection
+                African Rhapsody for skin Disorders: Grandma’s Secrets
+                Collection
               </h1>
             </AnimateOnScroll>
             <AnimateOnScroll animation="fade-up">
@@ -515,7 +532,7 @@ const page = () => {
           <div className="flex justify-center items-center">
             <AnimateOnScroll animation="fade-up">
               <Link
-                href="/products"
+                href="/products?category=grandma"
                 className="w-fit flex items-center gap-3 lg:py-5 lg:px-10 px-4 py-2 text-[10px] rounded-[10px] lg:rounded-[20px] text-base font-normal transition-all duration-300 bg-[#292F4A] text-primary"
               >
                 <span className="flex items-center text-[9px] lg:text-[18px] font-freize text-white">

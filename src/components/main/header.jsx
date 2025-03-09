@@ -86,9 +86,9 @@ const Header = () => {
   ];
 
   const shopDropdownOptions = [
-    { href: '/products?category=kids', text: 'African Rhapsody For Kids' },
-    { href: '/products?category=grandma', text: 'Grandma’s Secret Collection' },
     { href: '/products?category=african', text: 'African Rhapsody Products' },
+    { href: '/products?category=kids', text: 'African Rhapsody For Kids' },
+    { href: '/products?category=grandma', text: 'African Rhapsody for skin Disorders' },
   ];
 
   function Navbar() {

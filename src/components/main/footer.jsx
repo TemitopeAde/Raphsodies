@@ -12,9 +12,9 @@ const Footer = () => {
   ];
 
   const Shops = [
-    { id: "1", href: "/products", label: "African Rhapsody Products" },
-    { id: "2", href: "/products", label: "African Rhapsody For Kids" },
-    { id: "3", href: "/products", label: "Grandma’s Secrets Collection" },
+    { id: "1", href: "/products?category=african", label: "African Rhapsody Products" },
+    { id: "2", href: "/products?category=kids", label: "African Rhapsody For Kids" },
+    { id: "3", href: "/products?category=grandma", label: "Grandma's Secrets Collection" },
     { id: "4", href: "/products", label: "Skin Care Combo Collection" },
   ];
 
@@ -35,7 +35,7 @@ const Footer = () => {
 
       <div className="bg-custom-bg py-16">
         <div className="lg:flex-row bg-white w-[90%] rounded-[30px] mx-auto px-8 py-8">
-          <div className="flex flex-col gap-16 lg:flex-row mb-4">
+          <div className="flex flex-col lg:gap-14 gap-16 lg:flex-row mb-4">
             <div className="flex flex-col gap-4 text-center lg:text-left">
               <ul>
                 <AnimateOnScroll animation="fade-up">
@@ -50,7 +50,7 @@ const Footer = () => {
                     <li>
                       <Link
                         href={item.href}
-                        className="text-primary text-base leading-[32px] font-freize"
+                        className="text-primary text-base leading-[32px] font-freize lg:text-xs"
                       >
                         {item.label}
                       </Link>
@@ -60,7 +60,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="flex flex-col gap-4 text-center lg:text-left">
+            <div className="flex flex-col gap-4 text-center lg:text-left lg:basis-1/4">
               <ul>
                 <AnimateOnScroll animation="fade-up">
                   <li className="text-[20px] text-[#C78700] font-bold font-freize">
@@ -74,7 +74,7 @@ const Footer = () => {
                     <li>
                       <Link
                         href={item.href}
-                        className="text-primary text-base leading-[32px] font-freize"
+                        className="text-primary lg:text-xs text-base leading-[32px] font-freize"
                       >
                         {item.label}
                       </Link>
@@ -84,7 +84,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div>
+            <div className="">
               <div className="flex flex-col gap-4 items-center justify-center lg:flex-row lg:items-start">
                 <span>
                   <svg
@@ -103,14 +103,14 @@ const Footer = () => {
                   </svg>
                 </span>
                 <AnimateOnScroll animation="fade-up">
-                  <span className="text-primary text-center text-base leading-[32px] lg:leading-6 font-freize lg:text-left">
+                  <span className="text-primary text-center text-sm leading-[28px] lg:leading-5 font-freize lg:text-left">
                     5 Olakunle Ajibade Street, Off Ogudu Road, Ojota
                   </span>
                 </AnimateOnScroll>
               </div>
             </div>
 
-            <div className="flex justify-center items-center lg:self-baseline lg:text-left lg:basis-1/3">
+            <div className="flex lg:basis-1/6 justify-center items-center lg:self-baseline lg:text-left">
               <div className="flex justify-center items-center">
                 <img alt="logo" src="images/footer.png" />
               </div>
