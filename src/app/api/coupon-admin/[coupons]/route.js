@@ -2,7 +2,7 @@
 import {  NextResponse } from "next/server";
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 // Update a coupon
 export async function PATCH(request) {
