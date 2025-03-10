@@ -1,9 +1,15 @@
 'use client'
 
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const page = () => {
   const router = useRouter()
+  const { clearCart } = useCartStore();
+
+  useEffect(() => {
+    clearCart()
+  }, [])
   return (
     <section className="bg-custom-bg mt-20 flex justify-center items-center h-[70vh] text-center">
       <div className="flex flex-col gap-10">
