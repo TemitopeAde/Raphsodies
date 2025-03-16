@@ -1,5 +1,6 @@
 'use client'
 
+import useCartStore from "@/hooks/store/cartStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
