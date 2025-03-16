@@ -20,12 +20,14 @@ export async function loginUser(email, password) {
       return
     }
 
+    console.log({password, userPassword: user.password});
+    
     const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {
       // throw new Error('Invalid password');
       return 
     }
-
+    console.log({isPasswordValid});
     const { password: _, ...userWithoutPassword } = user;
     return userWithoutPassword;
   } catch (error) {
