@@ -397,7 +397,7 @@ const page = ({params}) => {
             </h1>
 
             <div>
-              <Product data={randomProducts} type="other" />
+              <Product countryCode={countryCode} data={randomProducts} type="other" />
             </div>
           </div>
         </div>
