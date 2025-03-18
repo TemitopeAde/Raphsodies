@@ -38,7 +38,7 @@ export async function POST(request) {
       value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 86400, // 1 day
+      maxAge: 604800,
       path: '/',
     });
 

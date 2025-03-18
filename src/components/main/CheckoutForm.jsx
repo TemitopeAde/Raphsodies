@@ -10,10 +10,9 @@ import { useStatesByCountry } from "@/hooks/payment/useState";
 import useCitiesByState from "@/hooks/payment/useCitiesStates";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "@/hooks/store/useAuth";
 
 export default function CheckOutForm({
-  netTotal: initialNetTotal, // Renamed to avoid shadowing
+  netTotal: initialNetTotal,
   countryList,
   loadingCountries,
   countryError,
@@ -21,12 +20,13 @@ export default function CheckOutForm({
   setDiscount,
   couponCode,
   setCouponCode,
+  isAuthenticated, // New prop
+  user, // New prop
 }) {
   const router = useRouter();
   const { cart } = useCartStore();
-  const { user, loading: authLoading, isAuthenticated } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false); // New state for coupon loading
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
@@ -37,7 +37,6 @@ export default function CheckOutForm({
   const { data: states, isLoading: loadingStates, isError: hasStateError } = useStatesByCountry(countryCode);
   const { data: cities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
 
-  // Calculate updated total with discount
   const discount = useState(0)[0]; // Assuming discount is managed via prop/state
   const updatedNetTotal = initialNetTotal - (discount || 0);
 
@@ -55,9 +54,9 @@ export default function CheckOutForm({
     setValue,
   } = useForm({
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
+      firstName: isAuthenticated && user?.firstName ? user.firstName : "",
+      lastName: isAuthenticated && user?.lastName ? user.lastName : "",
+      email: isAuthenticated && user?.email ? user.email : "",
       address: "",
       phoneNumber: "",
       city: "",
@@ -106,8 +105,8 @@ export default function CheckOutForm({
       return;
     }
 
-    setIsApplyingCoupon(true); // Disable button and show loader
-    setCouponError(""); // Clear previous errors
+    setIsApplyingCoupon(true);
+    setCouponError("");
 
     try {
       const response = await fetch("/api/coupons", {
@@ -125,14 +124,14 @@ export default function CheckOutForm({
         throw new Error(data.error || "Invalid coupon code");
       }
 
-      setDiscount(data.discountAmount); // Update discount
+      setDiscount(data.discountAmount);
       toast.success("Coupon applied successfully!");
     } catch (err) {
       setCouponError(err.message);
-      setDiscount(0); // Reset discount on error
+      setDiscount(0);
       toast.error(err.message);
     } finally {
-      setIsApplyingCoupon(false); // Re-enable button
+      setIsApplyingCoupon(false);
     }
   };
 
@@ -157,19 +156,13 @@ export default function CheckOutForm({
   };
 
   const onSubmit = async (data) => {
-    if (!user?.id) {
-      toast.error("Please login to continue.");
-      return;
-    }
-
     setIsSubmitting(true);
 
     const paymentData = {
       email: data.email,
-      amount: updatedNetTotal, // Use updated total with discount
+      amount: updatedNetTotal,
       cartItems,
-      userId: user.id,
-      // couponCode: couponCode || null,
+      userId: isAuthenticated ? user?.id : 1, 
       deliveryInfo: {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -187,8 +180,18 @@ export default function CheckOutForm({
   return (
     <div>
       <h1 className="lg:text-[32px] text-[24px] font-unbounded font-semibold text-primary lg:mb-12 mb-8">
-        Delivery
+        Delivery {isAuthenticated ? "" : "(Guest Checkout)"}
       </h1>
+
+      {!isAuthenticated && (
+        <p className="mb-4 text-primary font-freize">
+          Proceed as a guest or{" "}
+          <a href="/sign-in" className="underline text-blue-600">
+            sign in
+          </a>{" "}
+          for a better experience and order history
+        </p>
+      )}
 
       {locationError && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-600">
@@ -245,24 +248,6 @@ export default function CheckOutForm({
             <p className="text-red-500 text-sm mt-1 font-freize">{couponError}</p>
           )}
         </div>
-
-        {/* Display Total Amount */}
-        {/* <div className="space-y-2">
-          <div className="flex justify-between font-freize text-primary">
-            <span>Subtotal:</span>
-            <span>₦{initialNetTotal.toLocaleString()}</span>
-          </div>
-          {discount > 0 && (
-            <div className="flex justify-between font-freize text-green-600">
-              <span>Discount:</span>
-              <span>-₦{discount.toLocaleString()}</span>
-            </div>
-          )}
-          <div className="flex justify-between font-freize text-primary font-semibold">
-            <span>Total:</span>
-            <span>₦{updatedNetTotal.toLocaleString()}</span>
-          </div>
-        </div> */}
 
         <div>
           <input
@@ -453,7 +438,7 @@ export default function CheckOutForm({
 
         <button
           type="submit"
-          disabled={isSubmitting || authLoading}
+          disabled={isSubmitting}
           className="transition flex text-center justify-center items-center lg:text-[22px] gap-2 py-2 px-4 lg:h-[60px] rounded-[20px] text-base font-normal duration-300 bg-background text-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (

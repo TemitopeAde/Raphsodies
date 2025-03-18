@@ -4,33 +4,27 @@ import CheckOutForm from "@/components/main/CheckoutForm";
 import { useCountries } from "@/hooks/payment/useCountries";
 import useCartStore from "@/hooks/store/cartStore";
 import { useAuth } from "@/hooks/store/useAuth";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Page = () => {
   const { cart } = useCartStore();
-  const router = useRouter();
   const [authChecked, setAuthChecked] = useState(false);
   const { data: countryList, isLoading: loadingCountries, isError: hasCountryError, error: countryError } = useCountries();
   
   const deliveryFee = 10;
-  const [discount, setDiscount] = useState(0); // New state for discount amount
-  const [couponCode, setCouponCode] = useState(""); // New state for coupon code
+  const [discount, setDiscount] = useState(0);
+  const [couponCode, setCouponCode] = useState("");
   const totalCost = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
-  const netTotal = totalCost + deliveryFee - discount; // Adjusted netTotal with discount
+  const netTotal = totalCost + deliveryFee - discount;
 
   const { user, loading, isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (!loading) {
       console.log({ user, loading, isAuthenticated });
-      if (!isAuthenticated) {
-        window.location.href = "/sign-in";
-      } else {
-        setAuthChecked(true);
-      }
+      setAuthChecked(true); // Set auth checked regardless of authentication status
     }
-  }, [isAuthenticated, loading, router, user]);
+  }, [loading]);
 
   if (loading || !authChecked) {
     return (
@@ -73,9 +67,11 @@ const Page = () => {
               loadingCountries={loadingCountries}
               countryError={countryError}
               hasCountryError={hasCountryError}
-              setDiscount={setDiscount} // Pass discount setter
-              couponCode={couponCode} // Pass coupon code
-              setCouponCode={setCouponCode} // Pass coupon code setter
+              setDiscount={setDiscount}
+              couponCode={couponCode}
+              setCouponCode={setCouponCode}
+              isAuthenticated={isAuthenticated} // Pass authentication status
+              user={user} // Pass user data if available
             />
             <div className="basis-1/2 flex flex-col gap-4">
               {cart?.map((item, index) => (

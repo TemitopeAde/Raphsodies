@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const JWT_EXPIRATION = '1h'; 
+const JWT_EXPIRATION = process.env.JWT_EXPIRATION || '3d';
 
 export function createPasswordResetToken(user) {
     const token = jwt.sign(

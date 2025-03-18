@@ -45,7 +45,7 @@ function AuthFormContent() {
     if (isSignUp) {
       createUser({ name: formData.fullName, email: formData.email, password: formData.password }, {
         onSuccess: () => {
-          toast.success("Signup successful! You can now log in.", { theme: "colored" });
+          toast.success("Please check your email to verify your account", { theme: "colored" });
           setIsSignUp(false);
           setFormData({ fullName: "", email: "", password: "", confirmPassword: "" });
         },
