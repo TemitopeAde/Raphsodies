@@ -3,6 +3,8 @@ import React from 'react';
 import AnimateOnScroll from "@/components/main/AnimateOnScroll"; // Import AnimateOnScroll
 
 const Product = ({ data, type, countryCode }) => {
+  console.log(countryCode);
+  
   return (
     data ? (
       <div className={`grid grid-cols-1 ${type === "other" ? "" : "px-8 lg:px-24"} md:grid-cols-2 lg:grid-cols-4 gap-10 lg:justify-between`}>

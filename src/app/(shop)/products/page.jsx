@@ -44,9 +44,6 @@ const ProductPageContent = () => {
 
     setFace(reData?.products?.products[0])
 
-   
-    
-
     if (data) {
       setLocation(data?.location);
       setCountryCode(data?.location?.countryCode || "");
