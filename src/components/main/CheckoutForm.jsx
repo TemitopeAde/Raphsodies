@@ -20,8 +20,8 @@ export default function CheckOutForm({
   setDiscount,
   couponCode,
   setCouponCode,
-  isAuthenticated, // New prop
-  user, // New prop
+  isAuthenticated,
+  user,
 }) {
   const router = useRouter();
   const { cart } = useCartStore();
@@ -37,14 +37,8 @@ export default function CheckOutForm({
   const { data: states, isLoading: loadingStates, isError: hasStateError } = useStatesByCountry(countryCode);
   const { data: cities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
 
-  const discount = useState(0)[0]; // Assuming discount is managed via prop/state
+  const discount = useState(0)[0];
   const updatedNetTotal = initialNetTotal - (discount || 0);
-
-  useEffect(() => {
-    if (countryList) {
-      setCountries(countryList);
-    }
-  }, [countryList]);
 
   const {
     register,
@@ -61,9 +55,21 @@ export default function CheckOutForm({
       phoneNumber: "",
       city: "",
       state: "",
-      country: "",
+      country: "", // Will be set to "Nigeria" later
     },
   });
+
+  useEffect(() => {
+    if (countryList && countryList.length > 0) {
+      setCountries(countryList);
+      // Find Nigeria in the country list and set it as default
+      const nigeria = countryList.find((country) => country.name === "Nigeria");
+      if (nigeria && !selectedCountry) { // Only set if not already set
+        setSelectedCountry(nigeria);
+        setValue("country", nigeria.name, { shouldValidate: true });
+      }
+    }
+  }, [countryList, setValue, selectedCountry]);
 
   const handleCountryChange = (selected) => {
     setSelectedCountry(selected);
@@ -162,7 +168,7 @@ export default function CheckOutForm({
       email: data.email,
       amount: updatedNetTotal,
       cartItems,
-      userId: isAuthenticated ? user?.id : 1, 
+      userId: isAuthenticated ? user?.id : 1,
       deliveryInfo: {
         firstName: data.firstName,
         lastName: data.lastName,

@@ -148,7 +148,7 @@ const Footer = () => {
                   </svg>
                 </Link>
               </div>
-              <div>
+              {/* <div>
                 <Link href="/">
                   <svg
                     width="30"
@@ -179,9 +179,9 @@ const Footer = () => {
                     </defs>
                   </svg>
                 </Link>
-              </div>
+              </div> */}
               <div>
-                <Link href="/">
+                <Link href="https://instagram.com/AfricanRhapsody">
                   <svg
                     width="30"
                     height="30"

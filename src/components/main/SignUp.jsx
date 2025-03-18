@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateUser } from "@/hooks/store/useSignup";
 import { useLogin } from "@/hooks/store/useLogin";
-import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link";
 
 export default function AuthForm() {
@@ -20,6 +20,8 @@ function AuthFormContent() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({ fullName: "", email: "", password: "", confirmPassword: "" });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
   
   const { mutate: createUser, isPending } = useCreateUser();
@@ -36,6 +38,14 @@ function AuthFormContent() {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -103,7 +113,19 @@ function AuthFormContent() {
               <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <FaLock className="text-gray-400" />
               </div>
-              <input type="password" placeholder="Password" className="w-full rounded-lg border px-4 py-3 pl-10 focus:ring-[#00EEAE]" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+              <input 
+                type={showPassword ? "text" : "password"} 
+                placeholder="Password" 
+                className="w-full rounded-lg border px-4 py-3 pl-10 pr-10 focus:ring-[#00EEAE]" 
+                value={formData.password} 
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })} 
+              />
+              <div 
+                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEyeSlash className="text-gray-400" /> : <FaEye className="text-gray-400" />}
+              </div>
               {errors.password && <p className="mt-1 text-sm text-[#FF4D4D]">{errors.password}</p>}
             </div>
 
@@ -112,7 +134,19 @@ function AuthFormContent() {
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                   <FaLock className="text-gray-400" />
                 </div>
-                <input type="password" placeholder="Confirm Password" className="w-full rounded-lg border px-4 py-3 pl-10 focus:ring-[#00EEAE]" value={formData.confirmPassword} onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} />
+                <input 
+                  type={showConfirmPassword ? "text" : "password"} 
+                  placeholder="Confirm Password" 
+                  className="w-full rounded-lg border px-4 py-3 pl-10 pr-10 focus:ring-[#00EEAE]" 
+                  value={formData.confirmPassword} 
+                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} 
+                />
+                <div 
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                  onClick={toggleConfirmPasswordVisibility}  
+                >
+                  {showConfirmPassword ? <FaEyeSlash className="text-gray-400" /> : <FaEye className="text-gray-400" />}
+                </div>
                 {errors.confirmPassword && <p className="mt-1 text-sm text-[#FF4D4D]">{errors.confirmPassword}</p>}
               </div>
             )}

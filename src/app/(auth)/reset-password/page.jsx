@@ -4,9 +4,12 @@ import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; // Importing icons
 
 const ResetPasswordForm = () => {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for confirm password visibility
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -57,9 +60,9 @@ const ResetPasswordForm = () => {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
+            <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"} // Toggle between text and password
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#00EEAE]"
                 placeholder="New password"
                 {...register("password", {
@@ -70,12 +73,23 @@ const ResetPasswordForm = () => {
                   },
                 })}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)} // Toggle visibility
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-5 w-5 text-gray-500" />
+                ) : (
+                  <EyeIcon className="h-5 w-5 text-gray-500" />
+                )}
+              </button>
               {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
             </div>
 
-            <div>
+            <div className="relative">
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"} // Toggle between text and password
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#00EEAE]"
                 placeholder="Confirm password"
                 {...register("confirmPassword", {
@@ -84,6 +98,17 @@ const ResetPasswordForm = () => {
                     value === watch("password") || "Passwords do not match",
                 })}
               />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle visibility
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                {showConfirmPassword ? (
+                  <EyeSlashIcon className="h-5 w-5 text-gray-500" />
+                ) : (
+                  <EyeIcon className="h-5 w-5 text-gray-500" />
+                )}
+              </button>
               {errors.confirmPassword && (
                 <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
               )}

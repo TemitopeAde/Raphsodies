@@ -131,7 +131,7 @@ const ProductPageContent = () => {
             </AnimateOnScroll>
           )}
 
-          <ProductKit countryCode={countryCode} data={{ 
+          { productCategory ==="kids" ? "": <ProductKit countryCode={countryCode} data={{ 
             id: `${face?.id}`, 
             label: `${face?.name}`, 
             images: [
@@ -143,7 +143,8 @@ const ProductPageContent = () => {
             ],
             price: `${face?.price}`,
             priceDollar: `${face?.priceDollar}`
-          }} />
+          }} />}
+          
         </div>
       </section>
     </section>
