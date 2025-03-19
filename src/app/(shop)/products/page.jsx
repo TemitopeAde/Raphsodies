@@ -104,18 +104,49 @@ const ProductPageContent = () => {
       </section>
 
       <section className="bg-custom-bg">
-        <div className="flex flex-col gap-6 items-center py-20">
+
+        {productCategory === "kids" && (<div className="flex flex-col gap-6 items-center py-20">
           <AnimateOnScroll animation="fade-up">
             <h1 className="font-unbounded font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
-              Our Products
+            African Rhapsody for Kids:
             </h1>
           </AnimateOnScroll>
           <AnimateOnScroll animation="fade-up">
-            <p className="lg:text-2xl font-freize lg:leading-[35px] text-[15px]">
-              {productCategory ? `African Rhapsody ${productCategory.charAt(0).toUpperCase() + productCategory.slice(1)} Products` : "African Rhapsody Products"}
+            <p className="lg:text-2xl text-center font-freize lg:leading-[35px] text-[15px]">
+            Gentle yet powerful, <b>African Rhapsody for kids</b> shields young skin from bacteria and common issues like rashes, eczema, and pimples. Unlike harsh antibacterial soaps, our formula preserves the skin’s natural balance while delivering deep nourishment. Infused with Africa’s finest anti-inflammatory herbs, it soothes irritation, prevents breakouts, and promotes a healthy, radiant glow. 🌿
+
             </p>
           </AnimateOnScroll>
-        </div>
+          </div>)}
+
+          {productCategory === "grandma" && (<div className="flex flex-col gap-6 items-center py-20">
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="font-unbounded text-center font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
+              African Rhapsody for Skin Disorders: Grandma’s Secrets Collection
+            </h1>
+          </AnimateOnScroll>
+          <AnimateOnScroll animation="fade-up">
+            <p className="lg:text-2xl text-center font-freize lg:leading-[35px] text-[15px]">
+            Unveil the secrets of African Botanical Healing Rituals, designed to heal skin disorders such as eczema, tinea versicolor, other inflammatory conditions, and deeply nourish your skin
+            </p>
+          </AnimateOnScroll>
+          </div>)}
+
+
+          {productCategory === "african" && (<div className="flex flex-col gap-6 items-center py-20">
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="font-unbounded text-center font-bold text-[28px] lg:text-[48px] lg:leading-[55px]">
+            Our Products
+            </h1>
+          </AnimateOnScroll>
+          <AnimateOnScroll animation="fade-up">
+            <p className="lg:text-2xl text-center font-freize lg:leading-[35px] text-[15px]">
+            African Rhapsody Products
+            </p>
+          </AnimateOnScroll>
+          </div>)}
+
+        
 
         <div className="flex flex-col gap-20 pb-20">
           {products.length > 0 ? (

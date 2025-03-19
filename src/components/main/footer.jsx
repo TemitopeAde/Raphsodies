@@ -14,7 +14,7 @@ const Footer = () => {
   const Shops = [
     { id: "1", href: "/products?category=african", label: "African Rhapsody Products" },
     { id: "2", href: "/products?category=kids", label: "African Rhapsody For Kids" },
-    { id: "3", href: "/products?category=grandma", label: "Grandma's Secrets Collection" },
+    { id: "3", href: "/products?category=grandma", label: "African Rhapsody for Skin Disorders" },
     { id: "4", href: "/products", label: "Skin Care Combo Collection" },
   ];
 
@@ -148,8 +148,8 @@ const Footer = () => {
                   </svg>
                 </Link>
               </div>
-              {/* <div>
-                <Link href="/">
+              <div>
+                <Link href="https://www.facebook.com/profile.php?id=61562631612409&mibextid=wwXIfr&mibextid=wwXIfr">
                   <svg
                     width="30"
                     height="31"
@@ -179,7 +179,7 @@ const Footer = () => {
                     </defs>
                   </svg>
                 </Link>
-              </div> */}
+              </div>
               <div>
                 <Link href="https://instagram.com/AfricanRhapsody">
                   <svg
