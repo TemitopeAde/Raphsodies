@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function CheckOutForm({
-  netTotal: initialNetTotal, // Represents subtotal
+  netTotal: initialNetTotal,
   countryList,
   loadingCountries,
   countryError,
@@ -31,15 +31,27 @@ export default function CheckOutForm({
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null); // Track selected city
   const [locationError, setLocationError] = useState("");
   const [couponError, setCouponError] = useState("");
-  const [discount, setLocalDiscount] = useState(0); // Local discount state
+  const [discount, setLocalDiscount] = useState(0);
 
   const countryCode = selectedCountry?.iso2 || "";
   const { data: states, isLoading: loadingStates, isError: hasStateError } = useStatesByCountry(countryCode);
-  const { data: cities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
+  const { data: apiCities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
 
-  // Define state-based shipping costs
+  // Hardcoded Lagos locations and shipping costs
+  const lagosLocations = [
+    { name: "Mainland (Ojota Axis)", shippingCost: 3000 },
+    { name: "Mainland (Central)", shippingCost: 3500 },
+    { name: "Mainland (Outskirts)", shippingCost: 4000 },
+    { name: "Island to Lekki", shippingCost: 4000 },
+    { name: "Ajah", shippingCost: 4500 },
+    { name: "Sangotedo", shippingCost: 5000 },
+    { name: "Ikorodu", shippingCost: 4500 },
+  ];
+
+  // State-based shipping costs (excluding Lagos, which is handled separately)
   const shippingCosts = {
     "Abia": 6000,
     "Abuja": 6000,
@@ -82,18 +94,23 @@ export default function CheckOutForm({
   // Determine if any item is in USD
   const isInternationalOrder = cart?.some(item => item.currency === "USD");
 
-  // Calculate shipping cost based on selected state (only for NGN orders)
-  const shippingCost = isInternationalOrder ? 0 : (selectedState?.name ? shippingCosts[selectedState.name] || 0 : 0);
-  
-  // Calculate the total for display purposes only (not sent to API)
+  // Determine cities and shipping cost based on state
+  const isLagosSelected = selectedState?.name === "Lagos";
+  const cities = isLagosSelected ? lagosLocations : apiCities || [];
+  const shippingCost = isInternationalOrder
+    ? 0
+    : isLagosSelected
+    ? (selectedCity?.shippingCost || 0) // Use selected Lagos location's shipping cost
+    : (selectedState?.name ? shippingCosts[selectedState.name] || 0 : 0);
+
   const updatedNetTotal = initialNetTotal - discount + shippingCost;
 
   useEffect(() => {
-    setShippingCost(shippingCost); // Update shipping cost in parent (Page component)
+    setShippingCost(shippingCost);
   }, [shippingCost, setShippingCost]);
 
   useEffect(() => {
-    setDiscount(discount); // Sync local discount with parent
+    setDiscount(discount);
   }, [discount, setDiscount]);
 
   const {
@@ -132,12 +149,19 @@ export default function CheckOutForm({
     setValue("state", "");
     setValue("city", "");
     setSelectedState(null);
+    setSelectedCity(null);
   };
 
   const handleStateChange = (selected) => {
     setSelectedState(selected);
     setValue("state", selected.name);
     setValue("city", "");
+    setSelectedCity(null);
+  };
+
+  const handleCityChange = (selected) => {
+    setSelectedCity(selected);
+    setValue("city", selected.name);
   };
 
   useEffect(() => {
@@ -145,12 +169,12 @@ export default function CheckOutForm({
       setLocationError("Failed to load countries. Please try again later.");
     } else if (hasStateError) {
       setLocationError("Failed to load states. Please try again later.");
-    } else if (hasCityError) {
+    } else if (hasCityError && !isLagosSelected) {
       setLocationError("Failed to load cities. Please try again later.");
     } else {
       setLocationError("");
     }
-  }, [countryError, hasStateError, hasCityError]);
+  }, [countryError, hasStateError, hasCityError, isLagosSelected]);
 
   const cartItems = cart.map((item) => ({
     id: item?.id,
@@ -185,7 +209,7 @@ export default function CheckOutForm({
         throw new Error(data.error || "Invalid coupon code");
       }
 
-      setLocalDiscount(data.discountAmount); // Update local discount state
+      setLocalDiscount(data.discountAmount);
       toast.success("Coupon applied successfully!");
     } catch (err) {
       setCouponError(err.message);
@@ -198,7 +222,7 @@ export default function CheckOutForm({
 
   const handlePayment = async (paymentData) => {
     try {
-      console.log("Payment Data Sent to API:", paymentData); // Debug log
+      console.log("Payment Data Sent to API:", paymentData);
       const response = await fetch("/api/paystack/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -466,25 +490,25 @@ export default function CheckOutForm({
               rules={{ required: "City is required" }}
               render={({ field: { onChange, value } }) => (
                 <Listbox
-                  value={cities?.find((city) => city.name === value) || null}
-                  onChange={(selectedCity) => onChange(selectedCity.name)}
-                  disabled={!selectedState || loadingCities}
+                  value={cities.find((city) => city.name === value) || null}
+                  onChange={handleCityChange}
+                  disabled={!selectedState || (isLagosSelected ? false : loadingCities)}
                 >
                   <div className="relative">
                     <Listbox.Button className="w-full flex items-center justify-between p-3 border rounded-lg bg-white text-left focus:ring-2 focus:ring-gray-300">
                       <span className="font-freize text-primary">
-                        {loadingCities ? "Loading..." : value || "Select City"}
+                        {isLagosSelected ? (value || "Select Lagos Location") : (loadingCities ? "Loading..." : value || "Select City")}
                       </span>
                       <ChevronDownIcon className="w-5 h-5 text-gray-500" />
                     </Listbox.Button>
                     <Listbox.Options className="absolute z-50 w-full bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto border border-gray-200">
-                      {cities?.map((city) => (
+                      {cities.map((city) => (
                         <Listbox.Option
-                          key={city.id}
+                          key={city.name} // Use name as key since Lagos locations don’t have id
                           value={city}
                           className="p-3 hover:bg-gray-100 cursor-pointer font-freize text-primary"
                         >
-                          {city.name}
+                          {city.name} {isLagosSelected && `(₦${city.shippingCost.toLocaleString()})`}
                         </Listbox.Option>
                       ))}
                     </Listbox.Options>
