@@ -10,19 +10,24 @@ const Page = () => {
   const { cart } = useCartStore();
   const [authChecked, setAuthChecked] = useState(false);
   const { data: countryList, isLoading: loadingCountries, isError: hasCountryError, error: countryError } = useCountries();
-  
-  const deliveryFee = 10;
+
   const [discount, setDiscount] = useState(0);
   const [couponCode, setCouponCode] = useState("");
+  const [shippingCost, setShippingCost] = useState(0); // Dynamic shipping cost from CheckOutForm
   const totalCost = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
-  const netTotal = totalCost + deliveryFee - discount;
+
+  // Determine if any item is in USD
+  const isInternationalOrder = cart?.some(item => item.currency === "USD");
+  
+  // Calculate netTotal: Add shipping cost only for NGN orders
+  const netTotal = totalCost - discount + (isInternationalOrder ? 0 : shippingCost);
 
   const { user, loading, isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (!loading) {
       console.log({ user, loading, isAuthenticated });
-      setAuthChecked(true); // Set auth checked regardless of authentication status
+      setAuthChecked(true);
     }
   }, [loading]);
 
@@ -62,7 +67,7 @@ const Page = () => {
         <div>
           <div className="flex lg:flex-row lg:justify-between lg:gap-16 flex-col-reverse gap-9">
             <CheckOutForm
-              netTotal={netTotal}
+              netTotal={totalCost}
               countryList={countryList}
               loadingCountries={loadingCountries}
               countryError={countryError}
@@ -70,8 +75,9 @@ const Page = () => {
               setDiscount={setDiscount}
               couponCode={couponCode}
               setCouponCode={setCouponCode}
-              isAuthenticated={isAuthenticated} // Pass authentication status
-              user={user} // Pass user data if available
+              isAuthenticated={isAuthenticated}
+              user={user}
+              setShippingCost={setShippingCost}
             />
             <div className="basis-1/2 flex flex-col gap-4">
               {cart?.map((item, index) => (
@@ -101,10 +107,16 @@ const Page = () => {
                   </h2>
                 </div>
                 <div className="flex justify-between items-center">
-                  <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Delivery</h2>
-                  <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
-                    {cart?.some(item => item.currency === "USD") ? `$${deliveryFee.toLocaleString("en-US")}` : `NGN ${deliveryFee.toLocaleString("en-NG")}`}
-                  </h2>
+                  <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">Shipping</h2>
+                  {isInternationalOrder ? (
+                    <p className="text-primary font-normal font-freize lg:text-sm lg:leading-[34px] italic">
+                      Provided upon request
+                    </p>
+                  ) : (
+                    <h2 className="text-primary font-normal font-freize lg:text-lg lg:leading-[34px]">
+                      NGN {shippingCost.toLocaleString("en-NG")}
+                    </h2>
+                  )}
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between items-center">
@@ -120,6 +132,11 @@ const Page = () => {
                     {cart?.some(item => item.currency === "USD") ? `$${netTotal.toLocaleString("en-US")}` : `NGN ${netTotal.toLocaleString("en-NG")}`}
                   </h2>
                 </div>
+                {isInternationalOrder && (
+                  <p className="text-primary font-normal font-freize lg:text-sm text-xs mt-2">
+                    Shipping fees for international orders will be provided upon request. Our team will contact you with the details after your order is placed.
+                  </p>
+                )}
               </div>
             </div>
           </div>

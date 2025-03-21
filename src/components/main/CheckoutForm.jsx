@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function CheckOutForm({
-  netTotal: initialNetTotal,
+  netTotal: initialNetTotal, // Now represents subtotal
   countryList,
   loadingCountries,
   countryError,
@@ -22,6 +22,7 @@ export default function CheckOutForm({
   setCouponCode,
   isAuthenticated,
   user,
+  setShippingCost, // New prop to update shipping cost in parent
 }) {
   const router = useRouter();
   const { cart } = useCartStore();
@@ -37,8 +38,55 @@ export default function CheckOutForm({
   const { data: states, isLoading: loadingStates, isError: hasStateError } = useStatesByCountry(countryCode);
   const { data: cities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
 
-  const discount = useState(0)[0];
-  const updatedNetTotal = initialNetTotal - (discount || 0);
+  const [discount] = useState(0);
+
+  // Define state-based shipping costs
+  const shippingCosts = {
+    "Abia": 6000,
+    "Abuja": 6000,
+    "Adamawa": 7000,
+    "Akwa Ibom": 6000,
+    "Anambra": 6000,
+    "Bauchi": 6000,
+    "Bayelsa": 6000,
+    "Benue": 6000,
+    "Borno": 6000,
+    "Cross River": 6000,
+    "Delta": 6000,
+    "Ebonyi": 6000,
+    "Edo": 6000,
+    "Ekiti": 6000,
+    "Enugu": 6000,
+    "Gombe": 7000,
+    "Imo": 6000,
+    "Jigawa": 7000,
+    "Kaduna": 7000,
+    "Kano": 7000,
+    "Katsina": 6000,
+    "Kebbi": 7000,
+    "Kogi": 6000,
+    "Kwara": 6000,
+    "Nasarawa": 6000,
+    "Niger": 6000,
+    "Ogun": 6000,
+    "Ondo": 5500,
+    "Osun": 6000,
+    "Oyo": 6000,
+    "Plateau": 7000,
+    "Rivers": 6000,
+    "Sokoto": 7000,
+    "Taraba": 7000,
+    "Yobe": 7000,
+    "Zamfara": 7000,
+  };
+
+  // Calculate shipping cost based on selected state
+  const shippingCost = selectedState?.name ? shippingCosts[selectedState.name] || 0 : 0;
+  const updatedNetTotal = initialNetTotal - (discount || 0) + shippingCost;
+
+  useEffect(() => {
+    setShippingCost(shippingCost); // Update shipping cost in parent
+  }, [shippingCost, setShippingCost]);
 
   const {
     register,
@@ -55,16 +103,15 @@ export default function CheckOutForm({
       phoneNumber: "",
       city: "",
       state: "",
-      country: "", // Will be set to "Nigeria" later
+      country: "",
     },
   });
 
   useEffect(() => {
     if (countryList && countryList.length > 0) {
       setCountries(countryList);
-      // Find Nigeria in the country list and set it as default
       const nigeria = countryList.find((country) => country.name === "Nigeria");
-      if (nigeria && !selectedCountry) { // Only set if not already set
+      if (nigeria && !selectedCountry) {
         setSelectedCountry(nigeria);
         setValue("country", nigeria.name, { shouldValidate: true });
       }
@@ -166,7 +213,7 @@ export default function CheckOutForm({
 
     const paymentData = {
       email: data.email,
-      amount: updatedNetTotal,
+      amount: updatedNetTotal, // Includes shipping cost
       cartItems,
       userId: isAuthenticated ? user?.id : 1,
       deliveryInfo: {
@@ -254,6 +301,8 @@ export default function CheckOutForm({
             <p className="text-red-500 text-sm mt-1 font-freize">{couponError}</p>
           )}
         </div>
+
+        {/* Removed Shipping Cost Display */}
 
         <div>
           <input
