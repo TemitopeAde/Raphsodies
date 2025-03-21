@@ -42,9 +42,9 @@ export default function CheckOutForm({
 
   // Hardcoded Lagos locations and shipping costs
   const lagosLocations = [
-    { name: "Mainland (Ojota Axis)", shippingCost: 3000 },
-    { name: "Mainland (Central)", shippingCost: 3500 },
-    { name: "Mainland (Outskirts)", shippingCost: 4000 },
+    { name: "Mainland", shippingCost: 3000 },
+    { name: "Mainland", shippingCost: 3500 },
+    { name: "Mainland", shippingCost: 4000 },
     { name: "Island to Lekki", shippingCost: 4000 },
     { name: "Ajah", shippingCost: 4500 },
     { name: "Sangotedo", shippingCost: 5000 },
