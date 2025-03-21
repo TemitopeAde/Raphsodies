@@ -504,7 +504,7 @@ export default function CheckOutForm({
                           value={city}
                           className="p-3 hover:bg-gray-100 cursor-pointer font-freize text-primary"
                         >
-                          {city.name} {isLagosSelected && `(₦${city.shippingCost.toLocaleString()})`}
+                          {city.name} 
                         </Listbox.Option>
                       ))}
                     </Listbox.Options>
