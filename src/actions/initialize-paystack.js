@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const initialize = async params => {
+  console.log({params});
   
   try {
     const response = await axios.post(

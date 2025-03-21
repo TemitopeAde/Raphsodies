@@ -222,7 +222,7 @@ export default function CheckOutForm({
 
     const paymentData = {
       email: data.email,
-      shipping: shippingCost, // Send shipping cost instead of amount
+      shipping: shippingCost,
       cartItems,
       userId: isAuthenticated ? user?.id : 1,
       deliveryInfo: {
