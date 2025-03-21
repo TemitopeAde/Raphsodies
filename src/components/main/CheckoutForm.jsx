@@ -40,7 +40,6 @@ export default function CheckOutForm({
   const { data: states, isLoading: loadingStates, isError: hasStateError } = useStatesByCountry(countryCode);
   const { data: apiCities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
 
-  // Hardcoded Lagos locations and shipping costs
   const lagosLocations = [
     { name: "Mainland", shippingCost: 3000 },
     { name: "Mainland", shippingCost: 3500 },
@@ -51,7 +50,6 @@ export default function CheckOutForm({
     { name: "Ikorodu", shippingCost: 4500 },
   ];
 
-  // State-based shipping costs (excluding Lagos, which is handled separately)
   const shippingCosts = {
     "Abia": 6000,
     "Abuja": 6000,
@@ -91,16 +89,14 @@ export default function CheckOutForm({
     "Zamfara": 7000,
   };
 
-  // Determine if any item is in USD
   const isInternationalOrder = cart?.some(item => item.currency === "USD");
 
-  // Determine cities and shipping cost based on state
   const isLagosSelected = selectedState?.name === "Lagos";
   const cities = isLagosSelected ? lagosLocations : apiCities || [];
   const shippingCost = isInternationalOrder
     ? 0
     : isLagosSelected
-    ? (selectedCity?.shippingCost || 0) // Use selected Lagos location's shipping cost
+    ? (selectedCity?.shippingCost || 0) 
     : (selectedState?.name ? shippingCosts[selectedState.name] || 0 : 0);
 
   const updatedNetTotal = initialNetTotal - discount + shippingCost;
