@@ -43,7 +43,7 @@ export default function CheckOutForm({
   // Define state-based shipping costs
   const shippingCosts = {
     "Abia": 6000,
-    "Abuja": 6000,
+    "Abuja Federal Capital Territory": 6000,
     "Adamawa": 7000,
     "Akwa Ibom": 6000,
     "Anambra": 6000,
