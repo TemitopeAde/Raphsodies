@@ -9,7 +9,7 @@ export async function POST(req) {
     const body = await req.json();
     // console.log({body});
     
-    const { email, cartItems, deliveryInfo, userId } = body;
+    const { email, cartItems, deliveryInfo, userId, shipping } = body;
 
     // console.log({ email, amount, cartItems, deliveryInfo, userId });
     
@@ -41,7 +41,7 @@ export async function POST(req) {
     
     const params = {
       email,
-      amount: netAmount,
+      amount: netAmount + parseInt(shipping),
       currency: currency,
       callback_url: `${ORIGIN}/checkout-success`,
       metadata: {

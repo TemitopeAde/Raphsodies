@@ -85,7 +85,7 @@ export default function CheckOutForm({
   // Calculate shipping cost based on selected state (only for NGN orders)
   const shippingCost = isInternationalOrder ? 0 : (selectedState?.name ? shippingCosts[selectedState.name] || 0 : 0);
   
-  // Calculate the total including shipping cost for NGN orders
+  // Calculate the total for display purposes only (not sent to API)
   const updatedNetTotal = initialNetTotal - discount + shippingCost;
 
   useEffect(() => {
@@ -198,7 +198,7 @@ export default function CheckOutForm({
 
   const handlePayment = async (paymentData) => {
     try {
-      console.log("Payment Data Sent to API:", paymentData); 
+      console.log("Payment Data Sent to API:", paymentData); // Debug log
       const response = await fetch("/api/paystack/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -222,7 +222,7 @@ export default function CheckOutForm({
 
     const paymentData = {
       email: data.email,
-      amount: updatedNetTotal, // Includes shipping cost for NGN orders
+      shipping: shippingCost, // Send shipping cost instead of amount
       cartItems,
       userId: isAuthenticated ? user?.id : 1,
       deliveryInfo: {
