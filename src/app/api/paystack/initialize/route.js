@@ -7,7 +7,7 @@ const ORIGIN = "https://raphsodies.vercel.app"
 export async function POST(req) {
   try {
     const body = await req.json();
-    // console.log({body});
+    console.log({body});
     
     const { email, cartItems, deliveryInfo, userId, shipping } = body;
 
