@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function CheckOutForm({
-  netTotal: initialNetTotal, // Now represents subtotal
+  netTotal: initialNetTotal, // Represents subtotal
   countryList,
   loadingCountries,
   countryError,
@@ -22,7 +22,7 @@ export default function CheckOutForm({
   setCouponCode,
   isAuthenticated,
   user,
-  setShippingCost, // New prop to update shipping cost in parent
+  setShippingCost,
 }) {
   const router = useRouter();
   const { cart } = useCartStore();
@@ -43,7 +43,7 @@ export default function CheckOutForm({
   // Define state-based shipping costs
   const shippingCosts = {
     "Abia": 6000,
-    "Abuja Federal Capital Territory": 6000,
+    "Abuja": 6000,
     "Adamawa": 7000,
     "Akwa Ibom": 6000,
     "Anambra": 6000,
@@ -80,8 +80,11 @@ export default function CheckOutForm({
     "Zamfara": 7000,
   };
 
-  // Calculate shipping cost based on selected state
-  const shippingCost = selectedState?.name ? shippingCosts[selectedState.name] || 0 : 0;
+  // Determine if any item is in USD
+  const isInternationalOrder = cart?.some(item => item.currency === "USD");
+
+  // Calculate shipping cost based on selected state (only for NGN orders)
+  const shippingCost = isInternationalOrder ? 0 : (selectedState?.name ? shippingCosts[selectedState.name] || 0 : 0);
   const updatedNetTotal = initialNetTotal - (discount || 0) + shippingCost;
 
   useEffect(() => {
@@ -213,7 +216,7 @@ export default function CheckOutForm({
 
     const paymentData = {
       email: data.email,
-      amount: updatedNetTotal, // Includes shipping cost
+      amount: updatedNetTotal, // Now correctly includes shipping only for NGN
       cartItems,
       userId: isAuthenticated ? user?.id : 1,
       deliveryInfo: {
@@ -301,8 +304,6 @@ export default function CheckOutForm({
             <p className="text-red-500 text-sm mt-1 font-freize">{couponError}</p>
           )}
         </div>
-
-        {/* Removed Shipping Cost Display */}
 
         <div>
           <input

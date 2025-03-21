@@ -13,13 +13,10 @@ const Page = () => {
 
   const [discount, setDiscount] = useState(0);
   const [couponCode, setCouponCode] = useState("");
-  const [shippingCost, setShippingCost] = useState(0); // Dynamic shipping cost from CheckOutForm
+  const [shippingCost, setShippingCost] = useState(0);
   const totalCost = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
 
-  // Determine if any item is in USD
   const isInternationalOrder = cart?.some(item => item.currency === "USD");
-  
-  // Calculate netTotal: Add shipping cost only for NGN orders
   const netTotal = totalCost - discount + (isInternationalOrder ? 0 : shippingCost);
 
   const { user, loading, isAuthenticated } = useAuth();
