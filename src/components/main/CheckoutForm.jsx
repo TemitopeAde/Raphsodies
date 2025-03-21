@@ -197,24 +197,24 @@ export default function CheckOutForm({
   };
 
   const handlePayment = async (paymentData) => {
-    // try {
-    //   console.log("Payment Data Sent to API:", paymentData); 
-    //   const response = await fetch("/api/paystack/initialize", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(paymentData),
-    //   });
+    try {
+      console.log("Payment Data Sent to API:", paymentData); 
+      const response = await fetch("/api/paystack/initialize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(paymentData),
+      });
 
-    //   if (!response.ok) throw new Error("Failed to initiate payment");
+      if (!response.ok) throw new Error("Failed to initiate payment");
 
-    //   const data = await response.json();
-    //   router.push(data.data.authorization_url);
-    // } catch (err) {
-    //   console.error("Payment initiation failed:", err);
-    //   setLocationError("Payment initialization failed. Please try again.");
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+      const data = await response.json();
+      router.push(data.data.authorization_url);
+    } catch (err) {
+      console.error("Payment initiation failed:", err);
+      setLocationError("Payment initialization failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const onSubmit = async (data) => {
