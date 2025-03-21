@@ -33,12 +33,11 @@ export default function CheckOutForm({
   const [selectedState, setSelectedState] = useState(null);
   const [locationError, setLocationError] = useState("");
   const [couponError, setCouponError] = useState("");
+  const [discount, setLocalDiscount] = useState(0); // Local discount state
 
   const countryCode = selectedCountry?.iso2 || "";
   const { data: states, isLoading: loadingStates, isError: hasStateError } = useStatesByCountry(countryCode);
   const { data: cities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
-
-  const [discount] = useState(0);
 
   // Define state-based shipping costs
   const shippingCosts = {
@@ -85,11 +84,17 @@ export default function CheckOutForm({
 
   // Calculate shipping cost based on selected state (only for NGN orders)
   const shippingCost = isInternationalOrder ? 0 : (selectedState?.name ? shippingCosts[selectedState.name] || 0 : 0);
-  const updatedNetTotal = initialNetTotal - (discount || 0) + shippingCost;
+  
+  // Calculate the total including shipping cost for NGN orders
+  const updatedNetTotal = initialNetTotal - discount + shippingCost;
 
   useEffect(() => {
-    setShippingCost(shippingCost); // Update shipping cost in parent
+    setShippingCost(shippingCost); // Update shipping cost in parent (Page component)
   }, [shippingCost, setShippingCost]);
+
+  useEffect(() => {
+    setDiscount(discount); // Sync local discount with parent
+  }, [discount, setDiscount]);
 
   const {
     register,
@@ -180,11 +185,11 @@ export default function CheckOutForm({
         throw new Error(data.error || "Invalid coupon code");
       }
 
-      setDiscount(data.discountAmount);
+      setLocalDiscount(data.discountAmount); // Update local discount state
       toast.success("Coupon applied successfully!");
     } catch (err) {
       setCouponError(err.message);
-      setDiscount(0);
+      setLocalDiscount(0);
       toast.error(err.message);
     } finally {
       setIsApplyingCoupon(false);
@@ -192,23 +197,24 @@ export default function CheckOutForm({
   };
 
   const handlePayment = async (paymentData) => {
-    try {
-      const response = await fetch("/api/paystack/initialize", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(paymentData),
-      });
+    // try {
+    //   console.log("Payment Data Sent to API:", paymentData); 
+    //   const response = await fetch("/api/paystack/initialize", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(paymentData),
+    //   });
 
-      if (!response.ok) throw new Error("Failed to initiate payment");
+    //   if (!response.ok) throw new Error("Failed to initiate payment");
 
-      const data = await response.json();
-      router.push(data.data.authorization_url);
-    } catch (err) {
-      console.error("Payment initiation failed:", err);
-      setLocationError("Payment initialization failed. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    //   const data = await response.json();
+    //   router.push(data.data.authorization_url);
+    // } catch (err) {
+    //   console.error("Payment initiation failed:", err);
+    //   setLocationError("Payment initialization failed. Please try again.");
+    // } finally {
+    //   setIsSubmitting(false);
+    // }
   };
 
   const onSubmit = async (data) => {
@@ -216,7 +222,7 @@ export default function CheckOutForm({
 
     const paymentData = {
       email: data.email,
-      amount: updatedNetTotal, // Now correctly includes shipping only for NGN
+      amount: updatedNetTotal, // Includes shipping cost for NGN orders
       cartItems,
       userId: isAuthenticated ? user?.id : 1,
       deliveryInfo: {
