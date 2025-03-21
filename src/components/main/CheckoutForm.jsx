@@ -41,9 +41,9 @@ export default function CheckOutForm({
   const { data: apiCities, isLoading: loadingCities, isError: hasCityError } = useCitiesByState(countryCode, selectedState?.iso2);
 
   const lagosLocations = [
-    { name: "Mainland", shippingCost: 3000 },
-    { name: "Mainland", shippingCost: 3500 },
-    { name: "Mainland", shippingCost: 4000 },
+    { name: "Mainland (Ojota Axis)", shippingCost: 3000 },
+    { name: "Mainland (Central)", shippingCost: 3500 },
+    { name: "Mainland (Outskirts)", shippingCost: 4000 },
     { name: "Island to Lekki", shippingCost: 4000 },
     { name: "Ajah", shippingCost: 4500 },
     { name: "Sangotedo", shippingCost: 5000 },
@@ -500,7 +500,7 @@ export default function CheckOutForm({
                     <Listbox.Options className="absolute z-50 w-full bg-white shadow-lg rounded-lg mt-1 max-h-40 overflow-auto border border-gray-200">
                       {cities.map((city) => (
                         <Listbox.Option
-                          key={city.name} // Use name as key since Lagos locations don’t have id
+                          key={city.name}
                           value={city}
                           className="p-3 hover:bg-gray-100 cursor-pointer font-freize text-primary"
                         >
