@@ -36,6 +36,7 @@
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.5.1",
     "cookie": "^1.0.2",
+    "cookies-next": "^5.1.0",
     "crypto": "^1.0.1",
     "embla-carousel-react": "^8.5.2",
     "flowbite-react": "^0.10.2",

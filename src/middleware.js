@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server"
 
+
+
+
 export async function middleware(request) {
   const origin = request.headers.get('origin') || ''
   
   const allowedOrigins = [
+    "*",
     'http://localhost:3000',
     'http://localhost:3001',
     "https://raphsodies.vercel.app"
@@ -19,10 +23,6 @@ export async function middleware(request) {
   response.headers.set('Access-Control-Expose-Headers', 'X-User-Location')
   response.headers.set('Access-Control-Max-Age', '86400')
 
-  console.log(request.nextUrl);
-  
-
-  // Get IP and fetch location
   const forwarded = request.headers.get("x-forwarded-for")
   const ip = forwarded ? forwarded.split(",")[0] : request.ip || "0.0.0.0"
   
@@ -40,10 +40,29 @@ export async function middleware(request) {
     response.headers.set("X-User-Location", JSON.stringify({}))
   }
 
+  const path = request.nextUrl.pathname;
+ 
+  if (path.startsWith('/admin')) {
+    if (!request.cookies.get('authToken')) {
+      return NextResponse.redirect(new URL('/sign-in', request.url));
+    }
+    
+    const validationRes = await fetch(`${request.nextUrl.origin}/api/validate-token`, {
+      headers: { Cookie: request.headers.get('cookie') || '' },
+    });
+
+    const { isAdmin } = await validationRes.json();
+
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL('/unauthorized', request.url));
+    }
+  } 
+
   
   return response
 }
 
 export const config = {
-  matcher: '/api/:path*',
+  matcher: ['/api/:path*', '/admin/:path*'],
+
 }

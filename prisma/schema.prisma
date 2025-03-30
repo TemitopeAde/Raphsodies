@@ -102,10 +102,10 @@ model ContactUs {
 model Coupon {
   id              String    @id @default(cuid())
   code            String    @unique
-  discountType    String    // "percentage" or "fixed"
-  discountValue   Int       // Percentage (1-100) or fixed amount in cents/lowest currency unit
-  minOrderAmount  Int?      // Minimum order amount to apply coupon
-  maxUses         Int?      // Maximum number of times coupon can be used
+  discountType    String    
+  discountValue   Int      
+  minOrderAmount  Int?     
+  maxUses         Int?      
   currentUses     Int       @default(0)
   startDate       DateTime  @default(now())
   endDate         DateTime?

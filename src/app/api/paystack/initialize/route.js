@@ -42,7 +42,7 @@ export async function POST(req) {
       return acc + itemPrice * item.quantity;
     }, 0) * 100;
 
-    const shippingInKobo = shipping * 100; // Convert shipping to kobo
+    const shippingInKobo = shipping * 100; 
     const totalAmount = netAmount + shippingInKobo;
 
     console.log({

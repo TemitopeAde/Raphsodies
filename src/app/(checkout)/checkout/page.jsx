@@ -21,22 +21,22 @@ const Page = () => {
 
   const { user, loading, isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    if (!loading) {
-      console.log({ user, loading, isAuthenticated });
-      setAuthChecked(true);
-    }
-  }, [loading]);
+  // useEffect(() => {
+  //   if (!loading) {
+  //     console.log({ user, loading, isAuthenticated });
+  //     setAuthChecked(true);
+  //   }
+  // }, [loading]);
 
-  if (loading || !authChecked) {
-    return (
-      <section className="bg-custom-bg mt-20">
-        <div className="px-10 lg:px-24 flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
-        </div>
-      </section>
-    );
-  }
+  // if (loading || !authChecked) {
+  //   return (
+  //     <section className="bg-custom-bg mt-20">
+  //       <div className="px-10 lg:px-24 flex justify-center items-center py-20">
+  //         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   return (
     <section className="bg-custom-bg mt-20">

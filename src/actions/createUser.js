@@ -7,6 +7,9 @@ const prisma = new PrismaClient();
 export async function createUser(email, name, password) {
   try {
     const verificationToken = crypto.randomBytes(32).toString('hex');
+    const userCount = await prisma.user.count();
+    const role = userCount === 0 ? "admin" : "user";
+
     const newUser = await prisma.user.create({
       data: {
         email,
@@ -14,19 +17,19 @@ export async function createUser(email, name, password) {
         password,
         verificationToken,
         isVerified: false,
-        role: "user",
+        role
       },
     });
     const res = await sendVerificationEmail(email, verificationToken);
-    console.log({res});
+    
 
-    console.log({email, verificationToken});
+    // console.log({email, verificationToken});
     
     return newUser;
   } catch (error) {
-    // Handle Prisma-specific errors
+    
     if (error.code === 'P2002') {
-      // P2002 is Prisma's error code for unique constraint violation
+      
       if (error.meta?.target?.includes('email')) {
         throw new Error('Email already in use');
       }
