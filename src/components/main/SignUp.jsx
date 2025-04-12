@@ -59,7 +59,11 @@ function AuthFormContent() {
           setIsSignUp(false);
           setFormData({ fullName: "", email: "", password: "", confirmPassword: "" });
         },
-        onError: (err) => toast.error(err.message || "Signup failed. Try again.", { theme: "colored" }),
+        onError: (err) => {
+          console.log(err);
+          
+          toast.error(err.message || "Signup failed. Try again.", { theme: "colored" })
+        },
       });
     } else {
       loginUser({ email: formData.email, password: formData.password }, {
