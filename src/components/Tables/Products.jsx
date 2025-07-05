@@ -157,7 +157,7 @@ const ProductTable = () => {
               <>
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="bg-gray-800">
+                  <tr className="">
                   <th className="border-b border-gray-300 px-4 py-3 text-left">#</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Image</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Name</th>
@@ -170,7 +170,7 @@ const ProductTable = () => {
                 </thead>
                 <tbody>
                   {products?.map((product, index) => (
-                    <tr key={product.id} className="border-b hover:bg-gray-800">
+                    <tr key={product.id} className="border-b">
                       <td className="px-4 py-3 text-sm">{index + 1}</td>
                       <td className="px-4 py-3">
                         <img

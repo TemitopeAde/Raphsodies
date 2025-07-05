@@ -14,8 +14,10 @@ export async function POST(request) {
     const hashedPassword = await bcryptjs.hash(password, 10);
 
     const newUser = await createUser(email, name, hashedPassword);
+    const { password: _, ...userWithoutPassword } = newUser;
+    
 
-    return NextResponse.json({ message: 'User created successfully', user: newUser }, { status: 201 });
+    return NextResponse.json({ message: 'User created successfully', user: userWithoutPassword }, { status: 201 });
   } catch (error) {
     if (error instanceof SyntaxError) {
       return NextResponse.json({ message: 'Invalid JSON format' }, { status: 400 });

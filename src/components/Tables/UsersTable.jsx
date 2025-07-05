@@ -50,7 +50,7 @@ const UsersTable = () => {
               <>
               <table className="w-full">
                 <thead>
-                  <tr className="bg-gray-800">
+                  <tr className="">
                     <th className="border-b border-gray-300 px-4 py-3 text-left">ID</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Name</th>
                     <th className="border-b border-gray-300 px-4 py-3 text-left">Email</th>
@@ -61,7 +61,7 @@ const UsersTable = () => {
                 </thead>
                 <tbody>
                   {users.map((user, index) => (
-                    <tr key={user.id} className="hover:bg-gray-800 cursor-pointer">
+                    <tr key={user.id} className=" cursor-pointer">
                       <td className="border-b border-gray-300 px-4 py-3 text-sm">{parseInt(index) + 1}</td>
                       <td className="border-b border-gray-300 px-4 py-3 text-sm">{user.name}</td>
                       <td className="border-b border-gray-300 px-4 py-3 text-sm">{user.email}</td>
@@ -101,9 +101,9 @@ const UsersTable = () => {
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle className="text-white font-freize font-semibold text-xl mb-2">User Details</DialogTitle>
+              <DialogTitle className="text-[#475467] font-freize font-semibold text-xl mb-2">User Details</DialogTitle>
             </DialogHeader>
-            <div className="space-y-2 text-white font-unbounded">
+            <div className="space-y-2 text-[#475467] font-unbounded">
               <p><strong>Name:</strong> {selectedUser.name}</p>
               <p><strong>Email:</strong> {selectedUser.email}</p>
               <p><strong>Role:</strong> {selectedUser?.role}</p>

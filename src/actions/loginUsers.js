@@ -11,20 +11,24 @@ export async function loginUser(email, password) {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      // throw new Error('User not found');
+      console.log("user not found");
+      return "User not found"
     }
 
     if (!user.isVerified) {
-      await resendVerificationEmail(email);
+      const res = await resendVerificationEmail(email);
+      console.log(res);
+      
       // throw new Error("Account not verified. A new verification email has been sent.");
-      return
+      return "Account not verified. A new verification email has been sent"
     }
 
     
     const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {
       // throw new Error('Invalid password');
-      return 
+      return "Invalid password"
     }
     
     const { password: _, ...userWithoutPassword } = user;

@@ -20,7 +20,8 @@ const ProductPageContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const limit = 100;
-
+  // console.log(process.env.EMAIL_USER);
+  
   // Ensure category is read safely without hydration mismatch
   const productCategory = useMemo(() => searchParams.get("category") || "", [searchParams]);
 

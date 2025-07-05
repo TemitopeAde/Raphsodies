@@ -22,7 +22,8 @@ export async function createUser(email, name, password) {
     });
     const res = await sendVerificationEmail(email, verificationToken);
     
-
+    console.log(res);
+    
     // console.log({email, verificationToken});
     
     return newUser;
@@ -35,12 +36,7 @@ export async function createUser(email, name, password) {
       }
     }
 
-    // Log detailed error information
-    console.error("Error creating user:", error.message);
-    console.error("Stack trace:", error.stack);
-
-    // Throw a generic error for other cases
-    throw new Error("Error creating user");
+    return "Error creating user"
   } finally {
     // Ensure Prisma client is disconnected to avoid connection leaks
     await prisma.$disconnect();

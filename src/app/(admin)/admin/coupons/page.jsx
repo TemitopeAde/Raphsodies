@@ -556,7 +556,7 @@ export default function AdminCouponsPage() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setIsDeleteDialogOpen(false)}>
+            <AlertDialogCancel onClick={() => setIsDeleteDialogOpen(false)} className="text-[#475467]">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteCoupon} className="bg-red-500 hover:bg-red-600">
@@ -619,7 +619,7 @@ export default function AdminCouponsPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-blue-300 text-blue-600 hover:bg-blue-50"
+                        className="border-blue-300 text-[#475467]"
                         onClick={() => handleEditClick(coupon)}
                       >
                         Edit
@@ -627,7 +627,7 @@ export default function AdminCouponsPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-gray-100"
+                        className="text-[#475467]"
                         onClick={() => handleToggleActive(coupon.id, coupon.isActive)}
                       >
                         {coupon.isActive ? "Deactivate" : "Activate"}

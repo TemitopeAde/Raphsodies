@@ -50,6 +50,8 @@ export async function middleware(request) {
     const validationRes = await fetch(`${request.nextUrl.origin}/api/validate-token`, {
       headers: { Cookie: request.headers.get('cookie') || '' },
     });
+    console.log(validationRes);
+    
 
     const { isAdmin } = await validationRes.json();
 

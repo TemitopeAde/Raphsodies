@@ -257,11 +257,11 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           <RichTextPlugin
             contentEditable={
               <ContentEditable 
-                className="min-h-[100px] outline-none px-2 py-1"
+                className="min-h-[100px] outline-none px-2 py-1 text-[#475467] font-normal"
               />
             }
             placeholder={
-              <div className="absolute top-[1.125rem] left-[1.125rem] text-gray-400">
+              <div className="absolute top-[1.125rem] left-[1.125rem] text-gray-400 ">
                 Enter product description...
               </div>
             }
@@ -425,7 +425,7 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
     <Dialog open={isOpen}>
       <DialogContent className="sm:max-w-[60vw] font-freize max-h-[90vh] overflow-y-auto scrollbar-hide">
         <DialogHeader className="flex justify-between flex-row">
-          <DialogTitle className="text-white text-2xl font-unbounded">
+          <DialogTitle className="text-black text-2xl font-unbounded">
             {product ? 'Edit Product' : 'Add Product'}
           </DialogTitle>
           <X
@@ -439,9 +439,10 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           className="space-y-4 text-white font-unbounded"
         >
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label className="text-black" htmlFor="name">Name</Label>
             <Input
               id="name"
+              className="text-[#475467] font-normal"
               {...register("name", { required: "Product name is required" })}
             />
             {errors.name && (
@@ -450,19 +451,19 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <div className="border p-2 rounded-lg bg-transparent text-white max-h-40 overflow-y-auto">
+            <Label className="text-black" htmlFor="description">Description</Label>
+            <div className="border p-2 rounded-lg bg-transparent text-[#475467] max-h-40 overflow-y-auto">
               <Editor />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="price">Price</Label>
+            <Label className="text-black" htmlFor="price">Price</Label>
             <Input
               id="price"
               type="number"
               step="1"
-              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none text-[#475467] font-normal"
               {...register("price", {
                 required: "Price is required",
                 min: { value: 1, message: "Price must be greater than 0" }
@@ -474,12 +475,12 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="price">Price ($)</Label>
+            <Label className="text-black" htmlFor="price">Price ($)</Label>
             <Input
               id="priceDollar"
               type="number"
               step="1"
-              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none text-[#475467] font-normal"
               {...register("priceDollar", {
                 required: "Price in dollar is required",
                 min: { value: 1, message: "Price must be greater than 0" }
@@ -491,12 +492,13 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="stock">Stock</Label>
+            <Label className="text-black" htmlFor="stock">Stock</Label>
             <Input
               id="stock"
               type="number"
+              
               step="1"
-              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none text-[#475467] font-normal"
               {...register("stock", {
                 required: "Stock is required",
                 min: { value: 1, message: "Stock must be greater than 0" }
@@ -508,9 +510,10 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
+            <Label className="text-black" htmlFor="category">Category</Label>
             <Input
               id="category"
+              className="text-[#475467] font-normal"
               {...register("category")}
             />
             {errors.category && (
@@ -519,9 +522,10 @@ const EditProductForm = ({ isOpen, onClose, product, onEditProduct }) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="attributes">Attributes</Label>
+            <Label className="text-black" htmlFor="attributes">Attributes</Label>
             <Input
               id="attributes"
+              className="text-[#475467] font-normal"
               placeholder="Comma separated values"
               {...register("attributes")}
             />

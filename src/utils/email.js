@@ -3,8 +3,7 @@ import nodemailer from 'nodemailer';
 
 export async function sendPasswordResetEmail(email, resetLink) {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: "smtp.gmail.com",
+    host: "smtp.hostinger.com",
     port: 465,
     secure: true,
     auth: {
@@ -15,11 +14,32 @@ export async function sendPasswordResetEmail(email, resetLink) {
 
 
   const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: 'Password Reset Request',
-    text: `You requested a password reset. Click the link below to reset your password:\n\n${resetLink}`,
-  };
+  from: process.env.EMAIL_USER,
+  to: email,
+  subject: 'Password Reset Request',
+  html: `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+      <p>You requested a password reset.</p>
+      <p>Click the button below to reset your password:</p>
+      <a 
+        href="${resetLink}" 
+        style="
+          display: inline-block;
+          padding: 10px 20px;
+          margin-top: 10px;
+          background-color: #007BFF;
+          color: white;
+          text-decoration: none;
+          border-radius: 5px;
+        "
+      >
+        Reset Password
+      </a>
+      <p>If you did not request this, you can safely ignore this email.</p>
+    </div>
+  `,
+};
+
 
   await transporter.sendMail(mailOptions);
 }

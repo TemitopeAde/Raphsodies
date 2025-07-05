@@ -42,3 +42,6 @@ body {
 @layer base {}
 
 
+span[data-lexical-text="true"] {
+  color: black !important;
+}

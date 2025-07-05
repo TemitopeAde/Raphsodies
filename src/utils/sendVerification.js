@@ -2,19 +2,16 @@ import nodemailer from 'nodemailer';
 
 export async function sendVerificationEmail(email, token) {
   const verificationUrl = `${process.env.ORIGIN}/verify-user?token=${token}`;
-  
-  // Extract domain name for branding (assumes format like example.com)
   const domain = process.env.ORIGIN.replace(/^https?:\/\/(www\.)?/, '').split('/')[0];
   const brandName = "African Rhapsody"
   
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: "smtp.gmail.com",
+    host: "sandbox.smtp.mailtrap.io",
     port: 465,
-    secure: true,
+    secure: false,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: "92811f8dd53a82",
+      pass: "38750aa7fb02d2"
     },
   });
 
@@ -111,23 +108,7 @@ export async function sendVerificationEmail(email, token) {
       </body>
       </html>
     `,
-    text: `
-      Verify Your ${brandName} Account
-      
-      Hello,
-      
-      Thank you for signing up for ${brandName}! To complete your registration and verify your email address, please visit the link below:
-      
-      ${verificationUrl}
-      
-      This link will expire in 24 hours for security reasons.
-      
-      If you didn't create an account with ${brandName}, you can safely ignore this email.
-      
-      Best regards,
-      The ${brandName} Team
-    `,
   };
-
-  return await transporter.sendMail(mailOptions);
+  const response = await transporter.sendMail(mailOptions);
+  return response
 }
